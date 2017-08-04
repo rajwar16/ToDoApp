@@ -1,0 +1,63 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="navigationBar" >
+    <div class="container-fluid"  >
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span aria-hidden="true"><div style="float: left;padding-top: 4px;padding-left: 10px;"><img src="Images/navigationBarImages/menu.svg" alt="Sidemenu"></div></span></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        	<div style="float:left;padding-top: 20px;"><img style="height: 24px;width: 74px;margin-left: 35px;" src="Images/googleLogo.svg"></div>
+        	<div id="keppName" style="float:left;padding-top: 20px;">Keep</div>
+        	<div style="height:48px;width:809px; float: left;margin-top: 10px;margin-left: 5%">
+            	<div style="float: left;height:46px;width:54px;">
+                   <button type="submit" id="searchButton" style="float: left;height:46px;width:54px;padding: 10px;" ><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/icons8-Search-20.png"></button>
+             	</div>
+            	<div style="float: left;height:46px;width:666px;">
+					<input style="float: left;height:46px;width:666px;" type="text" placeholder="Search..." id="query" name="search" value="" ng-model="searchQuery">
+           		</div>
+           		<div style="float: left;height:46px;width:54px;">
+                   <button type="submit" id="searchButton" style="float: left;height:46px;width:54px;padding: 10px;" ><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/icons8-Delete-20.png"></button>
+             	</div>
+           		
+             </div>
+            <ul class="nav navbar-nav navbar-right ulcss" >
+                <li><a id="refresh"><span aria-hidden="true"><img ng-click="refresh()" src="Images/navigationBarImages/refresh.svg" alt="refresh"></span></a></li>
+				<li>
+					<a id="viewOntoggle">
+					<!-- <img id="list" ng-style="list" ng-click="list_view()" src="image/list.svg"> </img>
+                    <img id="grid" ng-style="grid" ng-click="grid_view()" src="image/grid.svg"></img> -->
+						<span aria-hidden="true" ng-hide="gridviewImg"><img id="gridview" ng-style="gridview"  ng-click="gridview()" src="Images/navigationBarImages/grid.svg" alt="grid"></span>
+						<span aria-hidden="true" ng-hide="listviewImg"><img id="listview" ng-style="listview"  ng-click="listview()" src="Images/list.svg" alt="list"></span>
+					</a>
+				</li>
+             	<li><a href="#"><span aria-hidden="true"><img src="Images/navigationBarImages/notification.png" alt="notification"></span></a></li>
+                
+                <li>
+                	<a class="dropdown-toggle" data-toggle="dropdown" >
+                		<div class="profileDiv" ng-bind="userName"></div>
+                		<!-- <img src="Images/usericon.png" style="border-radius: 50%" height="32px" width="32px" alt="userIcon"> -->
+                	</a>
+                	<div class="dropdown-menu profilePic" style="padding:20px">
+                		<div style="height: 96;width:100%">
+                			<div style="height: 96px;width:116px;float:left">
+                				<!-- <img src="Images/usericon.png" style="border-radius: 50%" height="96px" width="96px" alt="userIcon"> -->
+                				<div class="innerProfilePicDiv">{{userName}}</div>
+                			</div>
+                			<div style="height: 96px;width:156px;float:left"></div>
+                		</div>
+                		<div style="height: 35%;width: 100%;margin-top: 5px;paddin">
+                			<button>Sign out</button>
+                		</div>
+                	</div>
+                </li>
+                
+               <!--  <li><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Log Out</a></li> -->
+            </ul>
+            
+		</div>
+        </div>
+</nav>

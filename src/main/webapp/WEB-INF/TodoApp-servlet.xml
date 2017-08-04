@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://java.sun.com/xml/ns/javaee     
+    http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<context:component-scan base-package="com.bridgeit.TodoApp" /> 
+	
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" mode="proxy" proxy-target-class="true" /> -->
+	
+	<mvc:annotation-driven />
+	<tx:annotation-driven/>
+	
+	<mvc:resources mapping="/bower_components/**" location="/bower_components/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/Images/**" location="/Images/" />
+	<mvc:resources location="/template/" mapping="/template/**"/>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="pooledDataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.bridgeit.TodoApp.model.User</value>
+				<value>com.bridgeit.TodoApp.model.Token</value>
+				<value>com.bridgeit.TodoApp.model.ToDoNotes</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect"> org.hibernate.dialect.MySQLDialect</prop>
+				<!-- <prop key="hibernate.current_session_context_class">thread</prop> -->
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- pooled data Source -->
+	<bean id="pooledDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/ToDoGoogleKeep"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="pooja"></property>
+	</bean>
+
+	<bean id="userServices" class="com.bridgeit.TodoApp.services.UserServices" />
+	<bean id="userDao" class="com.bridgeit.TodoApp.dao.UserDaoImplementation"/>
+	<bean id="registerValidation" class="com.bridgeit.TodoApp.validator.RegisterValidation"/>
+	<bean id="tokenservices" class="com.bridgeit.TodoApp.services.TokenServices"/>
+	<bean id="tokenDao" class="com.bridgeit.TodoApp.dao.TokenDaoImplementation"/>
+	<bean id="ToDoServices" class="com.bridgeit.TodoApp.services.ToDoServices"/>
+	<bean id="todoNotesDao" class="com.bridgeit.TodoApp.dao.TodoNotesDaoImlementation"/>
+
+<mvc:resources mapping="/static/**" location="/static/" />
+</beans>

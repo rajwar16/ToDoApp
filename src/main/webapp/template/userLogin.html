@@ -1,0 +1,76 @@
+<head>
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+	<div>
+		<div class="materialContainer">
+			<div class="box">
+				<div class="title">Sign in</div>
+
+				<form name="userForm">
+
+					<div class="input">
+						<label for="userName"></label> 
+						<input type="email" name="userName" id="userName" data-ng-model="userName" placeholder="Username" required >
+						<span class="spin"></span>
+					</div>
+						<span style="color:#ED2553;font-size: 14px" data-ng-show="userForm.userName.$error.required && userForm.userName.$touched">*Email is required.</span> 
+						<span style="color:#ED2553;font-size:14px" data-ng-show="userForm.userName.$error.email && userForm.userName.$touched">*Invalid email address.</span>
+					
+					<div class="input">
+						<label for="pass"></label> 
+						<input type="password" name="password" id="pass" data-ng-model="password" placeholder="Password" required> 
+						<span class="spin"></span>
+					</div>
+					<div>
+						<span style="color:#ED2553;font-size:14px" data-ng-show="userForm.password.$error.required && userForm.password.$touched">*password is required.</span> 
+					</div>
+					
+					<div class="button login">
+						<button class="btn red" ng-click="loginController()" ng-disabled="userForm.userName.$dirty && userForm.userName.$invalid">
+							Sign in
+						</button>
+					</div>
+				</form>
+				<div class="pass-forgot">
+					dont have account plzz<a ui-sref="register">register?</a>
+				</div>
+			</div>
+			<!-- Full Name: {{userName + " " + password}} -->
+		</div>
+	</div>
+</body>
+
+
+
+
+<!-- <div class="overbox">
+      <div class="material-button alt-2"><span class="shape"></span></div>
+
+      <div class="title">REGISTER</div>
+
+      <div class="input">
+         <label for="regname">Username</label>
+         <input type="text" name="regname" id="regname">
+         <span class="spin"></span>
+      </div>
+
+      <div class="input">
+         <label for="regpass">Password</label>
+         <input type="password" name="regpass" id="regpass">
+         <span class="spin"></span>
+      </div>
+
+      <div class="input">
+         <label for="reregpass">Repeat Password</label>
+         <input type="password" name="reregpass" id="reregpass">
+         <span class="spin"></span>
+      </div>
+
+      <div class="button">
+         <button><span>NEXT</span></button>
+      </div>
+
+
+   </div> -->

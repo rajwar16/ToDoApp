@@ -1,0 +1,22 @@
+	<div  ng-style="{'background-color':$ctrl.color}">
+	<div contenteditable1 contenteditable="true" placeholder="Title"  ng-bind-html="$ctrl.title" ng-model="$ctrl.title1" id="presentationTitle"></div>
+	<div contenteditable1 contenteditable="true" placeholder="Take a note..."  ng-bind-html="$ctrl.note" ng-model="$ctrl.note1" id="presentationNote"></div>
+	<div id="presentationedit" style="display:inline-block;">
+			<div class="editDiv"><img src="Images/remindericon.svg" title="reminder"></div>
+			<div class="editDiv"><img src="Images/cc.svg"></div>
+			<color></color>
+			<div class="editDiv"><img src="Images/img.svg"></div>
+			<div class="editDiv"><img src="Images/archive.svg"></div>
+			<div class="editDiv"><img src="Images/list.png"></div>
+			<div class="editDivRepeat">
+				<button id="doneButton" ng-click="$ctrl.deleteNote($ctrl.id)" style="float:right;">
+					  <img src="Images/trash.svg">
+				</button>
+			</div>
+					  			
+			<div class="editdivButton">
+				<button id="doneButton" ng-click="$ctrl.updateNoteFunction($ctrl.id)">
+					 DONE
+				</button>
+			</div>
+	</div>

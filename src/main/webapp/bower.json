@@ -1,0 +1,25 @@
+{
+  "name": "bower_components",
+  "homepage": "index.jsp",
+  "authors": [
+    "pooja16 <poojarajwar3@gmail.com>"
+  ],
+  "description": "all installation file is there",
+  "main": "ToDoApp",
+  "keywords": [
+    "pooja"
+  ],
+  "license": "123456789",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.5",
+    "jquery": "^3.2.1"
+  }
+}

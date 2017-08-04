@@ -1,0 +1,192 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="navigationBar" >
+    <div class="container-fluid"  >
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span aria-hidden="true"><div style="float: left;padding-top: 4px;padding-left: 10px;"><img src="Images/navigationBarImages/menu.svg" alt="Sidemenu"></div></span></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        	<div style="float:left;padding-top: 20px;"><img style="height: 24px;width: 74px;margin-left: 35px;" src="Images/googleLogo.svg"></div>
+        	<div id="keppName" style="float:left;padding-top: 20px;">Keep</div>
+        	<div style="height:48px;width:809px; float: left;margin-top: 10px;margin-left: 5%">
+            	<div style="float: left;height:46px;width:54px;">
+                   <button type="submit" id="searchButton" style="float: left;height:46px;width:54px;padding: 10px;" ><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/icons8-Search-20.png"></button>
+             	</div>
+            	<div style="float: left;height:46px;width:666px;">
+					<input style="float: left;height:46px;width:666px;" type="text" placeholder="Search..." id="query" name="search" value="" ng-model="searchQuery">
+           		</div>
+           		<div style="float: left;height:46px;width:54px;">
+                   <button type="submit" id="searchButton" style="float: left;height:46px;width:54px;padding: 10px;" ><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/icons8-Delete-20.png"></button>
+             	</div>
+           		
+             </div>
+            <ul class="nav navbar-nav navbar-right ulcss" >
+                <li><a id="refresh"><span aria-hidden="true"><img ng-click="refresh()" src="Images/navigationBarImages/refresh.svg" alt="refresh"></span></a></li>
+				<li>
+					<a id="viewOntoggle">
+					<!-- <img id="list" ng-style="list" ng-click="list_view()" src="image/list.svg"> </img>
+                    <img id="grid" ng-style="grid" ng-click="grid_view()" src="image/grid.svg"></img> -->
+						<span aria-hidden="true" ng-hide="gridviewImg"><img id="gridview" ng-style="gridview"  ng-click="gridview()" src="Images/navigationBarImages/grid.svg" alt="grid"></span>
+						<span aria-hidden="true" ng-hide="listviewImg"><img id="listview" ng-style="listview"  ng-click="listview()" src="Images/list.svg" alt="list"></span>
+					</a>
+				</li>
+             	<li><a href="#"><span aria-hidden="true"><img src="Images/navigationBarImages/notification.png" alt="notification"></span></a></li>
+                
+                <li>
+                	<a class="dropdown-toggle" data-toggle="dropdown" >
+                		<div class="profileDiv" ng-bind="userName"></div>
+                		<!-- <img src="Images/usericon.png" style="border-radius: 50%" height="32px" width="32px" alt="userIcon"> -->
+                	</a>
+                	<div class="dropdown-menu profilePic" style="padding:20px">
+                		<div style="height: 96;width:100%">
+                			<div style="height: 96px;width:116px;float:left">
+                				<!-- <img src="Images/usericon.png" style="border-radius: 50%" height="96px" width="96px" alt="userIcon"> -->
+                				<div class="innerProfilePicDiv">{{userName}}</div>
+                			</div>
+                			<div style="height: 96px;width:156px;float:left"></div>
+                		</div>
+                		<div style="height: 35%;width: 100%;margin-top: 5px;paddin">
+                			<button>Sign out</button>
+                		</div>
+                	</div>
+                </li>
+                
+                
+                
+               <!--  <li class="dropdown" >
+                  <a class="dropdown-toggle" data-toggle="dropdown" >
+                    trkhykthkyrtyht
+                  </a>
+                     <ul class="dropdown-menu">
+      					<li><a href="#">HTML</a></li>
+      					<li><a href="#">CSS</a></li>
+      					<li><a href="#">JavaScript</a></li>
+    				</ul>
+               	</li> -->
+                
+               <!--  <li><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Log Out</a></li> -->
+            </ul>
+            
+		</div>
+        </div>
+</nav>
+<!-- <navigationbar></navigationbar> -->
+<div id="wrapper" class="toggled" id="wrapperDiv">
+    <div class="container-fluid" id="sidebarContainerFluid">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" style="background-color: #e8e8e8">
+            <ul class="sidebar-nav">
+              	<li class="sidebar-brand">
+                    <br>
+                </li>
+               <br>
+                <li>
+                    <a href="#"><img style="height: 24px;width: 24px ;margin-right: 35px;" src="Images/noteicon.png"> Note</a>
+                </li>
+                <br>
+                 <li>
+                    <a href="#"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/remindericon.svg">Reminders</a>
+                </li>
+                
+                <hr style="height: 1px;color:red;background-color: black">
+                                
+                <li>
+                    <a href="#"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/archive.svg"> Archive</a>
+                </li>
+                <br>
+                <li>
+                    <a href="#"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/trash.svg">Trash</a>
+                </li>
+             
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+<!-- profile popup div-->
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="margin-top: 35px;" data-ng-blur="ShowHide1()">
+            <div class="container-fluid" id="pageContainerfluid">
+                <div class="row">
+                	<div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-8" style="margin-top: 30px;">
+                   		<!-- card division -->
+                      	<div contenteditable1 contenteditable="true" class="presentation"  data-ng-show = "IsVisible1" data-placeholder="Take a note..." data-ng-click="ShowHide()" id="initialTitle"><div class="presentationDiv"><img style="height: 24px;width: 24px" src="Images/pen.svg"></div><div class="presentationDiv"><img style="height: 24px;width: 24px" src="Images/List_menu.png"></div><div class="presentationDiv"><img style="height: 24px;width: 24px" src="Images/img.svg"></div></div>
+					  	
+					  	<!-- /card division  -->
+					  	
+					  	<!--this is editable division, this division will show when click card division -->
+					  	<div data-ng-show="IsVisible" class="presentation1">
+					 		<div contenteditable1 contenteditable="true" placeholder="Title" data-ng-model="title"  id="presentationTitle"></div>
+					  		<div  contenteditable1 contenteditable="true" placeholder="Take a note..." data-ng-model="note" id="presentationNote"></div>
+					  		
+					  		<div id="presentationedit" style="display:inline-block;">
+					  			<div class="editDiv" title="Remind me"><img src="Images/remindericon.svg" ></div>
+					  			<div class="editDiv" title="Collaborator"><img src="Images/cc.svg" ></div>
+					  			<div class="editDiv" title="Change color"><img src="Images/colur.svg" ></div>
+					  			<div class="editDiv" title="Add image"><img src="Images/img.svg" ></div>
+					  			<div class="editDiv" title="Archive"><img src="Images/archive.svg" ></div>
+					  			<div class="editDiv" title="More"><img src="Images/list.png" ></div>
+					  			
+					  			<div class="editdivButton">
+					  				<button id="doneButton" ng-click="createNote()">
+					  					DONE
+					  				</button>
+					  			</div>
+					  		</div>
+					  	</div>
+					 </div>
+                    </div>	
+                </div>
+                <br>
+                <br>
+                <div class="row" style="color:red">
+                  
+                  <div  data-ng-repeat="x in records | filter:searchQuery" >
+                  	<div ng-class="space3col"></div>                  
+                    <div ng-class="view_change">
+                   <!--	<div class="col-lg-8"> -->
+                    <div class="todoNoteDiv" ng-style="{'background-color':x.color}">
+                    	<div ng-click="open(x)">
+					 		<div id="presentationTitle" data-ng-bind-html="x.title"></div>
+					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
+					  	</div>
+					  	<div style="display: inline-block; height: 35px;width: 100%" >
+					  		<div id="presentationeditRepeat" style="height: 35px">
+					  			<div class="editDivRepeat" title="Remind me"><img src="Images/remindericon.svg"></div>
+					  			<div class="editDivRepeat" title="Collaborator"><img src="Images/cc.svg"></div>
+					  			
+		<!--------------------- colorDiv Section ----------------------------------------------------------------->
+  								<color></color>
+		<!--------------------- colorDiv Section End--------------------------------------------------------->
+					  			
+					  			<div class="editDivRepeat" title="Add image"><img src="Images/img.svg"></div>
+					  			<div class="editDivRepeat" title="Archive"><img src="Images/archive.svg"></div>
+					  			<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
+					  			
+					  			<div  class="editDivRepeat"  title="Delete">
+					  				<button id="doneButton" ng-click="deleteNote(x.noteid)" style="float:right;">
+					  					<img src="Images/trash.svg">
+					  				</button>
+					  			</div>
+    						</div>
+    					</div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                </div>
+        </div><!-- /#page-content-wrapper -->
+</div><!-- /#wrapper -->
+
+<script type="text/javascript">
+$("#menu-toggle").click(function(e) {
+	console.log("inside the toggele");
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+});
+</script>
