@@ -91,13 +91,19 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
         		console.log("updated note :: "+this.note);
         		console.log("updated note :: "+this.id);
         		
+        		this.changedivColor=function(color)
+        		{
+        			this.color=color;
+        			console.log("popup color function :: "+color)
+        		}
+        		
         		this.updateNoteFunction=function(id){
         			console.log("inside updateNote functiom :: "+id);
         			$uibModalInstance.dismiss('Done');
         			var updateObj = {
         					noteid :id,
-        					title : this.title1,
-        					description :  this.note1,
+        					title : this.title,
+        					description :  this.note,
         					noteCreatedDate:this.noteCreatedDate,
         					noteEditedDate:this.noteEditedDate,
         					color:this.color,
@@ -289,7 +295,7 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	//----------select color for div view function---------------------------
 	$scope.changedivColor=function(x,color)
 	{
-		console.log("color change note id :: ",x);
+		console.log("color change note :: ",x);
 		console.log("color change note color :: ",color);
 		
 		var updateColor = {
@@ -336,9 +342,9 @@ myApp.directive('dndList', function () {
 	       //}, true);
 	       // use jquery to make the element sortable (dnd). This is called
 	       // when the element is rendered
-	       debugger;
+	      
 	       $(element[0]).sortable({
-	           items: 'div',
+	           items: 'span',
 	           start: function (event, ui) {
 	               // on start we define where the item is dragged from
 	               startIndex = ($(ui.item).index());

@@ -73,7 +73,7 @@ public class AthenticationTokenBasedLogin implements Filter
 
 		long difference = currentDate.getTime() - date.getTime();
 		long differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(difference);
-		if (differenceInSeconds > 60) // 1 min
+		if (differenceInSeconds > 60*30) // 30 min
 		{
 			// generate json error response - access token is expired
 			response.setContentType("application/json");

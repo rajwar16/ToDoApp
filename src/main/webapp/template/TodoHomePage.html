@@ -75,7 +75,7 @@
         </div>
 </nav>
 <!-- <navigationbar></navigationbar> -->
-<div id="wrapper" class="toggled" id="wrapperDiv">
+<div id="wrapper" class="toggled">
     <div class="container-fluid" id="sidebarContainerFluid">
         <!-- Sidebar -->
         <div id="sidebar-wrapper" style="background-color: #e8e8e8">
@@ -111,7 +111,7 @@
         <div id="page-content-wrapper" style="margin-top: 35px;" data-ng-blur="ShowHide1()">
             <div class="container-fluid" id="pageContainerfluid">
                 <div class="row">
-                	<div class="col-lg-3">
+                	<div class="col-lg-2">
                     </div>
                     <div class="col-lg-8" style="margin-top: 30px;">
                    		<!-- card division -->
@@ -127,7 +127,7 @@
 					  		<div id="presentationedit" style="display:inline-block;">
 					  			<div class="editDiv" title="Remind me"><img src="Images/remindericon.svg" ></div>
 					  			<div class="editDiv" title="Collaborator"><img src="Images/cc.svg" ></div>
-					  			<div class="editDiv" title="Change color"><img src="Images/colur.svg" ></div>
+					  			<color></color>
 					  			<div class="editDiv" title="Add image"><img src="Images/img.svg" ></div>
 					  			<div class="editDiv" title="Archive"><img src="Images/archive.svg" ></div>
 					  			<div class="editDiv" title="More"><img src="Images/list.png" ></div>
@@ -141,16 +141,20 @@
 					  	</div>
 					 </div>
                     </div>	
+                    <div class="col-lg-2">
+                    </div>
                 </div>
                 <br>
                 <br>
-                <div class="row" style="color:red">
+                <div class="row" style="color:red"  >
                   
                   <div  data-ng-repeat="x in records | filter:searchQuery" >
                   	<div ng-class="space3col"></div>                  
-                    <div ng-class="view_change">
+                    <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
                    <!--	<div class="col-lg-8"> -->
-                    <div class="todoNoteDiv" ng-style="{'background-color':x.color}">
+                   
+                   <span dnd-draggable="records" dnd-effect-allowed="move" dnd-selected="models.selected=records">
+                    <div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
                     	<div ng-click="open(x)">
 					 		<div id="presentationTitle" data-ng-bind-html="x.title"></div>
 					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
@@ -176,6 +180,7 @@
     						</div>
     					</div>
                     </div>
+                  </span>
                   </div>
                   </div>
                 </div>

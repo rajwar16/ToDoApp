@@ -233,6 +233,7 @@
     box-shadow: 0 2px 10px rgba(0,0,0,.2);
 }
 
+
 .profileDiv
 {
 	border-radius: 50%;
@@ -253,4 +254,9 @@
     font-weight: bold;
     font-size: 33px;
 
+}
+
+.col-lg-8 {
+    width: 67.666667%;
+    margin-left: 4%;
 }

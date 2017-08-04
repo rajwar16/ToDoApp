@@ -1,22 +1,93 @@
-	<div  ng-style="{'background-color':$ctrl.color}">
-	<div contenteditable1 contenteditable="true" placeholder="Title"  ng-bind-html="$ctrl.title" ng-model="$ctrl.title1" id="presentationTitle"></div>
-	<div contenteditable1 contenteditable="true" placeholder="Take a note..."  ng-bind-html="$ctrl.note" ng-model="$ctrl.note1" id="presentationNote"></div>
-	<div id="presentationedit" style="display:inline-block;">
-			<div class="editDiv"><img src="Images/remindericon.svg" title="reminder"></div>
-			<div class="editDiv"><img src="Images/cc.svg"></div>
-			<color></color>
-			<div class="editDiv"><img src="Images/img.svg"></div>
-			<div class="editDiv"><img src="Images/archive.svg"></div>
-			<div class="editDiv"><img src="Images/list.png"></div>
-			<div class="editDivRepeat">
-				<button id="doneButton" ng-click="$ctrl.deleteNote($ctrl.id)" style="float:right;">
-					  <img src="Images/trash.svg">
-				</button>
+
+<div ng-style="{'background-color':$ctrl.color}">
+	<div contenteditable1 contenteditable="true" placeholder="Title"
+		ng-model="$ctrl.title" ng-bind-html="$ctrl.title"
+		id="presentationTitle"></div>
+	<div contenteditable1 contenteditable="true"
+		placeholder="Take a note..." ng-model="$ctrl.note"
+		ng-bind-html="$ctrl.note" id="presentationNote"></div>
+	<div id="presentationedit" style="display: inline-block;">
+		<div class="editDiv">
+			<img src="Images/remindericon.svg" title="reminder">
+		</div>
+		<div class="editDiv">
+			<img src="Images/cc.svg">
+		</div>
+		<div class="editDiv dropdown" data-toggle="dropdown"
+			title="Change color">
+			<!-------------------- color popup div------------------- -->
+			<div class="dropdown-content">
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="white"
+						ng-click="$ctrl.changedivColor('rgb(250, 250, 250)')"
+						style="background-color: rgb(250, 250, 250);"></div>
+					<!-- <div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="Red"
+						ng-click="$ctrl.changedivColor('rgb(255, 138, 128)')"
+						style="background-color: rgb(255, 138, 128);"></div>
+					<!-- <div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="Orange"
+						ng-click="$ctrl.changedivColor('rgb(255, 209, 128)')"
+						style="background-color: rgb(255, 209, 128);"></div>
+					<!-- <div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="Yellow"
+						ng-click="$ctrl.changedivColor('rgb(255, 255, 141)')"
+						style="background-color: rgb(255, 255, 141);"></div>
+					<!-- <div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="Gray"
+						ng-click="$ctrl.changedivColor('rgb(207, 216, 220)')"
+						style="background-color: rgb(207, 216, 220);"></div>
+					<!-- <div></div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="Blue"
+						ng-click="$ctrl.changedivColor('rgb(128, 216, 255)')"
+						style="background-color: rgb(128, 216, 255);"></div>
+					<!-- <div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="Teal"
+						ng-click="$ctrl.changedivColor('rgb(167, 255, 235)')"
+						style="background-color: rgb(167, 255, 235);"></div>
+					<!-- <div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
+				<div class="colorDiv">
+					<div class="innerColorDiv" title="green"
+						ng-click="$ctrl.changedivColor('rgb(204, 255, 144)')"
+						style="background-color: rgb(204, 255, 144);"></div>
+					<!-- <div><img src="Images/colorImg/blue.svg" class="colorDivImg"></div> -->
+				</div>
 			</div>
-					  			
-			<div class="editdivButton">
-				<button id="doneButton" ng-click="$ctrl.updateNoteFunction($ctrl.id)">
-					 DONE
-				</button>
-			</div>
+			<!-- ---------------------------color popup div end ------------------->
+			<img src="Images/colur.svg">
+
+		</div>
+		<div class="editDiv">
+			<img src="Images/img.svg">
+		</div>
+		<div class="editDiv">
+			<img src="Images/archive.svg">
+		</div>
+		<div class="editDiv">
+			<img src="Images/list.png">
+		</div>
+		<div class="editDivRepeat">
+			<button id="doneButton" ng-click="$ctrl.deleteNote($ctrl.id)"
+				style="float: right;">
+				<img src="Images/trash.svg">
+			</button>
+		</div>
+
+		<div class="editdivButton">
+			<button id="doneButton" ng-click="$ctrl.updateNoteFunction($ctrl.id)">
+				DONE</button>
+		</div>
 	</div>

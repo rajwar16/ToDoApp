@@ -6,51 +6,31 @@
 
 /* Toggle Styles */
 #wrapper {
-	-webkit-transition: all 0.2s linear;
-	-moz-transition: all 0.2s linear;
-	-o-transition: all 0.2s linear;
-	transition: all 0.2s linear;
+	padding-left: 0;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
 }
 
 #wrapper.toggled {
 	padding-left: 250px;
 }
 
-#sidebar-wrapper {
-	position: fixed;
-	left: 250px;
-	z-index: 1000;
-	overflow-y: auto;
-	margin-left: -250px;
-	width: 0px;
-	height: 100%;
-	background: #000;
-	
-	-webkit-transition: all 0.2s linear;
-	-moz-transition: all 0.2s linear;
-	-o-transition: all 0.2s linear;
-	transition: all 0.2s linear;
-}
 
 #wrapper.toggled #sidebar-wrapper {
 	width: 250px;
-	background-color: red;
-	
-	-webkit-transition: all 0.2s linear;
-	-moz-transition: all 0.2s linear;
-	-o-transition: all 0.2s linear;
-	transition: all 0.2s linear;
 }
 
 #page-content-wrapper {
-	width: 80%; /*79px*/
-	margin-left: 250px;
-	position: fixed;
-    word-wrap: break-word;
+	width: 79%;
+	background-color: red;
+	border:1px solid red;
 }
+
 #wrapper.toggled #page-content-wrapper {
-	
-	margin-left: 0px; /*250px*/
+	position: absolute;
+	margin-right: -250px;
 }
 
 /* Sidebar Styles */
@@ -90,6 +70,7 @@
 	line-height: 60px;
 }
 
+
 .sidebar-nav>.sidebar-brand a {
 	color: #999999;
 }
@@ -99,6 +80,7 @@
 	color: #fff;
 }
 
+
 @media ( min-width : 768px) {
 	#wrapper {
 		padding-left: 0;
@@ -107,24 +89,19 @@
 		padding-left: 250px;
 	}
 	#sidebar-wrapper {
-		width: 0px;
+		width: 0;
 	}
 	#wrapper.toggled #sidebar-wrapper {
 		width: 250px;
-		-webkit-transition: all 0.2s linear;
-		-moz-transition: all 0.2s linear;
-		-o-transition: all 0.2s linear;
-		transition: all 0.2s linear;
 	}
 	#page-content-wrapper {
-		
+		padding: 20px;
 	}
 	#wrapper.toggled #page-content-wrapper {
 		position: relative;
-		margin-left: 30px;
-		width: 98%;
-    	word-wrap: break-word;
+		margin-right: 0;
 	}
+	
 }
 
     #navigationBar {
@@ -160,6 +137,22 @@
 	{
 		padding: 3px;	
 	}
+	
+	#sidebar-wrapper {
+	position: fixed;
+	left: 250px;
+	z-index: 1000;
+	overflow-y: auto;
+	margin-left: -250px;
+	width: 0;
+	height: 100%;
+	background: #000;
+	/* -webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease; */
+	/* transition: all 0.5s ease; */
+	visibility: visible;
+}
 	
 	
 	#searchButton
@@ -197,6 +190,16 @@
     width: 100%;
     background:red;
     }
+	
+	.col-sm-8, .col-lg-8, .col-xs-12, .col-md-5
+	{
+		position: relative;
+    	min-height: 1px;
+    	padding-right: 0px;
+    	padding-left: 0px;
+    	background-color: red;
+	}
+	
 	
 	html, body{
 	background-color: #e8e8e8;
