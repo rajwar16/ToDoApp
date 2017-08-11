@@ -52,9 +52,14 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
     //list view and gridview image hide and show
     $scope.gridviewImg=false;
     $scope.listviewImg=true;
-    $scope.space3col="";
-    $scope.view_change="col-lg-4 col-sm-9 col-md-4 col-xs-12";
     
+    $scope.space3col="";
+    $scope.colLg2="13.666667%";
+    $scope.colLg4="31.3333%";
+    $scope.view_change="col-lg-4 col-sm-9 col-md-4 col-xs-12";
+   /* $scope.space3col="";
+    $scope.view_change="col-lg-4 col-sm-9 col-md-4 col-xs-12";
+    */
     
 	$scope.pinupHtml=true;
    	$scope.viewHtml=true;
@@ -432,6 +437,8 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 		$scope.gridviewImg=false;
 	    $scope.listviewImg=true;
 	    $scope.space3col="";
+	    $scope.colLg2="13.666667%";
+	    $scope.colLg4="31.3333%";
 	    $scope.view_change="col-lg-4 col-sm-9 col-md-4 col-xs-12";
 	};
 	
@@ -444,6 +451,8 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	    $scope.listviewImg=false;
 	    
 	    $scope.space3col="col-lg-2";
+	    $scope.colLg2="4.333333%";
+	    $scope.colLg4="";
 	    $scope.view_change = "col-sm-8 col-lg-8 col-xs-12 col-md-5";
 	};
 	
@@ -581,6 +590,10 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 		if(x.pin=='true')
 		{
 			$scope.pinup=true;
+		}
+		if(x.isArchive=='true')
+		{
+			$scope.isArchive=true;
 		}
 		
 		$scope.color=color;

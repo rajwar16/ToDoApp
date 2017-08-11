@@ -80,7 +80,7 @@ $grid.find('.grid-item').each( function( i, gridItem ) {
   	<div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" >
   	<div ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false'" >
                 <div ng-class="space3col"></div>                  
-                <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
+                <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px;" ng-style="{'width':colLg4}">
                    		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
                     		<div id="pinDiv" ng-click="isPin(x,'true')">
 									<img src="Images/pin.svg" style="height: 20px; width: 20px">

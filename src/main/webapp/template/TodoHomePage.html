@@ -30,8 +30,8 @@
 					<a id="viewOntoggle">
 					<!-- <img id="list" ng-style="list" ng-click="list_view()" src="image/list.svg"> </img>
                     <img id="grid" ng-style="grid" ng-click="grid_view()" src="image/grid.svg"></img> -->
-						<span aria-hidden="true" ng-hide="gridviewImg"><img id="gridview" ng-style="gridview"  ng-click="gridview()" src="Images/navigationBarImages/grid.svg" alt="grid"></span>
-						<span aria-hidden="true" ng-hide="listviewImg"><img id="listview" ng-style="listview"  ng-click="listview()" src="Images/list.svg" alt="list"></span>
+						<span aria-hidden="true" ng-hide="gridviewImg"><img id="gridview" ng-style="gridview"  ng-click="gridview()" src="Images/list.svg" alt="grid"></span>
+						<span aria-hidden="true" ng-hide="listviewImg"><img id="listview" ng-style="listview"  ng-click="listview()" src="Images/navigationBarImages/grid.svg"  alt="list"></span>
 					</a>
 				</li>
              	<li><a href="#"><span aria-hidden="true"><img src="Images/navigationBarImages/notification.png" alt="notification"></span></a></li>
@@ -160,7 +160,7 @@
                    			<div ng-include="'template/view.html'"></div>
                   		</div>
                   </div> -->
-                  <div class="col-lg-1" style="width: 5.333333%;"></div>
+                  <div class="col-lg-2" ng-style="{'width':colLg2}"></div>
                   <div class="col-lg-10" style="padding-right: 0px;padding-left: 0px;">
                   	<div ng-show="pinupHtml" ng-include="'template/pinup.html'"></div>
                   	<div ng-show="viewHtml" ng-include="'template/view.html'"></div>
