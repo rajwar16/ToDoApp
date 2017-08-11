@@ -80,7 +80,7 @@
 			<img src="Images/list.png">
 		</div>
 		<div class="editDivRepeat">
-			<button id="doneButton" ng-click="$ctrl.deleteNote($ctrl.id)"
+			<button id="doneButton" ng-click="$ctrl.deleteNote($ctrl,'true')"
 				style="float: right;">
 				<img src="Images/trash.svg">
 			</button>
@@ -88,6 +88,7 @@
 
 		<div class="editdivButton">
 			<button id="doneButton" ng-click="$ctrl.updateNoteFunction($ctrl.id)">
-				DONE</button>
+				DONE
+			</button>
 		</div>
 	</div>

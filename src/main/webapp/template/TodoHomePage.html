@@ -54,19 +54,7 @@
                 		</div>
                 	</div>
                 </li>
-                
-                
-                
-               <!--  <li class="dropdown" >
-                  <a class="dropdown-toggle" data-toggle="dropdown" >
-                    trkhykthkyrtyht
-                  </a>
-                     <ul class="dropdown-menu">
-      					<li><a href="#">HTML</a></li>
-      					<li><a href="#">CSS</a></li>
-      					<li><a href="#">JavaScript</a></li>
-    				</ul>
-               	</li> -->
+             
                 
                <!--  <li><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Log Out</a></li> -->
             </ul>
@@ -85,7 +73,7 @@
                 </li>
                <br>
                 <li>
-                    <a href="#"><img style="height: 24px;width: 24px ;margin-right: 35px;" src="Images/noteicon.png"> Note</a>
+                    <a ui-sref="ToDoHomePage"><img style="height: 24px;width: 24px ;margin-right: 35px;" src="Images/noteicon.png"> Note</a>
                 </li>
                 <br>
                  <li>
@@ -95,11 +83,11 @@
                 <hr style="height: 1px;color:red;background-color: black">
                                 
                 <li>
-                    <a href="#"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/archive.svg"> Archive</a>
+                    <a ui-sref="archive"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/archive.svg"> Archive</a>
                 </li>
                 <br>
                 <li>
-                    <a href="#"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/trash.svg">Trash</a>
+                    <a ui-sref="trash"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/trash.svg">Trash</a>
                 </li>
              
             </ul>
@@ -110,26 +98,45 @@
         <!-- Page Content -->
         <div id="page-content-wrapper" style="margin-top: 35px;" data-ng-blur="ShowHide1()">
             <div class="container-fluid" id="pageContainerfluid">
-                <div class="row">
+                <div class="row" ng-show="createEditableNote">
                 	<div class="col-lg-2">
                     </div>
-                    <div class="col-lg-8" style="margin-top: 30px;">
+                    <div class="col-lg-8" style="margin-top: 30px;padding-right: 0px;padding-left: 0px">
                    		<!-- card division -->
                       	<div contenteditable1 contenteditable="true" class="presentation"  data-ng-show = "IsVisible1" data-placeholder="Take a note..." data-ng-click="ShowHide()" id="initialTitle"><div class="presentationDiv"><img style="height: 24px;width: 24px" src="Images/pen.svg"></div><div class="presentationDiv"><img style="height: 24px;width: 24px" src="Images/List_menu.png"></div><div class="presentationDiv"><img style="height: 24px;width: 24px" src="Images/img.svg"></div></div>
 					  	
 					  	<!-- /card division  -->
 					  	
 					  	<!--this is editable division, this division will show when click card division -->
-					  	<div data-ng-show="IsVisible" class="presentation1">
+					  	<div data-ng-show="IsVisible" ng-style="{'background-color':createColor}" class="presentation1">
+					  		<div ng-show="pinImg" id="pinDiv1" ng-click="createPinup('true')"><img src="Images/pin.svg" style="height: 20px;width:20px" ></div>
+					  		<div ng-show="unpinImg" id="pinDiv1" ng-click="createPinup('true')"><img src="Images/colorPin.svg" style="height: 20px;width:20px" ></div>
 					 		<div contenteditable1 contenteditable="true" placeholder="Title" data-ng-model="title"  id="presentationTitle"></div>
 					  		<div  contenteditable1 contenteditable="true" placeholder="Take a note..." data-ng-model="note" id="presentationNote"></div>
 					  		
 					  		<div id="presentationedit" style="display:inline-block;">
-					  			<div class="editDiv" title="Remind me"><img src="Images/remindericon.svg" ></div>
+					  		
+					  			<!--------- reminder div ------------->	
+					  			<div class="dropdown-toggle editDiv" data-toggle="dropdown" title="Remind me">
+					  				<img src="Images/remindericon.svg" >
+					  			</div>
+					  		
+                				<div class="dropdown-menu" style="width: 44%;height: 183%;position: absolute;top: 93%;left: 3px;">
+                					<div style="height: 46px;width: 300px;font-size: 14px;padding: 15px;font-family: 'Roboto',arial,sans-serif;">Reminder:</div>
+                					<div style="height: 35px;width: 300px;background-color: yellow;">
+                						<input ng-model="date2" datetime-picker date-format="yyyy-MM-dd" date-only /> 
+                					</div>
+                					<div style="height: 35px;width: 300px;background-color: red;"></div>
+                					<div style="height: 35px;width: 300px;background-color: yellow;"></div>
+                					<div style="height: 35px;width: 300px;background-color: red;"></div>
+                					<div style="height: 35px;width: 300px;background-color: yellow;"></div>
+                				</div>
+					  			<!--------- reminder div ------------->	
 					  			<div class="editDiv" title="Collaborator"><img src="Images/cc.svg" ></div>
-					  			<color></color>
+					  			<div class="editDiv" title="Collaborator" style="padding: 6px 0px 0px 0px;"><color ></color></div>
+					  			
 					  			<div class="editDiv" title="Add image"><img src="Images/img.svg" ></div>
-					  			<div class="editDiv" title="Archive"><img src="Images/archive.svg" ></div>
+					  			<div class="editDiv" title="Archive" ng-click="createArchive('true')"><img src="Images/archive.svg" ></div>
 					  			<div class="editDiv" title="More"><img src="Images/list.png" ></div>
 					  			
 					  			<div class="editdivButton">
@@ -147,41 +154,18 @@
                 <br>
                 <br>
                 <div class="row" style="color:red"  >
-                  
-                  <div  data-ng-repeat="x in records | filter:searchQuery" >
-                  	<div ng-class="space3col"></div>                  
-                    <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
-                   <!--	<div class="col-lg-8"> -->
-                   
-                   <span dnd-draggable="records" dnd-effect-allowed="move" dnd-selected="models.selected=records">
-                    <div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
-                    	<div ng-click="open(x)">
-					 		<div id="presentationTitle" data-ng-bind-html="x.title"></div>
-					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
-					  	</div>
-					  	<div style="display: inline-block; height: 35px;width: 100%" >
-					  		<div id="presentationeditRepeat" style="height: 35px">
-					  			<div class="editDivRepeat" title="Remind me"><img src="Images/remindericon.svg"></div>
-					  			<div class="editDivRepeat" title="Collaborator"><img src="Images/cc.svg"></div>
-					  			
-		<!--------------------- colorDiv Section ----------------------------------------------------------------->
-  								<color></color>
-		<!--------------------- colorDiv Section End--------------------------------------------------------->
-					  			
-					  			<div class="editDivRepeat" title="Add image"><img src="Images/img.svg"></div>
-					  			<div class="editDivRepeat" title="Archive"><img src="Images/archive.svg"></div>
-					  			<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
-					  			
-					  			<div  class="editDivRepeat"  title="Delete">
-					  				<button id="doneButton" ng-click="deleteNote(x.noteid)" style="float:right;">
-					  					<img src="Images/trash.svg">
-					  				</button>
-					  			</div>
-    						</div>
-    					</div>
-                    </div>
-                  </span>
-                  </div>
+                 <!--  <div  data-ng-repeat="x in records | filter:searchQuery" >
+                  		<div ng-class="space3col"></div>                  
+                    	<div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
+                   			<div ng-include="'template/view.html'"></div>
+                  		</div>
+                  </div> -->
+                  <div class="col-lg-1"></div>
+                  <div class="col-lg-10" style="padding-right: 0px;padding-left: 0px;">
+                  	<div ng-show="pinupHtml" ng-include="'template/pinup.html'"></div>
+                  	<div ng-show="viewHtml" ng-include="'template/view.html'"></div>
+                  	<div ng-show="trashHtml" ng-include="'template/trash.html'"></div>
+                  	<div ng-show="archiveHtml" ng-include="'template/archive.html'"></div>
                   </div>
                 </div>
                 </div>

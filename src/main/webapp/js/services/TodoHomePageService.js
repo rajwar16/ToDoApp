@@ -3,6 +3,7 @@ myApp.service('TodoHomePageService', function($http) {
 	console.log("local storage accesstoken :: ",localStorage.getItem("accessToken"));
 	
     this.createNote = function (createNoteObject) {
+    	console.log("create note object :: ",createNoteObject);
         return  $http({
             method : "POST",
             url : "http://localhost:8080/TodoApp/CreateToDoNote",

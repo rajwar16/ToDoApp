@@ -1,0 +1,37 @@
+<div class="row">
+<div style="margin-left:16%">	
+	<div id="trashWord">Notes in Trash are deleted after 7 days.</div> 
+	<div id="trashEmpty">EMPTY TRASH NOW</div>
+</div>
+</div>
+<div class="row" ui-sortable="sortableOptions" ng-model="records">
+  <div  data-ng-repeat="x in records | filter:searchQuery as results track by $index">
+  <div ng-if="x.isDelete=='true'">
+                  		<div ng-class="space3col"></div>                  
+                    	<div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
+                   		
+                   		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
+                    	
+                    	
+					 		<div id="presentationTitle"data-ng-bind-html="x.title"></div>
+					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
+					  	
+					  		<div style="display: inline-block; height: 35px;width: 100%" >
+					  		<div id="presentationeditRepeat" style="height: 35px">
+					  		
+								<div class="editDivRepeat" ng-click="deleteNote(x,'false')" title="More">restore</div>					  		
+					  			<div  class="editDivRepeat"  title="Delete">
+					  				<button id="doneButton" ng-click="deletePermanent(x.noteid)" style="float:right;">
+					  					<img src="Images/trash.svg">
+					  				</button>
+					  			</div>
+    						</div>
+    					</div>
+                    </div>
+                    </div>
+                    </div>
+                   	
+                  		</div>
+                  </div> 
+                    
+

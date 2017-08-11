@@ -28,8 +28,11 @@ public class ToDoNotes implements Serializable
 	private Date noteCreatedDate;
 	private Date noteEditedDate;
 	private String color;
-	
-	
+	private String pin;
+	private String isDelete;
+	private String isArchive;
+
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id")
 	
@@ -91,14 +94,38 @@ public class ToDoNotes implements Serializable
 	public void setNoteEditedDate(Date noteEditedDate) {
 		this.noteEditedDate = noteEditedDate;
 	}
+	
+
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+	
+	public String getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(String isDelete) {
+		this.isDelete = isDelete;
+	}
+	
+	public String getIsArchive() {
+		return isArchive;
+	}
+
+	public void setIsArchive(String isArchive) {
+		this.isArchive = isArchive;
+	}
 
 	@Override
 	public String toString() {
 		return "ToDoNotes [noteid=" + noteid + ", title=" + title + ", description=" + description
 				+ ", noteCreatedDate=" + noteCreatedDate + ", noteEditedDate=" + noteEditedDate + ", color=" + color
-				+ ", user=" + user + "]";
+				+ ", pin=" + pin + ", isDelete=" + isDelete + ", isArchive=" + isArchive + ", user=" + user + "]";
 	}
 
-	
 	
 }

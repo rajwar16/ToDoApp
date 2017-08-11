@@ -1,0 +1,110 @@
+<!-- <div class="row" style="margin-top: 65px; ">
+
+	<div id="pinWord" style="margin-bottom: 4%">Others</div>
+		<div ng-class="space3col"></div>	
+	<div  ng-class="view_change" style="background-color: red">
+		<!-- <div ui-sortable ng-model="records">
+			<div data-ng-repeat="x in records | filter:searchQuery" testpackery id="todoNote"> 
+				<div ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false'" >
+						<div ng-class="space3col"></div>
+						<div ng-class="view_change" style="padding-right: 0px; padding-left: 0px;background-color: yellow;">
+						<div ng-style="{'background-color':x.color}">
+								<div id="pinDiv" ng-click="isPin(x,'true')">
+									<img src="Images/pin.svg" style="height: 20px; width: 20px">
+								</div>
+							<div ng-click="open(x)">
+								<div id="presentationTitle" data-ng-bind-html="x.title"></div>
+								<div id="presentationNote" data-ng-bind-html="x.description"></div>
+							</div>
+							<div style="display: inline-block; height: 35px; width: 100%">
+								<div id="presentationeditRepeat" style="height: 35px">
+									<div class="editDivRepeat" title="Remind me">
+										<img src="Images/remindericon.svg">
+									</div>
+									<div class="editDivRepeat" title="Collaborator">
+										<img src="Images/cc.svg">
+									</div>
+								------------------- colorDiv Section ---------------------------------------------------------------
+									<color></color>
+								------------------- colorDiv Section End-------------------------------------------------------
+									<div class="editDivRepeat" title="Add image">
+										<img src="Images/img.svg">
+									</div>
+									<div class="editDivRepeat" title="Archive"
+										ng-click="isarchive(x,'true')">
+										<img src="Images/archive.svg">
+									</div>
+									<div class="editDivRepeat" title="More">
+										<img src="Images/list.png">
+									</div>
+
+									<div class="editDivRepeat" title="Delete">
+										<button id="doneButton" ng-click="deleteNote(x,'true')"
+											style="float: right;">
+											<img src="Images/trash.svg">
+										</button>
+									</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+</div> -->
+
+
+<!--****************************************************************************************************************** / -->
+<!-- </div> -->
+<!-- <script>                  
+var $grid = $('.grid').packery({
+  itemSelector: '.grid-item',
+  columnWidth: 100
+});
+
+// make all grid-items draggable
+$grid.find('.grid-item').each( function( i, gridItem ) {
+  var draggie = new Draggabilly( gridItem );
+  // bind drag events to Packery
+  $grid.packery( 'bindDraggabillyEvents', draggie );
+});                    
+</script> -->
+
+<!--****************************************************************************************************************** / -->
+<div class="row">
+<div id="pinWord" style="margin-bottom: 4%;margin-top: 2%;">Others</div>
+  <div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" >
+  	<div ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false'" >
+                <div ng-class="space3col"></div>                  
+                 <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
+                   		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
+                    		<div id="pinDiv" ng-click="isPin(x,'true')">
+									<img src="Images/pin.svg" style="height: 20px; width: 20px">
+								</div>
+                    		<div ng-click="open(x)">
+					 			<div id="presentationTitle"data-ng-bind-html="x.title"></div>
+					  			<div id="presentationNote" data-ng-bind-html="x.description"></div>
+					  		</div>
+					  		<div style="display: inline-block; height: 35px;width: 100%" >
+					  			<div id="presentationeditRepeat" style="height: 35px">
+					  				<div class="editDivRepeat" title="Remind me"><img src="Images/remindericon.svg"></div>
+					  				<div class="editDivRepeat" title="Collaborator"><img src="Images/cc.svg"></div>
+			<!--------------------- colorDiv Section----------------------------------------------------------------->
+  									<color></color>
+			<!--------------------- colorDiv Section End--------------------------------------------------------->
+					  				<div class="editDivRepeat" title="Add image"><img src="Images/img.svg"></div>
+					  				<div class="editDivRepeat" title="Archive" ng-click="isarchive(x,'true')"><img src="Images/archive.svg"></div>
+					  				<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
+					  				<div  class="editDivRepeat"  title="Delete">
+					  					<button id="doneButton" ng-click="deleteNote(x,'true')" style="float:right;">
+					  						<img src="Images/trash.svg">
+					  					</button>
+					  				</div>
+    							</div>
+    						</div>
+                    	</div>
+                    </div>
+                    </div>
+                 </div>
+               </div> 
+                    
+

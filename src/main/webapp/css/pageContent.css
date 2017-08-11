@@ -69,7 +69,7 @@
   margin-top: 1px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); 
   transition: all 0.3s; 
-  border-radius: 3px;
+  /* border-radius: 3px; */
   display: inline-block;
 }
 
@@ -101,13 +101,14 @@
   margin-top: 10px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); 
   transition: all 0.3s; 
-  border-radius: 3px;
+  /* border-radius: 3px; */
 }
 
 #presentationTitle{
-  width: 100%;
-/*   height: 120px; */
-  padding: 11px;
+  width: 100%
+	/*   height: 120px; */
+	
+  /* padding: 11px; */
   background: transparent;
   color:black;
   font-family: 'Roboto Condensed',arial,sans-serif;
@@ -115,6 +116,7 @@
   font-weight: bold;
   font-size: 18px;
   transition: all 0.3s; 
+  padding: 11px;
 }
 #presentationTitle[contenteditable=true]:empty:before {
   content: attr(placeholder);
@@ -186,17 +188,50 @@
     font-family: 'Roboto',arial,sans-serif;
 }
 
-
 .todoNoteDiv{
-  width: 85%;
-/*   height: 120px; */
-/*   padding: 20px;*/  
- /*  margin: auto; */
+      width: 94%;
+  /*  height: 120px; 
+  padding: 20px;  
+  margin: auto;  */
   background: #FFF;
   margin-top: 10px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   transition: all 0.3s; 
   border-radius: 3px;
+}
+
+/* .todoNoteDiv1{
+	 width: 95%;
+  height: 120px;
+  padding: 20px;  
+  margin: auto;
+  background: #FFF;
+  margin-top: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition: all 0.3s; 
+  border-radius: 3px;
+} */
+
+#pinDiv1
+{
+	float: right;
+	height: 6%;
+	width: 14%;
+	    padding: 10px 0px 0px 54px;
+}
+
+#pinDiv
+{
+	float: right;
+	height: 6%;
+	width: 14%;
+	padding: 5px 0px 0px 14px;
+	display : none;
+}
+
+.todoNoteDiv:hover #pinDiv
+{
+	 display : block;
 }
 
 .todoNoteDiv:hover #presentationeditRepeat{
@@ -227,7 +262,7 @@
     
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    border-radius: 4px;
+    /* border-radius: 4px; */
    
     -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.2);
     box-shadow: 0 2px 10px rgba(0,0,0,.2);
@@ -255,6 +290,56 @@
     font-size: 33px;
 
 }
+
+#pinWord
+{
+	color: rgba(0,0,0,.54);
+    font-family: 'Roboto',arial,sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 3%;
+}
+
+#trashWord
+{
+	cursor: default;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: rgba(0,0,0,.87);
+    font-family: 'Roboto',arial,sans-serif;
+     float: left;
+    
+}
+#trashEmpty
+{
+	font-size: 14px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-weight: bold;
+    padding: 5px 14px;
+    text-transform: uppercase;
+    color: #4081f5;
+    float: left;
+}
+
+#toast-container{
+   background-color:black;
+}
+
+.toast-success{
+   	background-color: black;
+    height: 46px;
+    width: 184%;
+}
+
+/* .col-lg-4 {
+    width: 31.333333%;
+    background-color: transparent;
+    margin-left: 2%;
+} */
 
 .col-lg-8 {
     width: 67.666667%;

@@ -6,10 +6,10 @@
 
 /* Toggle Styles */
 #wrapper {
-	-webkit-transition: all 0.2s linear;
-	-moz-transition: all 0.2s linear;
-	-o-transition: all 0.2s linear;
-	transition: all 0.2s linear;
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
 }
 
 #wrapper.toggled {
@@ -47,6 +47,8 @@
 	margin-left: 250px;
 	position: fixed;
     word-wrap: break-word;
+    
+    
 }
 #wrapper.toggled #page-content-wrapper {
 	

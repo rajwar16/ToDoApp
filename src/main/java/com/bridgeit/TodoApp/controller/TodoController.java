@@ -52,7 +52,8 @@ public class TodoController {
 		
 		boolean createNote=false;
 		List<ToDoNotes> todoNoteslist;
-		System.out.println("updated data :::::: :::::::: ::::::"+toDoNotes);
+		System.out.println("isdelted :::::: :::::::: ::::::"+toDoNotes.getIsDelete());
+		System.out.println("ispin :::::: :::::::: ::::::"+toDoNotes.getPin());
 		System.out.println("pooja");
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
@@ -136,7 +137,7 @@ public class TodoController {
 		return new ResponseEntity<ToDoNotesResponse>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
-	/*-------------------ToDoNote Update/{id}------------------*/
+	/*-------------------ToDoNote Update------------------*/
 	/**
 	 * 3) this controller method update the todoNote inside the `ToDoGoogleKeep` database of `User` table
 	 * @param toDoNotes {@link ToDoNotes}
@@ -148,6 +149,7 @@ public class TodoController {
 	@RequestMapping(value="ToDoNoteUpdate", method=RequestMethod.PUT)
 	public ResponseEntity<Response> updateToDoNotes(@RequestBody ToDoNotes toDoNotes,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
 	{
+		System.out.println("is pin valuesssssss :::::   ");
 		boolean updateNote=false;
 		List<ToDoNotes> toDoNotesList=null;
 		System.out.println("comming from services :: "+toDoNotes);

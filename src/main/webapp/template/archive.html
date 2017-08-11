@@ -1,0 +1,47 @@
+<div class="row">
+
+  <div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" >
+  <div ng-if="x.isArchive=='true'">
+                  		<div ng-class="space3col"></div>                  
+                    	<div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
+                   		
+                   			<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
+                    	
+                    	<div id="pinDiv" ng-click="isPin(x,'true')"><img src="Images/pin.svg" style="height: 20px;width:20px" ></div>
+                    	<div ng-click="open(x)">
+					 		<div id="presentationTitle"data-ng-bind-html="x.title"></div>
+					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
+					  	</div>
+					  	<div style="display: inline-block; height: 35px;width: 100%" >
+					  		<div id="presentationeditRepeat" style="height: 35px">
+					  		
+						<!--------- reminder div ------------->					  		
+					  			<div class="dropdown-toggle editDiv" style="padding: 0px 7px;top: 93%;left:4px;" data-toggle="dropdown" title="Remind me">
+					  				<img src="Images/remindericon.svg" >
+					  			</div>
+					  		
+                				<div class="dropdown-menu" style="padding:20px;width: 44%;height: 183%;position: absolute;top: 93%;left: 3px;">
+                				</div>
+					  	<!-- reminder div -->
+					  			<div class="editDivRepeat" title="Collaborator"><img src="Images/cc.svg"></div>
+						<!------------ colorDiv Section -------------------------------->
+  								<color></color>
+						<!----------- colorDiv Section End--------------------------------------------------------->
+					  			<div class="editDivRepeat" title="Add image"><img src="Images/img.svg"></div>
+					  			<div class="editDivRepeat" title="Archive" ng-click="isarchive(x,'false')"><img src="Images/archive.svg"></div>
+					  			<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
+					  			
+					  			<div  class="editDivRepeat"  title="Delete">
+					  				<button id="doneButton" ng-click="deleteNote(x,'true')" style="float:right;">
+					  					<img src="Images/trash.svg">
+					  				</button>
+					  			</div>
+    						</div>
+    					</div>
+                    </div>
+                    </div>
+                    </div>
+                  		</div>
+                  </div> 
+                    
+ 

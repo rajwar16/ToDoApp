@@ -1,4 +1,4 @@
-var myApp = angular.module('todo', [ 'ui.router','ngSanitize','ui.bootstrap']);
+var myApp = angular.module('todo', [ 'ui.router','ngSanitize','ui.bootstrap','ui','ui.sortable']);
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
 	console.log("login router ");
@@ -15,6 +15,14 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		url : "/ToDoHomePage",
 		templateUrl : "template/TodoHomePage.html",
 		controller : "showDivision"
+	}).state("trash", {
+		url : "/trash",
+		templateUrl : "template/TodoHomePage.html",
+		controller : "trashController"
+	}).state("archive", {
+		url : "/archive",
+		templateUrl : "template/TodoHomePage.html",
+		controller : "archiveController"
 	}).state("getrefreshToken", {
 		url : "/getrefreshToken",
 		/*controller : "TodoHomePageController"*/
