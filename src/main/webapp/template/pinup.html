@@ -1,5 +1,11 @@
 <div class="row">
-<div id="pinWord">Pinned</div>
+	<div ng-class="space3col"></div>                  
+    <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
+		<div id="pinWord" style="margin-bottom: 4%;margin-top: 2%;">Pinned</div>
+	</div>
+</div>	
+
+<div class="row">
   <div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" >
   	<div ng-if="x.pin=='true'">
                 <div ng-class="space3col"></div>                  
