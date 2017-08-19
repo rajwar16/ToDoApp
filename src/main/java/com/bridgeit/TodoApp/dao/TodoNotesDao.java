@@ -10,7 +10,7 @@ public interface TodoNotesDao
 
 	List<ToDoNotes> getNotesList(long userId);
 
-	ToDoNotes getNotesById(long noteId);
+	ToDoNotes getNotesById(long noteId,long userId);
 
 	List<ToDoNotes> getNotesByTitle(String noteTitle, long userId);
 

@@ -1,13 +1,19 @@
 package com.bridgeit.TodoApp.model;
 
 import java.io.Serializable;
+import java.sql.Blob;
+import java.util.Arrays;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,6 +29,11 @@ public class User implements Serializable
 	private String password;
 	private String mobileNo;
 	private String email;
+	private String facebookProfile; 
+	
+/*	@Lob
+    @Column(name="Profile_IMAGE", nullable=false, columnDefinition="mediumblob")
+    private byte[] profileImage;*/
 	
 	public long getId() {
 		return id;
@@ -55,12 +66,27 @@ public class User implements Serializable
 		this.email = email;
 	}
 	
+
+	/*public byte[] getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(byte[] profileImage) {
+		this.profileImage = profileImage;
+	}*/
+	public String getFacebookProfile() {
+		return facebookProfile;
+	}
+	public void setFacebookProfile(String facebookProfile) {
+		this.facebookProfile = facebookProfile;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", mobileNo=" + mobileNo
-				+ ", email=" + email + "]";
+				+ ", email=" + email + ", facebookProfile=" + facebookProfile + "]";
 	}
 	
 	
-
-}
+	
+	
+	
+}	

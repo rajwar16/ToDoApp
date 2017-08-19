@@ -33,6 +33,7 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 
 
 
@@ -44,11 +45,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-animate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
-<script type="text/javascript" src="bower_components/angular-drag-and-drop-lists.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/2.1.0/angular-drag-and-drop-lists.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.17.1/sortable.min.js"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-sanitize.js"></script>
@@ -85,6 +86,9 @@
 <script type="text/javascript" src="js/controller/TodoHomePageController.js"></script>
 <script type="text/javascript" src="js/services/TodoHomePageService.js"></script>
 <script type="text/javascript" src="js/directives/dragDropPackery.js"></script>
+<script type="text/javascript" src="js/controller/profilePicController.js"></script>
+<script type="text/javascript" src="js/services/profilePicService.js"></script>
+<script type="text/javascript" src="js/controller/facebookLoginController.js"></script>
 
 
 

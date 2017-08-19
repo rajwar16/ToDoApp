@@ -12,15 +12,16 @@
                    		
                    		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
                     	
-                    	
 					 		<div id="presentationTitle"data-ng-bind-html="x.title"></div>
 					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
 					  	
 					  		<div style="display: inline-block; height: 35px;width: 100%" >
 					  		<div id="presentationeditRepeat" style="height: 35px">
 					  		
-								<div class="editDivRepeat" ng-click="deleteNote(x,'false')" title="More">restore</div>					  		
-					  			<div  class="editDivRepeat"  title="Delete">
+								<div class="editDivRepeat" style="margin: 0px 9px;" ng-click="deleteNote(x,'false')" title="More">
+									<img src="Images/navigationBarImages/refresh.svg">
+								</div>					  		
+					  			<div  class="editDivRepeat" style="margin: 0px 9px;"  title="Delete">
 					  				<button id="doneButton" ng-click="deletePermanent(x.noteid)" style="float:right;">
 					  					<img src="Images/trash.svg">
 					  				</button>

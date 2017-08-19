@@ -78,7 +78,7 @@ public class UserController
 		
 		try
 		{
-			userRegistered=(Boolean) userServices.addUserRegister(user);
+			userRegistered=(Boolean) userServices.addUserRegister(user,"mannual");
 		}
 		
 		catch (Exception e) {
@@ -124,7 +124,7 @@ public class UserController
 		userRegistration.setId(userId);
 		
 		try {
-			update=(Boolean) userServices.addUserRegister(userRegistration);
+			update=(Boolean) userServices.addUserRegister(userRegistration,"mannual");
 			System.out.println("updated value :: "+update);
 		} 
 		catch (Exception e) {

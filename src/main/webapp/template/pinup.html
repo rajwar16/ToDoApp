@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-show="pinShow">
 	<div ng-class="space3col"></div>                  
     <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
 		<div id="pinWord" style="margin-bottom: 4%;margin-top: 2%;">Pinned</div>
@@ -11,7 +11,7 @@
                 <div ng-class="space3col"></div>                  
                  <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px;" ng-style="{'width':colLg4}">
                    		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
-                    		<div id="pinDiv" ng-click="isPin(x,'false')" style="display: block"><img src="Images/colorPin.svg" style="height: 20px;width:20px;"></div>
+                    		<div id="pinDiv"  ng-click="isPin(x,'false')" style="display: block"><img src="Images/colorPin.svg" title="unpin" style="height: 20px;width:20px;"></div>
                     		<div ng-click="open(x)">
 					 			<div id="presentationTitle"data-ng-bind-html="x.title"></div>
 					  			<div id="presentationNote" data-ng-bind-html="x.description"></div>
@@ -37,6 +37,7 @@
                     </div>
                     </div>
                  </div>
+                 <p><p>
                </div> 
                     
 

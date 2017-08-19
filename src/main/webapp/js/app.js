@@ -1,4 +1,4 @@
-var myApp = angular.module('todo', [ 'ui.router','ngSanitize','ui.bootstrap','ui','ui.sortable']);
+var myApp = angular.module('todo', [ 'ui.router','ngSanitize','ui.bootstrap','ui','ui.sortable','dndLists']);
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
 	console.log("login router ");
@@ -7,6 +7,9 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		url : "/login",
 		templateUrl : "template/userLogin.html",
 		controller : "loginController"
+	}).state("facebookLogin1", {
+		url : "/facebookLogin1",
+		controller : "facebookLoginController"
 	}).state("register", {
 		url : "/register",
 		templateUrl : "template/UserRegistration.html",

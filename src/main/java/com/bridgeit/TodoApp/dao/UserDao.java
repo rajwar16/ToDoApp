@@ -9,7 +9,7 @@ import com.bridgeit.TodoApp.model.UserRegistration;
 
 public interface UserDao 
 {
-	Object addUserRegister(User userRegistration) throws NoSuchAlgorithmException, InvalidKeySpecException;
+	Object addUserRegister(User userRegistration, String string) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
 	User loginUser(String emailId, String password) throws NoSuchAlgorithmException, InvalidKeySpecException;
 

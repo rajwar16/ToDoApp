@@ -1,5 +1,6 @@
 myApp.controller( 'loginController',function($scope, $state,loginService)
 {
+	console.log("inside the loginController");
 	$scope.loginController=function() {
 		console.log("inside the login controller function...gbbbbbbbbbbbbb");
 		console.log($scope.userName);
@@ -31,6 +32,29 @@ myApp.controller( 'loginController',function($scope, $state,loginService)
 		});
 
 	}
+	
+	
+	$scope.facebookLoginController=function() {
+		console.log("inside the lfacebookLoginController function....");
+		
+		var result=loginService.facebookLogin().then(function(data){
+			if(data.data.status==200)
+			{
+				console.log("facebook login sucessfully status 200..");
+				localStorage.setItem("accessToken",data.data.accessToken);
+				$state.go("ToDoHomePage");
+			}
+			
+			else
+			{
+				console.log("invalid credintial..");
+				$state.go("login");
+			}
+		});
+
+	}
+	
+	
 	/*
 	$scope.isSignIn = function () 
 	{

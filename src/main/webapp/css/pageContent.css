@@ -7,8 +7,10 @@
 }
 
 .modal-content {
-    margin-top: 33%;
+    margin-top: 25%;
 }
+
+    
 
 .editDiv
 {
@@ -35,8 +37,8 @@
 	width:34px;
 	/* border:1px solid red; */
 	float:left;
-	margin: 0px 2px;
-    padding: 0px 7px;
+	margin: 0px 1px;
+    padding: 0px 12px;
 }
 
 .editDivRepeatColor
@@ -45,8 +47,8 @@
 	width:34px;
 	/* border:1px solid red; */
 	float:left;
-	margin: 0px 2px;
-    padding: 0px 7px;
+	margin: 0px 1px;
+    padding: 0px 12px;
 }
 
 .editDivRepeatColor:hover #showColorPopup
@@ -160,7 +162,7 @@
 
 #presentationeditRepeat
 {
-	width: 100%;
+	 width: 104%;
 	/*   height: 120px; */
   	background: transparent;
    	transition: all 0.3s; 
@@ -169,8 +171,8 @@
 
 
 .presentation:hover{
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  transition: all 0.3s;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
+  transition: all 0.2s;
   transform: translateZ(10px);
 }
 
@@ -200,17 +202,32 @@
   border-radius: 3px;
 }
 
-/* .todoNoteDiv1{
-	 width: 95%;
-  height: 120px;
+.todoNoteDiv1:hover{
+  	box-shadow: 0 6px 20px rgba(0,0,0,0.25), 0 4px 6px rgba(0,0,0,0.22);
+    transition: all 0.2s;
+    transform: translateZ(6px);
+}
+
+.todoNoteDiv1{
+  /*     width: 94%; */
+  /*  height: 120px; 
   padding: 20px;  
-  margin: auto;
+  margin: auto;  */
   background: #FFF;
-  margin-top: 10px;
+   margin-top: 10px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  transition: all 0.3s; 
-  border-radius: 3px;
-} */
+  /* transition: all 0.3s; */ 
+ /*  border-radius: 3px; */ 
+}
+
+.todoNoteDiv1:hover #pinDiv
+{
+	 display : block;
+}
+
+.todoNoteDiv1:hover #presentationeditRepeat{
+   display : block;
+ }
 
 #pinDiv1
 {
@@ -236,6 +253,10 @@
 
 .todoNoteDiv:hover #presentationeditRepeat{
    display : block;
+   -webkit-transition: all 0.4s ease;
+	-moz-transition: all 0.4s ease;
+	-o-transition: all 0.4s ease;
+	transition: all 0.4s ease;
  }
 
 
@@ -336,7 +357,9 @@
 }
 
 .col-lg-4 {
-    width: 30.333333%;
+    width: 29%;
+    padding-right: 0px;
+    padding-left: 0px;
     
 }
 

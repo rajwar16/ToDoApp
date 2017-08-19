@@ -112,6 +112,7 @@ public class LoginController {
 		
 		return new ResponseEntity<Response>(tokenResponse,HttpStatus.OK);
 	}
+	
 	@RequestMapping(value="refreshToken",method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response> refreshToken(@RequestBody Map<String, String> refreshTokenMap,HttpServletRequest request,HttpServletResponse response)
 	{

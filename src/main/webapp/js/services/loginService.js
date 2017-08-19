@@ -7,4 +7,12 @@ myApp.service('loginService', function($http) {
             data : registerObject
         });
     }
+    this.facebookLogin = function () {
+    	console.log("inside the lfacebookLoginservice function....");
+        return  $http({
+            method : "GET",
+            url : "http://localhost:8080/TodoApp/facebookLogin",
+        });
+    }
+    
 });

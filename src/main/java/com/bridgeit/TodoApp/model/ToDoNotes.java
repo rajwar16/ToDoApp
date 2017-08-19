@@ -22,7 +22,8 @@ public class ToDoNotes implements Serializable
 	@Id
 	@GenericGenerator(name="id", strategy="increment")
 	@GeneratedValue(generator="id")
-	private long noteid;
+	
+	private long Noteid;
 	private String title;
 	private String description;
 	private Date noteCreatedDate;
@@ -31,19 +32,18 @@ public class ToDoNotes implements Serializable
 	private String pin;
 	private String isDelete;
 	private String isArchive;
-
+	private String isReminder;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id")
-	
 	private User user;
 
 	public long getNoteid() {
-		return noteid;
+		return Noteid;
 	}
 
 	public void setNoteid(long noteid) {
-		this.noteid = noteid;
+		this.Noteid = noteid;
 	}
 
 	public String getTitle() {
@@ -120,12 +120,19 @@ public class ToDoNotes implements Serializable
 		this.isArchive = isArchive;
 	}
 
-	@Override
-	public String toString() {
-		return "ToDoNotes [noteid=" + noteid + ", title=" + title + ", description=" + description
-				+ ", noteCreatedDate=" + noteCreatedDate + ", noteEditedDate=" + noteEditedDate + ", color=" + color
-				+ ", pin=" + pin + ", isDelete=" + isDelete + ", isArchive=" + isArchive + ", user=" + user + "]";
+	public String getIsReminder() {
+		return isReminder;
 	}
 
-	
+	public void setIsReminder(String isReminder) {
+		this.isReminder = isReminder;
+	}
+
+	@Override
+	public String toString() {
+		return "ToDoNotes [noteid=" + Noteid + ", title=" + title + ", description=" + description
+				+ ", noteCreatedDate=" + noteCreatedDate + ", noteEditedDate=" + noteEditedDate + ", color=" + color
+				+ ", pin=" + pin + ", isDelete=" + isDelete + ", isArchive=" + isArchive + ", isReminder=" + isReminder
+				+ ", user=" + user + "]";
+	}
 }

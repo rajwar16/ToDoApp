@@ -15,6 +15,7 @@ public class RegisterErrorResponse extends Response
 	private long mobilePhoneError;
 	private String emailIdError;
 	private List<FieldError> errorList;
+	private String accessToken;
 	
 	public String getFirstNameError() {
 		return firstNameError;
@@ -70,6 +71,13 @@ public class RegisterErrorResponse extends Response
 	public void setErrorList(List<FieldError> errorList) {
 		this.errorList = errorList;
 	}
+	public String getAccessToken() {
+		return accessToken;
+	}
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	
 	
 	
 }

@@ -1,6 +1,7 @@
 myApp.controller( 'registerController',function($scope, $state, $http,registerService)
 {
 	console.log("inside the register controller");
+	
 	$scope.registerController=function() {
 		console.log("inside the register controller function ");
 		
@@ -29,6 +30,5 @@ myApp.controller( 'registerController',function($scope, $state, $http,registerSe
 				$state.go("register");
 			}
 		});
-
 	}
 });

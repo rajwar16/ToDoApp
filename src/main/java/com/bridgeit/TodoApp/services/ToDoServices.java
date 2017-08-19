@@ -15,6 +15,7 @@ public class ToDoServices
 	
 	@Transactional
 	public Object CreateAndUpdateToDoNotes(ToDoNotes toDoNotes) {
+		System.out.println("service CreateAndUpdateToDoNotes :: "+toDoNotes);
 		return todoNotesDao.CreateAndUpdateToDoNotes(toDoNotes);
 	}
 
@@ -23,8 +24,9 @@ public class ToDoServices
 		
 	}
 
-	public ToDoNotes getNotesById(long noteId) {
-		return todoNotesDao.getNotesById(noteId);
+	public ToDoNotes getNotesById(long noteId,long userId) {
+		
+		return todoNotesDao.getNotesById(noteId,userId);
 	}
 
 	public List<ToDoNotes> getNotesByTitle(String noteTitle, long userId) {

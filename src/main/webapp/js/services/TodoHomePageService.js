@@ -6,7 +6,7 @@ myApp.service('TodoHomePageService', function($http) {
     	console.log("create note object :: ",createNoteObject);
         return  $http({
             method : "POST",
-            url : "http://localhost:8080/TodoApp/CreateToDoNote",
+            url : "CreateToDoNote",
             data : createNoteObject,
             headers: {'accessToken': localStorage.getItem("accessToken")}
         });
@@ -15,7 +15,7 @@ myApp.service('TodoHomePageService', function($http) {
     this.getAllNoteList = function() {
     	return $http({
     		method : "GET",
-            url : "http://localhost:8080/TodoApp/ToDoNoteList",
+            url : "ToDoNoteList",
             headers: {'accessToken': localStorage.getItem("accessToken")
     	}
     });
@@ -25,7 +25,7 @@ myApp.service('TodoHomePageService', function($http) {
     	console.log("service update object  :: ",updateObj);
     	return $http({
     		method : "PUT",
-            url : "http://localhost:8080/TodoApp/ToDoNoteUpdate",
+            url : "ToDoNoteUpdate",
             data : updateObj,
             headers: {'accessToken': localStorage.getItem("accessToken")
     	}
@@ -35,7 +35,7 @@ myApp.service('TodoHomePageService', function($http) {
     this.deleteNote = function(noteid) {
     	return $http({
     		method : "POST",
-            url : "http://localhost:8080/TodoApp/TodoNoteDelete",
+            url : "TodoNoteDelete",
             data : noteid,
             headers: {'accessToken': localStorage.getItem("accessToken")
     	}
@@ -46,7 +46,7 @@ myApp.service('TodoHomePageService', function($http) {
     	console.log("service refreshToken object object  :: ",token);
     	return $http({
     		method : "POST",
-            url : "http://localhost:8080/TodoApp/refreshToken",
+            url : "refreshToken",
             data : token,
     });
     }
@@ -55,9 +55,23 @@ myApp.service('TodoHomePageService', function($http) {
     	console.log("service getAllNotes object object  :: ",token);
     	return $http({
     		method : "GET",
-            url : "http://localhost:8080/TodoApp/ToDoNoteList",
+            url : "ToDoNoteList",
             headers: {'accessToken': localStorage.getItem("accessToken")}
     });
     }
+    
+    
+    this.reminder = function(reminder) {
+    	console.log("service reminder object  :: ",reminder);
+    	return $http({
+    		method : "PUT",
+            url : "ToDoNoteReminder",
+            data : reminder,
+            headers: {'accessToken': localStorage.getItem("accessToken")
+    	}
+    });
+    }
+    
+    
     
 });

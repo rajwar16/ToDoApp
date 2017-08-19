@@ -70,20 +70,22 @@ $grid.find('.grid-item').each( function( i, gridItem ) {
 </script> -->
 
 <!--****************************************************************************************************************** / -->
-<div class="row">
+<div class="row" ng-show="othershow">
 	<div ng-class="space3col"></div>                  
     <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
 		<div id="pinWord" style="margin-bottom: 3%;margin-top: 7%;">Others</div>
 	</div>
 </div>	
+<!-- <div class="row" dnd-list="records"> -->
 <div class="row">	
-  	<div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" >
-  	<div ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false'" >
+  	<div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false' " testpackery ng-class="view_change" style="margin:0px 15px 18px 3px;padding-right: 0px;padding-left: 3px;" class="todoNoteDiv1"  ng-style="{'background-color':x.color,width:colLg4view}">
+  	<!-- <div  data-ng-repeat="x in records | filter:searchQuery as results track by $index"  dnd-draggable="x" dnd-effect-allowed="copymove" dnd-selected="models.selected=x" >  -->
+<!--   	<div ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false'" >
                 <div ng-class="space3col"></div>                  
                 <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px;" ng-style="{'width':colLg4}">
-                   		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
+                   		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}"> -->
                     		<div id="pinDiv" ng-click="isPin(x,'true')">
-									<img src="Images/pin.svg" style="height: 20px; width: 20px">
+									<img src="Images/pin.svg"  title="unpin" style="height: 20px; width: 20px">
 								</div>
                     		<div ng-click="open(x)">
 					 			<div id="presentationTitle"data-ng-bind-html="x.title"></div>
@@ -99,7 +101,7 @@ $grid.find('.grid-item').each( function( i, gridItem ) {
 					  				<div class="editDivRepeat" title="Add image"><img src="Images/img.svg"></div>
 					  				<div class="editDivRepeat" title="Archive" ng-click="isarchive(x,'true')"><img src="Images/archive.svg"></div>
 					  				<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
-					  				<div  class="editDivRepeat"  title="Delete">
+					  				<div  class="editDivRepeat"  title="Delete" style="margin-top: -2px;margin-left: 3px;">
 					  					<button id="doneButton" ng-click="deleteNote(x,'true')" style="float:right;">
 					  						<img src="Images/trash.svg">
 					  					</button>

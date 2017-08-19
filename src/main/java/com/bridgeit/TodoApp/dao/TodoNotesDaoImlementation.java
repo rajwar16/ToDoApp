@@ -67,10 +67,11 @@ public class TodoNotesDaoImlementation implements TodoNotesDao{
 	 * 
 	 * @see com.bridgeit.TodoApp.dao.TodoNotesDao#getNotesById(long)
 	 */
-	public ToDoNotes getNotesById(long noteId) {
+	public ToDoNotes getNotesById(long noteId,long userId) {
+		System.out.println("dao getNotesById");
 		Session session=sessionFactory.openSession();
 		Criteria criteria=session.createCriteria(ToDoNotes.class);
-		ToDoNotes toDoNotes=(ToDoNotes) criteria.add(Restrictions.eq("Noteid", noteId)).uniqueResult();
+		ToDoNotes toDoNotes=(ToDoNotes) criteria.add(Restrictions.eq("Noteid", noteId)).add(Restrictions.eq("user.id", userId)).uniqueResult();
 		return toDoNotes;
 	}
 

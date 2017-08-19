@@ -25,9 +25,9 @@ public class UserServices{
 	 * it adds User's related all data inside 'ToDoGoogleKeep' dataBase of 'UserRegistration' Table
 	 */
 	@Transactional
-	public Object addUserRegister(User userRegistration) throws NoSuchAlgorithmException, InvalidKeySpecException 
+	public Object addUserRegister(User userRegistration, String string) throws NoSuchAlgorithmException, InvalidKeySpecException 
 	{
-		return userDao.addUserRegister(userRegistration);
+		return userDao.addUserRegister(userRegistration,string);
 	}
 	
 	public User loginUser(String emailId,String password) throws NoSuchAlgorithmException, InvalidKeySpecException

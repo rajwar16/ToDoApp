@@ -24,20 +24,23 @@ public class UserDaoImplementation implements UserDao
 	 * @see com.bridgeit.TodoApp.dao.UserDao#addUserRegister(com.bridgeit.TodoApp.model.UserRegistration)
 	 */
 	
-	public Object addUserRegister(User userRegistration) throws NoSuchAlgorithmException, InvalidKeySpecException {
-
+	public Object addUserRegister(User userRegistration ,String string) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		
+		Session session=sessionFactory.getCurrentSession();
+		if(string=="mannual")
+		{
 		String originalPassword=userRegistration.getPassword();
 		System.out.println("Original password comming from view page :: "+originalPassword);
 		StrongSecuredPassword strongSecuredPassword=new StrongSecuredPassword();
 
 		String EncryptedPassword=strongSecuredPassword.EncryptPassword(originalPassword);
 		userRegistration.setPassword(EncryptedPassword);
-
-		System.out.println("dao Implementation : "+userRegistration);
-
-		Session session=sessionFactory.getCurrentSession();
-
-		session.saveOrUpdate(userRegistration);		
+		
+		session.saveOrUpdate(userRegistration);	
+		}
+		else if (string=="facebook") {
+			session.saveOrUpdate(userRegistration);		
+		}
 		return true;
 	}
 

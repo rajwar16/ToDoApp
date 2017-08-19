@@ -8,9 +8,14 @@ myApp.directive('testpackery', ['$rootScope', '$timeout',
           scope.element = element;
           $rootScope.packery = new Packery(element[0].parentElement, {
             isResizeBound: true,
-            //rowHeight: 230,
-            //columnWidth: 230,
-            itemSelector: '#todoNote'
+            /*rowHeight: 10,*/
+            /*columnWidth: '.view_change',*/
+            transitionDuration: 0,
+            itemSelector: '.todoNoteDiv1',
+            dragSelector: '',
+            isAppended: true,
+            isDraggable: true,
+            percentPosition: true
           });
           $rootScope.packery.bindResize();
           var draggable1 = new Draggabilly(element[0]);
@@ -24,16 +29,16 @@ myApp.directive('testpackery', ['$rootScope', '$timeout',
           });
 
 
-         /* var orderItems = function() {
+          var orderItems = function() {
             var itemElems = $rootScope.packery.getItemElements();
             $(itemElems).each(function(i, itemElem) {
-              $(itemElem).text(i + 1);
+              $(itemElem).text("pooja");
             });
-          };*/
+          };
 
-          /*$rootScope.packery.on('layoutComplete', orderItems);
-          $rootScope.packery.on('dragItemPositioned', orderItems);*/
-
+        /*  $rootScope.packery.on('layoutComplete', orderItems);
+          $rootScope.packery.on('dragItemPositioned', orderItems);
+*/
 
         } else {
           // console.log("else", element[0]);
