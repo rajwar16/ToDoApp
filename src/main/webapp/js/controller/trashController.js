@@ -11,7 +11,20 @@ myApp.controller( 'trashController',['$scope', '$controller', function($scope, $
 	   	$scope.createEditableNote=false;
 	   	
 	   	
-	    var tmpList = [];
+	   	$scope.navigationBar="rgb(99, 99, 99)";
+	    $scope.navigationBorder="rgb(99, 99, 99)";
+	    $scope.google=false;
+	    $scope.navbarName="Trash";
+	    $scope.navcolor="white";
+	    $scope.menuImg="Images/menu.svg";
+	    $scope.listImg="Images/list2.svg";
+	    $scope.gridImg="Images/navigationBarImages/grid2.svg";
+	    $scope.refreshImg="Images/navigationBarImages/refresh2.svg";
+	    $scope.notificationImg="Images/navigationBarImages/notification2.svg";
+	   	
+	   	
+	   	
+	   /* var tmpList = [];
 	    
 	    for (var i = 1; i <= 6; i++){
 	      tmpList.push({
@@ -23,7 +36,7 @@ myApp.controller( 'trashController',['$scope', '$controller', function($scope, $
 	    $scope.list = tmpList;
 	    
 	    
-	    $scope.sortingLog = [];
+	    $scope.sortingLog = [];*/
 	    
 	   /* $scope.sortableOptions = {
 	      handle: '> .todoNoteDiv',*/

@@ -45,6 +45,7 @@
 		<url-pattern>/ToDoNoteList</url-pattern>
 		<url-pattern>/ToDoNoteUpdate/</url-pattern>
 		<url-pattern>/TodoNoteDelete</url-pattern>
+		<url-pattern>/ToDoNoteList</url-pattern>
 		<url-pattern></url-pattern>
 		
 	</filter-mapping>

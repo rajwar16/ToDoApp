@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,6 +35,10 @@ public class ToDoNotes implements Serializable
 	private String isDelete;
 	private String isArchive;
 	private String isReminder;
+	
+	@Lob
+    @Column(name="IMAGE", columnDefinition="mediumblob")
+	private String addImage;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id")
@@ -128,11 +134,21 @@ public class ToDoNotes implements Serializable
 		this.isReminder = isReminder;
 	}
 
+	public String getAddImage() {
+		return addImage;
+	}
+
+	public void setAddImage(String addImage) {
+		this.addImage = addImage;
+	}
+
 	@Override
 	public String toString() {
-		return "ToDoNotes [noteid=" + Noteid + ", title=" + title + ", description=" + description
+		return "ToDoNotes [Noteid=" + Noteid + ", title=" + title + ", description=" + description
 				+ ", noteCreatedDate=" + noteCreatedDate + ", noteEditedDate=" + noteEditedDate + ", color=" + color
 				+ ", pin=" + pin + ", isDelete=" + isDelete + ", isArchive=" + isArchive + ", isReminder=" + isReminder
-				+ ", user=" + user + "]";
+				+ ", addImage=" + addImage + ", user=" + user + "]";
 	}
+
+	
 }

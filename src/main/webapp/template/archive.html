@@ -8,6 +8,7 @@
                    			<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
                     	
                     	<div id="pinDiv" ng-click="isPin(x,'true')"><img src="Images/pin.svg" style="height: 20px;width:20px" ></div>
+                    	<div ng-if="x.addImage!=null" id="presentationTitle1" style="background-image: url({{x.addImage}});background-repeat:no-repeat;background-size: cover;"></div>
                     	<div ng-click="open(x)">
 					 		<div id="presentationTitle"data-ng-bind-html="x.title"></div>
 					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
@@ -28,7 +29,7 @@
                 					<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;">Pick date & time</div>
                 				</div>
 					  	<!-- reminder div -->
-					  			<div class="editDivRepeat" title="Collaborator"><img src="Images/cc.svg"></div>
+					  			<div class="editDivRepeat" title="Collaborator" ng-click="collaborator(x)"><img src="Images/cc.svg"></div>
 						<!------------ colorDiv Section -------------------------------->
   								<color></color>
 						<!----------- colorDiv Section End--------------------------------------------------------->
@@ -44,7 +45,7 @@
     						</div>
     					</div>
                     	<div ng-if="x.isReminder!=null" style="height: 36px;width: 90%;margin-left: 15px;border-top:2px dotted rgba(0,0,0,0.1)" >
-							<div style="color:rgba(0,0,0,.54);font-size: 14px;font-family: 'Roboto',arial,sans-serif;padding-top: 7px "><span style="padding: 3px 7px 7px 4px;"><img src="Images/watchReminder.svg"></span>{{reminderDate}}</div>                    	
+							<div style="color:rgba(0,0,0,.54);font-size: 14px;font-family: 'Roboto',arial,sans-serif;padding-top: 7px "><span style="padding: 3px 7px 7px 4px;"><img src="Images/watchReminder.svg"></span>{{x.isReminder}}</div>                    	
                     	</div>
                     </div>
                     </div>

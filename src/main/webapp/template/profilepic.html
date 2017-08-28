@@ -7,12 +7,15 @@
 		<div ng-click="changepic()">change pic</div>
 		 <img ng-src="{{filepreview}}"> -->
 		 
-		   <form>
+		   <!-- <form>
       			<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc">
-      			<!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
+      			rough  <input type="file" ng-file-select="onFileSelect($files)" multiple>
    	 	   </form>
-    	   <img style="width:200px; height:200px;" ng-src="{{imageSrc}}" />
-    	   <button ng-click="uploadPic(imageSrc)">upload</button>
+    	   <img style="width:200px; height:200px;" ng-src="{{imageSrc}}" /> -->
+    	   
+    	<img id="profileimage" ng-src="{{imageSrc}}"  ng-click="triggerUpload()" ng-model="imageSrc"/>
+ 		<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="display:none" id="fileInput"/>
+         	
 	</div>
-	<div style="width:100%;height:80px;border: 1px solid"></div>
+	<div style="width:100%;height:80px;border: 1px solid"><button ng-click="uploadPic(imageSrc)">Set as profile pic</button></div>
 </div>

@@ -17,15 +17,18 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 	}).state("ToDoHomePage", {
 		url : "/ToDoHomePage",
 		templateUrl : "template/TodoHomePage.html",
-		controller : "showDivision"
+		controller : "showDivision",
 	}).state("trash", {
 		url : "/trash",
 		templateUrl : "template/TodoHomePage.html",
-		controller : "trashController"
+		controller : "trashController",
 	}).state("archive", {
 		url : "/archive",
 		templateUrl : "template/TodoHomePage.html",
-		controller : "archiveController"
+		controller : "archiveController",
+		data: {
+			accessToken: localStorage.getItem("accessToken")
+        }
 	}).state("getrefreshToken", {
 		url : "/getrefreshToken",
 		/*controller : "TodoHomePageController"*/
@@ -33,5 +36,12 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		controller : "getAllNotes"
 	});
 	$urlRouterProvider.otherwise('/login');
-
 });
+
+myApp.factory('AuthService', ['$rootScope', function($rootScope){
+	$rootScope.$on('$stateChangeStart', 
+			   function(event, toState, toParams, fromState, fromParams){ 
+			      event.preventDefault();
+			      window.history.forward();
+			});
+}]);

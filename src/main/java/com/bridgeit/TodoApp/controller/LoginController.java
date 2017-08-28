@@ -173,7 +173,7 @@ public class LoginController {
 		token.setRefreshToken(refreshToken);
 		token.setUserId(user.getId());
 		
-		System.out.println("updated new toke is token is :: "+token);
+		System.out.println("updated new token is :: "+token);
 		try {
 			tokenservices.addToken(token);
 		} catch (Exception e) {
@@ -181,10 +181,51 @@ public class LoginController {
 		}
 		
 		tokenResponse.setStatus(200);
-		tokenResponse.setMessage("accessToken Genreted success fully...");
+		tokenResponse.setMessage("accessToken Genreted successfully...");
 		tokenResponse.setAccessToken(accessToken);
 		tokenResponse.setRefreshToken(refreshToken);
 		tokenResponse.setToken(token);
-		return null;
+		return new ResponseEntity<Response>(tokenResponse,HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="UserLogout",method=RequestMethod.DELETE)
+	public ResponseEntity<Response> userLogout(@RequestBody String accessToten1,HttpServletRequest request,HttpServletResponse response)
+	{
+		String accessToken=null;
+		TokenResponse tokenResponse=new TokenResponse();
+		
+		accessToken =  accessToten1;
+		
+		if (accessToken == null || accessToken.trim().isEmpty()) {
+			tokenResponse.setMessage("access token is null...");
+			tokenResponse.setStatus(404);
+			return new ResponseEntity<Response>(tokenResponse,HttpStatus.OK);
+		}
+		
+		Token token = null;
+		try {
+			token = tokenservices.getToken(accessToken);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		System.out.println("authetication token from database :: "+token.getAccessToken());
+		
+		if (token.getAccessToken() == null) {
+			tokenResponse.setStatus(400);
+			tokenResponse.setMessage("Invalid access Token.");
+			return new ResponseEntity<Response>(tokenResponse,HttpStatus.OK);
+		}
+		
+		try {
+			tokenservices.deleteToken(token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		tokenResponse.setMessage("logout successfully...");
+		tokenResponse.setStatus(200);
+		return new ResponseEntity<Response>(tokenResponse,HttpStatus.OK);
 	}
 }

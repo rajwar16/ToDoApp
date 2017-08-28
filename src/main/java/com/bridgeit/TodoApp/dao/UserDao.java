@@ -13,12 +13,14 @@ public interface UserDao
 
 	User loginUser(String emailId, String password) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
-	User getUserById(String id);
-
 	List<User> getUserList();
 
 	Object updateUser(User userRegistration) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
 	boolean deleteUser(long userId);
+
+	User getUserByEmail(String email);
+
+	User getUserById(long userId);
 	
 }

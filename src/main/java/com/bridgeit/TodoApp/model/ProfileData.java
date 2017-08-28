@@ -1,6 +1,7 @@
 package com.bridgeit.TodoApp.model;
 
 public class ProfileData {
+	
 		private String url;
 		private boolean is_silhouette;
 		
@@ -21,8 +22,4 @@ public class ProfileData {
 		public String toString() {
 			return "ProfileData [url=" + url + ", is_silhouette=" + is_silhouette + "]";
 		}
-		
-		
-
-		
 }

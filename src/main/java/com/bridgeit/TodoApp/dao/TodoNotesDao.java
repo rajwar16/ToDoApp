@@ -2,6 +2,7 @@ package com.bridgeit.TodoApp.dao;
 
 import java.util.List;
 
+import com.bridgeit.TodoApp.model.Collaborator;
 import com.bridgeit.TodoApp.model.ToDoNotes;
 
 public interface TodoNotesDao 
@@ -15,4 +16,6 @@ public interface TodoNotesDao
 	List<ToDoNotes> getNotesByTitle(String noteTitle, long userId);
 
 	boolean deleteNoteById(long noteId);
+
+	Boolean collaboratorNoteCreate(Collaborator collaborator);
 }

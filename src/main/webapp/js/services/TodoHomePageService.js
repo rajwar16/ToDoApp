@@ -42,6 +42,17 @@ myApp.service('TodoHomePageService', function($http) {
     });
     }
     
+    this.emptyTrash = function() {
+    	console.log("empty trash service...");
+    	return $http({
+    		method : "DELETE",
+            url : "TodoNoteEmptyTrash",
+            headers: {'accessToken': localStorage.getItem("accessToken")
+    	}
+    });
+    }
+    
+    
     this.getRefreshToken = function(token) {
     	console.log("service refreshToken object object  :: ",token);
     	return $http({
@@ -52,14 +63,13 @@ myApp.service('TodoHomePageService', function($http) {
     }
     
     this.getAllNotes = function() {
-    	console.log("service getAllNotes object object  :: ",token);
+    	console.log("get all notes called......");
     	return $http({
     		method : "GET",
             url : "ToDoNoteList",
             headers: {'accessToken': localStorage.getItem("accessToken")}
     });
     }
-    
     
     this.reminder = function(reminder) {
     	console.log("service reminder object  :: ",reminder);
@@ -71,7 +81,16 @@ myApp.service('TodoHomePageService', function($http) {
     	}
     });
     }
-    
-    
-    
+
+    this.logout = function() {
+    	console.log("service logout ....");
+    	return $http({
+    		method : "DELETE",
+            url : "UserLogout",
+            data:localStorage.getItem("accessToken"),
+            headers: {
+            	'accessToken': localStorage.getItem("accessToken")
+            }
+    });
+    }
 });

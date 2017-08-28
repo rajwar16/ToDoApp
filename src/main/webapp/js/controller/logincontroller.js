@@ -1,6 +1,7 @@
 myApp.controller( 'loginController',function($scope, $state,loginService)
 {
 	console.log("inside the loginController");
+	$scope.invalidCredintial=false;
 	$scope.loginController=function() {
 		console.log("inside the login controller function...gbbbbbbbbbbbbb");
 		console.log($scope.userName);
@@ -24,6 +25,12 @@ myApp.controller( 'loginController',function($scope, $state,loginService)
 				$state.go("ToDoHomePage");
 			}
 			
+			else if(data.data.status==404)
+			{
+				console.log("login unsucessfully status 404..");
+				$scope.invalidCredintial=true;
+				$state.go("login");
+			}
 			else
 			{
 				console.log("invalid credintial..");
@@ -32,7 +39,6 @@ myApp.controller( 'loginController',function($scope, $state,loginService)
 		});
 
 	}
-	
 	
 	$scope.facebookLoginController=function() {
 		console.log("inside the lfacebookLoginController function....");
@@ -65,6 +71,8 @@ myApp.controller( 'loginController',function($scope, $state,loginService)
 			console.log("inside the controller");
 			if(data.status==200)
 			{
+						
+
 
 			}else
 			{

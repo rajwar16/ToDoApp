@@ -29,6 +29,7 @@ public class UserDaoImplementation implements UserDao
 		Session session=sessionFactory.getCurrentSession();
 		if(string=="mannual")
 		{
+		System.out.println("mannual :: ");
 		String originalPassword=userRegistration.getPassword();
 		System.out.println("Original password comming from view page :: "+originalPassword);
 		StrongSecuredPassword strongSecuredPassword=new StrongSecuredPassword();
@@ -37,11 +38,13 @@ public class UserDaoImplementation implements UserDao
 		userRegistration.setPassword(EncryptedPassword);
 		
 		session.saveOrUpdate(userRegistration);	
+		return true;
 		}
 		else if (string=="facebook") {
 			session.saveOrUpdate(userRegistration);		
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/* (non-Javadoc)
@@ -74,54 +77,45 @@ public class UserDaoImplementation implements UserDao
 			return user;
 		}
 		return null;
-
 	}
 
-	public User getUserById(String id) {
+	public User getUserByEmail(String email) {
 		Session session=sessionFactory.openSession();
-		Criteria criteria=session.createCriteria(UserRegistration.class);
-		criteria.add(Restrictions.eq("userName", id));
-
+		Criteria criteria=session.createCriteria(User.class);
+		criteria.add(Restrictions.eq("email", email));
+		System.out.println("user dao imple getuserby email ::  "+ criteria.uniqueResult());
 		return (User) criteria.uniqueResult();
 	}
 
 	public List<User> getUserList() 
 	{
 		Session session=sessionFactory.openSession();
-		Criteria criteria=session.createCriteria(UserRegistration.class);
-
+		Criteria criteria=session.createCriteria(User.class);
 		List<User> list=criteria.list();
 		return list;
-
 	}
 
 	public Object updateUser(User userRegistration) throws NoSuchAlgorithmException, InvalidKeySpecException {
-
-		/*String originalPassword=userRegistration.getPassword();
-		System.out.println("Original password comming from view page :: "+originalPassword);
-		StrongSecuredPassword strongSecuredPassword=new StrongSecuredPassword();
-
-		String EncryptedPassword=strongSecuredPassword.EncryptPassword(originalPassword);
-		userRegistration.setPassword(EncryptedPassword);
-
 		System.out.println("dao Implementation : "+userRegistration);
-
 		Session session=sessionFactory.getCurrentSession();
-
-		session.update(userRegistration);	*/	
-		return null;
+		session.update(userRegistration);		
+		return true;
 	}
+	
 	public boolean deleteUser(long userId) {
 		Session session=sessionFactory.getCurrentSession();
-		
-		
-		
 		 UserRegistration user = (UserRegistration ) session.createCriteria(UserRegistration.class)
           .add(Restrictions.eq("id", userId)).uniqueResult();
-
 		session.delete(user);		
 		return true;
 	}
 
+	public User getUserById(long userId) {
+		Session session=sessionFactory.openSession();
+		Criteria criteria=session.createCriteria(User.class);
+		criteria.add(Restrictions.eq("id", userId));
+		System.out.println("user dao imple getuserby email ::  "+ criteria.uniqueResult());
+		return (User) criteria.uniqueResult();
+	}
 
 }

@@ -1,11 +1,11 @@
 
 <div ng-style="{'background-color':$ctrl.color}">
-	<div contenteditable1 contenteditable="true" placeholder="Title"
-		ng-model="$ctrl.title" ng-bind-html="$ctrl.title"
-		id="presentationTitle"></div>
-	<div contenteditable1 contenteditable="true"
-		placeholder="Take a note..." ng-model="$ctrl.note"
-		ng-bind-html="$ctrl.note" id="presentationNote"></div>
+	<div  ng-if="$ctrl.addImage1!=null" data-ng-model="note" id="presentationNote">
+		<img style="width:100%; height:100%;" ng-src="{{$ctrl.addImage1}}" />
+	</div>
+	<div contenteditable1 contenteditable="true" placeholder="Title" ng-model="$ctrl.title" ng-bind-html="$ctrl.title" id="presentationTitle"></div>
+	<div contenteditable1 contenteditable="true" placeholder="Take a note..." ng-model="$ctrl.note" ng-bind-html="$ctrl.note" id="presentationNote"></div>
+	
 	<div id="presentationedit" style="display: inline-block;">
 		<div class="editDiv">
 			<img src="Images/remindericon.svg" title="reminder">
@@ -68,14 +68,21 @@
 			</div>
 			<!-- ---------------------------color popup div end ------------------->
 			<img src="Images/colur.svg">
-
 		</div>
 		<div class="editDiv">
 			<img src="Images/img.svg">
+			<input type="file" ng-model="addImage1" id="inputImage" style="display: none;" multiple/>
+    			<script>
+    				$("input[type='image']").click(function() {
+    					$("input[id='inputImage']").click();
+    				});
+    			</script>
 		</div>
+		
 		<div class="editDiv">
-			<img src="Images/archive.svg">
+			<img src="Images/archive.svg" ng-click="createArchive('true')">
 		</div>
+		
 		<div class="editDiv">
 			<img src="Images/list.png">
 		</div>

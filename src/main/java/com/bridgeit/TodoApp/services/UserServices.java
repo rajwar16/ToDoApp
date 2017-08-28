@@ -36,8 +36,8 @@ public class UserServices{
 		
 	}
 
-	public User getUserById(String id) {
-		return userDao.getUserById(id);
+	public User getUserByEmail(String email) {
+		return userDao.getUserByEmail(email);
 	}
 
 	public List<User> getUserList() {
@@ -52,6 +52,11 @@ public class UserServices{
 	@Transactional
 	public boolean deleteUser(long userId) {
 		return userDao.deleteUser(userId);
+	}
+
+	public User getUserById(long userId) {
+		
+		return userDao.getUserById(userId);
 	}
 
 }

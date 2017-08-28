@@ -89,6 +89,7 @@
 <script type="text/javascript" src="js/controller/profilePicController.js"></script>
 <script type="text/javascript" src="js/services/profilePicService.js"></script>
 <script type="text/javascript" src="js/controller/facebookLoginController.js"></script>
+<script type="text/javascript" src="js/controller/collaborator.js"></script>
 
 
 
@@ -97,6 +98,7 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
 </script>
+
 <title>Google Keep</title>
 </head>
 <body data-ng-app="todo" style="background-color: #e8e8e8">

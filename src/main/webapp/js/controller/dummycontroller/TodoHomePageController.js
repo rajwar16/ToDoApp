@@ -14,7 +14,6 @@ myApp.controller('showDivision',function ($scope,$http,$uibModal,$window,TodoHom
 	$scope.IsVisible = false;
     $scope.IsVisible1 = true;
     
-    
     //list view and gridview image hide and show
     $scope.gridviewImg=false;
     $scope.listviewImg=true;
@@ -30,7 +29,6 @@ myApp.controller('showDivision',function ($scope,$http,$uibModal,$window,TodoHom
     };
     //end
     
-    
     //hoverhideshow function
     
    /* $scope.hoverHideShow = function (x) {
@@ -39,9 +37,6 @@ myApp.controller('showDivision',function ($scope,$http,$uibModal,$window,TodoHom
     };*/
     
     //end of hideovershow function
-    
-    
-    
     
     //popup function
     $scope.open = function (x) {

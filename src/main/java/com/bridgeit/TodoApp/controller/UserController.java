@@ -113,19 +113,38 @@ public class UserController
 	 * 
 	 */
 	@RequestMapping(value="userUpdate",method=RequestMethod.PUT)
-	public ResponseEntity<Response> updateUser(@RequestBody User userRegistration,HttpServletRequest httpServletRequest) throws NoSuchAlgorithmException, InvalidKeySpecException
+	public ResponseEntity<Response> updateUser(@RequestBody User user,HttpServletRequest httpServletRequest) throws NoSuchAlgorithmException, InvalidKeySpecException
 	{
 		boolean update=false;
 		UserResponse userResponse=new UserResponse();
-		System.out.println("update user registration :: "+userRegistration);
-		HttpSession httpSession=httpServletRequest.getSession();
-		User user=(User) httpSession.getAttribute("user");
+		/*HttpSession httpSession=httpServletRequest.getSession();
+		User user=(User) httpSession.getAttribute("user");*/
 		long userId=user.getId();
-		userRegistration.setId(userId);
+		String profilepic=user.getProfileImage();
+		User getUserById=null;
+		try
+		{
+			getUserById=userServices.getUserById(userId);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			ErrorResponse errorResponse=new ErrorResponse();
+			errorResponse.setStatus(-1);
+			errorResponse.setMessage("500 internal server error...");
+			return new ResponseEntity<Response>(userResponse,HttpStatus.OK);
+		}
+		
+		if(getUserById==null)
+		{
+			userResponse.setStatus(-1);
+			userResponse.setMessage("User Not Found...");
+			return new ResponseEntity<Response>(userResponse,HttpStatus.OK);
+		}
 		
 		try {
-			update=(Boolean) userServices.addUserRegister(userRegistration,"mannual");
-			System.out.println("updated value :: "+update);
+			getUserById.setProfileImage(profilepic);
+			update=(Boolean) userServices.updateUser(getUserById);
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -142,8 +161,10 @@ public class UserController
 			userResponse.setMessage("User data not Updated....");
 			return new ResponseEntity<Response>(userResponse,HttpStatus.NOT_FOUND);
 		}
-		userResponse.setStatus(1);
+		userResponse.setUserRegistration(getUserById);
+		userResponse.setStatus(200);
 		userResponse.setMessage("User data Updated successfully....");
+		
 		return new ResponseEntity<Response>(userResponse,HttpStatus.OK);
 	}
 	
@@ -160,23 +181,23 @@ public class UserController
 		long userId=user.getId();
 	
 		boolean deleteuser = userServices.deleteUser(userId);
-		
 		UserResponse userResponse=new UserResponse();
 		userResponse.setMessage("user deleted successfully...");
 		userResponse.setStatus(1);
+		
 		return new ResponseEntity<Response>(userResponse,HttpStatus.OK);
 	}
 	
 	
 	/*---getUserByName------------*/
-	@RequestMapping(value="User/{userName}", method=RequestMethod.GET)
-	public ResponseEntity<Response> getUserByName(@PathVariable("userName") String id )
+	@RequestMapping(value="User", method=RequestMethod.GET)
+	public ResponseEntity<Response> getUserById(@PathVariable("userName") String email )
 	{
 		User userRegistration=null;
 		UserResponse userResponse=new UserResponse();
 		try
 		{
-			userRegistration=userServices.getUserById(id);
+			userRegistration=userServices.getUserByEmail(email);
 			System.out.println(userRegistration);
 			userResponse.setStatus(1);
 			userResponse.setMessage("User Found...");
@@ -215,7 +236,6 @@ public class UserController
 			userResponse.setStatus(1);
 			userResponse.setMessage("following are the UserList");
 			userResponse.setList(list);
-			System.out.println(list);
 		}
 		catch(Exception e)
 		{

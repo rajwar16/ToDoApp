@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.bridgeit.TodoApp.model.ToDoNotes;
+import com.bridgeit.TodoApp.model.User;
 
 public class ToDoNotesResponse extends Response
 {
@@ -11,7 +12,16 @@ public class ToDoNotesResponse extends Response
 	private ToDoNotes toDoNotes;	
 	private Date createdDate;
 	private Date editedDate;
+	private User noteSharedWithUser;
 	
+	public User getNoteSharedWithUser() {
+		return noteSharedWithUser;
+	}
+
+	public void setNoteSharedWithUser(User noteSharedWithUser) {
+		this.noteSharedWithUser = noteSharedWithUser;
+	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -44,5 +54,9 @@ public class ToDoNotesResponse extends Response
 		this.toDoNotes = toDoNotes;
 	}
 
-
+	@Override
+	public String toString() {
+		return "ToDoNotesResponse [list=" + list + ", toDoNotes=" + toDoNotes + ", createdDate=" + createdDate
+				+ ", editedDate=" + editedDate + ", noteSharedWithUser=" + noteSharedWithUser + "]";
 	}
+}

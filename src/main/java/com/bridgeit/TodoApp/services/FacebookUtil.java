@@ -10,6 +10,9 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import com.bridgeit.TodoApp.model.FacebookProfile;
 import com.bridgeit.TodoApp.model.FacebookToken;
@@ -17,6 +20,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Service
 public class FacebookUtil 
 {
 	public static final String FB_APP_ID = "194065034464695";
@@ -88,4 +92,17 @@ public class FacebookUtil
 
 		return facebookprofile1;
 	}
+	
+	/*private String apikey;
+
+	public MultiValueMap<String, Object> publishLinkWithVisiblityRestriction(
+			String state) {
+		MultiValueMap<String, Object> userRestrictedMap = new LinkedMultiValueMap<String, Object>();
+		userRestrictedMap.set("privacy", "{value:\"EVERYONE\"}");
+		userRestrictedMap.set("message",
+				"My Post through Spring Social using Facebook Graph API");
+		userRestrictedMap.set("picture", "");
+		userRestrictedMap.set("caption", "ArpitAggarwal.in");
+		return userRestrictedMap;
+	}*/
 }

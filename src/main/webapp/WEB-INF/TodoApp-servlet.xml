@@ -46,6 +46,7 @@
 				<value>com.bridgeit.TodoApp.model.User</value>
 				<value>com.bridgeit.TodoApp.model.Token</value>
 				<value>com.bridgeit.TodoApp.model.ToDoNotes</value>
+				<value>com.bridgeit.TodoApp.model.Collaborator</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -59,11 +60,6 @@
 		</property>
 	</bean>
 	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- one of the properties available; the maximum file size in bytes -->
-		<property name="maxUploadSize" value="10000000" />
-	</bean>
-
 	<!-- pooled data Source -->
 	<bean id="pooledDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
@@ -79,6 +75,54 @@
 	<bean id="tokenDao" class="com.bridgeit.TodoApp.dao.TokenDaoImplementation"/>
 	<bean id="ToDoServices" class="com.bridgeit.TodoApp.services.ToDoServices"/>
 	<bean id="todoNotesDao" class="com.bridgeit.TodoApp.dao.TodoNotesDaoImlementation"/>
+	<!-- <bean id="facebookServiceProvider" class="com.bridgeit.TodoApp.services.OAuthServiceConfig"/> -->
+	<!-- <bean id="todoNotesDao" class="com.bridgeit.TodoApp.services.OAuthServiceProvider"/> -->
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000" />
+	</bean>
+	
+	
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:application.properties</value>
+		</property>
+	</bean>
+	
+	<bean id="connectionFactoryRegistry"
+		class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+		<property name="connectionFactories">
+			<list>
+				<bean
+					class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+					<constructor-arg value="${app.config.oauth.facebook.apikey}" />
+					<constructor-arg value="${app.config.oauth.facebook.apisecret}" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="facebookServiceProvider" class="com.bridgeit.TodoApp.services.OAuthServiceProvider">
+		<constructor-arg name="config" ref="facebookServiceConfig" />
+	</bean>
+	
+	<bean id="facebookServiceConfig" class="com.bridgeit.TodoApp.services.OAuthServiceConfig">
+		<constructor-arg value="${app.config.oauth.facebook.apikey}" />
+		<constructor-arg value="${app.config.oauth.facebook.apisecret}" />
+		<constructor-arg value="${app.config.oauth.facebook.callback}" />
+		<constructor-arg value="org.scribe.builder.api.FacebookApi" />
+	</bean>
+	
+	<bean id="oAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<constructor-arg>
+			<map>
+				<entry key="redirect_uri" value="${app.config.oauth.facebook.callback}"></entry>
+				<entry key="scope" value="${app.config.oauth.facebook.scope}"></entry>
+			</map>
+		</constructor-arg>
+	</bean>
 
 <mvc:resources mapping="/static/**" location="/static/" />
 </beans>

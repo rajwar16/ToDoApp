@@ -26,6 +26,10 @@
 					<div>
 						<span style="color:#ED2553;font-size:14px" data-ng-show="userForm.password.$error.required && userForm.password.$touched">*password is required.</span> 
 					</div>
+					<br>
+					<div style="margin-left: 115px;">
+						<span style="color:#ED2553;font-size:18px" data-ng-show="userForm.userName.$dirty && userForm.userName.$invalid || invalidCredintial">invalid credintial</span> 
+					</div>
 					
 					<div class="button login">
 						<button class="btn red" ng-click="loginController()" ng-disabled="userForm.userName.$dirty && userForm.userName.$invalid">
@@ -37,10 +41,10 @@
 					dont have account plzz<a ui-sref="register">register?</a>
 				</div>
 				<div class="pass-forgot">
-						<button class="btn red" ng-click="facebookLoginController()">
+						<!-- <button class="btn red" ng-click="facebookLoginController()">
 							Login with facbook
-						</button>
-						<!-- <a href="facebookLogin">Login with facbook</a> -->
+						</button> -->
+						<a href="facebookLogin">Login with facbook</a>
 				</div>
 				
 			</div>

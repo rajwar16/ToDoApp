@@ -22,10 +22,12 @@ import com.bridgeit.TodoApp.JSONResponse.ErrorResponse;
 import com.bridgeit.TodoApp.JSONResponse.Response;
 import com.bridgeit.TodoApp.JSONResponse.ToDoNotesResponse;
 import com.bridgeit.TodoApp.JSONResponse.UserResponse;
+import com.bridgeit.TodoApp.model.Collaborator;
 import com.bridgeit.TodoApp.model.ToDoNotes;
 import com.bridgeit.TodoApp.model.User;
 import com.bridgeit.TodoApp.model.UserRegistration;
 import com.bridgeit.TodoApp.services.ToDoServices;
+import com.bridgeit.TodoApp.services.UserServices;
 
 /**
  * @author bridgeit
@@ -37,6 +39,8 @@ public class TodoController {
 
 	@Autowired
 	ToDoServices toDoServices; 
+	@Autowired
+	UserServices userServices;
 
 	/*---------------it create the ToDoNotes------------*/
 	/**
@@ -50,12 +54,9 @@ public class TodoController {
 	@RequestMapping(value="CreateToDoNote", method=RequestMethod.POST)
 	public ResponseEntity<Response> CreateToDoNotes(@RequestBody ToDoNotes toDoNotes,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
 	{
-		
+		System.out.println("created todo notes :: "+toDoNotes);
 		boolean createNote=false;
 		List<ToDoNotes> todoNoteslist;
-		System.out.println("isdelted :::::: :::::::: ::::::"+toDoNotes.getIsDelete());
-		System.out.println("ispin :::::: :::::::: ::::::"+toDoNotes.getPin());
-		System.out.println("pooja");
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 
@@ -67,13 +68,9 @@ public class TodoController {
 			errorResponse.setList(list);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
-		System.out.println("updatede id  after set all value************:::::"+toDoNotes.getNoteid());
 		HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");
-		System.out.println("user data :: "+user);
 		Date currentDate=new Date();
-
-		System.out.println("after set all value :: "+toDoNotes);
                                 
 		toDoNotes.setNoteCreatedDate(currentDate);
 		toDoNotes.setUser(user);//store whole object inside the table
@@ -95,10 +92,9 @@ public class TodoController {
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
 		
-		todoNoteslist=toDoServices.getNotesList(user.getId());
-		System.out.println("all Notes list  :: "+toDoNotes);
+		/*todoNoteslist=toDoServices.getNotesList(user.getId());
+		toDoNotesResponse.setList(todoNoteslist);*/
 		
-		toDoNotesResponse.setList(todoNoteslist);
 		toDoNotesResponse.setStatus(200);
 		toDoNotesResponse.setMessage("Todo Item created successfully...");
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
@@ -120,12 +116,8 @@ public class TodoController {
 		
 		HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");
-		System.out.println("user data :: "+user);
 		
 		long userId=user.getId();
-
-		System.out.println("user Id :: "+userId);
-		
 		try {
 			toDoNotesList=toDoServices.getNotesList(userId);
 		} catch (Exception e) {
@@ -134,7 +126,8 @@ public class TodoController {
 			e.printStackTrace();
 		}
 		toDoNotesResponse.setList(toDoNotesList);
-		System.out.println("TodoList get all Notes :: "+toDoNotesList);
+		toDoNotesResponse.setStatus(200);
+		toDoNotesResponse.setMessage("all todo list");
 		return new ResponseEntity<ToDoNotesResponse>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
@@ -150,10 +143,8 @@ public class TodoController {
 	@RequestMapping(value="ToDoNoteUpdate", method=RequestMethod.PUT)
 	public ResponseEntity<Response> updateToDoNotes(@RequestBody ToDoNotes toDoNotes,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
 	{
-		System.out.println("is pin valuesssssss :::::   ");
 		boolean updateNote=false;
 		List<ToDoNotes> toDoNotesList=null;
-		System.out.println("comming from services :: "+toDoNotes);
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 
@@ -168,13 +159,10 @@ public class TodoController {
 
 		HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");
-		System.out.println("user data :: "+user);
-		System.out.println("updated note id *****:::::"+toDoNotes);
 		Date noteEditedDate=new Date();
 		toDoNotes.setNoteEditedDate(noteEditedDate);
 		toDoNotes.setUser(user);//store whole object inside the table
 		
-		System.out.println("after set all value :: "+toDoNotes);
 
 		try {
 			updateNote=(Boolean) toDoServices.CreateAndUpdateToDoNotes(toDoNotes);
@@ -191,15 +179,14 @@ public class TodoController {
 			toDoNotesResponse.setMessage("Todo Note not updated successfully...");
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
-		
+		/*
 		try {
 			toDoNotesList=toDoServices.getNotesList(user.getId());
-			System.out.println("all Notes list after updated :: "+toDoNotes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		toDoNotesResponse.setList(toDoNotesList);
+		toDoNotesResponse.setList(toDoNotesList);*/
 		toDoNotesResponse.setStatus(200);
 		toDoNotesResponse.setMessage("Todo Item updated successfully...");
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
@@ -237,13 +224,38 @@ public class TodoController {
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
 		
-		todoNoteslist=toDoServices.getNotesList(user.getId());
-		toDoNotesResponse.setList(todoNoteslist);
+		/*todoNoteslist=toDoServices.getNotesList(user.getId());
+		toDoNotesResponse.setList(todoNoteslist);*/
 		toDoNotesResponse.setMessage("user deleted successfully...");
 		toDoNotesResponse.setStatus(200);
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
+	
+	@RequestMapping(value="TodoNoteEmptyTrash", method = RequestMethod.DELETE)
+	public ResponseEntity<ToDoNotesResponse> TodoNoteEmptyTrash(HttpServletResponse httpServletResponse,HttpServletRequest httpServletRequest )
+	{
+		System.out.println("trash....");
+		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
+		
+		HttpSession httpSession=httpServletRequest.getSession();
+		User user=(User) httpSession.getAttribute("user");
+		
+		long userId=user.getId();
+		try {
+				toDoServices.emptyTrash(userId);
+				toDoNotesResponse.setStatus(200);
+				toDoNotesResponse.setMessage("all todo list");
+				return new ResponseEntity<ToDoNotesResponse>(toDoNotesResponse,HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+			toDoNotesResponse.setStatus(500);
+			toDoNotesResponse.setMessage("Exception....");
+			return new ResponseEntity<ToDoNotesResponse>(toDoNotesResponse,HttpStatus.OK);
+		}
+		}
 	/*------get ToDoNotes by Id------------*/
 	/**
 	 * 4) this method get TodoNotes by id from database `ToDoGoogleKeep` of table `ToDo_Notes` 
@@ -288,7 +300,6 @@ public class TodoController {
 	{
 		HttpSession httpSession=httpServletRequest.getSession();
 		UserRegistration user=(UserRegistration) httpSession.getAttribute("user");
-		System.out.println("user data :: "+user);
 		
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 		
@@ -297,7 +308,6 @@ public class TodoController {
 		List<ToDoNotes> toDoNotes = null;
 		try {
 			toDoNotes = toDoServices.getNotesByTitle(noteTitle,userId);
-			System.out.println("todo list by title :: "+toDoNotes);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -307,7 +317,6 @@ public class TodoController {
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println("todo not null or not :: "+toDoNotes);
 		if(toDoNotes==null)
 		{
 			toDoNotesResponse.setStatus(-1);
@@ -334,9 +343,6 @@ public class TodoController {
 	@RequestMapping(value="ToDoNoteReminder", method=RequestMethod.PUT)
 	public ResponseEntity<Response> ToDoNoteReminder(@RequestBody Map<String, Object> remindMap,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
 	{
-		System.out.println("333333333333333333  :: "+remindMap.get("reminder")+" "+remindMap.get("noteId"));
-		System.out.println("comming from services noteid :: "+remindMap.get("noteId"));
-		System.out.println("is pin valuesssssss :::::   ");
 		boolean updateNote=false;
 		List<ToDoNotes> toDoNotesList=null;
 		ToDoNotes toDoNotes = null;
@@ -348,8 +354,6 @@ public class TodoController {
 		String reminder=(String) remindMap.get("reminder");
 		int noteIdint = (Integer)remindMap.get("noteId");
 		long noteId = noteIdint;
-		System.out.println("noteid long ::::::::: "+noteId);
-		
 		
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
@@ -370,7 +374,6 @@ public class TodoController {
 					toDoNotes.setIsReminder(reminder);
 					toDoNotes.setNoteEditedDate(noteEditedDate);
 					toDoNotes.setUser(user);//store whole object inside the table
-					System.out.println("updated to do notes :: :: :: "+toDoNotes);
 					try {
 						updateNote=(Boolean) toDoServices.CreateAndUpdateToDoNotes(toDoNotes);
 					} catch (Exception e) {
@@ -393,19 +396,73 @@ public class TodoController {
 			toDoNotesResponse.setMessage("Todo Note not updated successfully...");
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
-		
 		try {
 			toDoNotesList=toDoServices.getNotesList(user.getId());
-			System.out.println("all Notes list after updated :: "+toDoNotesList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		toDoNotesResponse.setList(toDoNotesList);
 		toDoNotesResponse.setStatus(200);
 		toDoNotesResponse.setMessage("Todo Item updated successfully...");
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
-	
+	@RequestMapping(value="collaborator", method=RequestMethod.PUT)
+	public ResponseEntity<Response> collaborator(@RequestBody Map<String, Object> collaboratorMap,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
+	{
+		ToDoNotes toDoNotes = null;
+		Collaborator collaborator = new Collaborator();
+		ErrorResponse errorResponse=new ErrorResponse();
+		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
+
+		HttpSession httpSession=httpServletRequest.getSession();
+		User user=(User) httpSession.getAttribute("user");
+		
+		int noteIdint = (Integer)collaboratorMap.get("noteId");
+		long sharednoteId = noteIdint;
+		String sharedEmailId=(String) collaboratorMap.get("sharedEmailId");
+		User sharedUser=null;
+		boolean collaboratorNote=false;
+		try {
+				toDoNotes = toDoServices.getNotesById(sharednoteId,user.getId());
+				if(toDoNotes!=null)
+				{
+					System.out.println("todonotes collaborator :: "+toDoNotes);
+					try {
+						sharedUser = userServices.getUserByEmail(sharedEmailId);
+						if(sharedUser!=null)
+						{
+							System.out.println("shared user user id by email...:: "+sharedUser.getId());
+							collaborator.setSharedId(sharedUser.getId());
+							collaborator.setOwnerId(user.getId());
+							collaborator.setSharedNoteId(sharedUser.getId());
+							try {
+								collaboratorNote=(Boolean) toDoServices.collaboratorNoteCreate(collaborator);
+								toDoNotesResponse.setStatus(200);
+								toDoNotesResponse.setNoteSharedWithUser(sharedUser);
+								toDoNotesResponse.setMessage("Todo collaborator successfully...");
+								return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
+							} catch (Exception e) {
+								e.printStackTrace();
+								errorResponse.setMessage("Exception occure....");
+								errorResponse.setStatus(-1);
+								return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
+							}	
+						}
+					}catch (Exception e) {
+					e.printStackTrace();
+					errorResponse.setMessage("Exception occure....");
+					errorResponse.setStatus(-1);
+					return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
+				}
+					
+				}
+			}catch (Exception e) {
+			e.printStackTrace();
+			errorResponse.setMessage("Exception occure....");
+			errorResponse.setStatus(-1);
+			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
+		}
+		return null;
+	}
 }

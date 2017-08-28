@@ -1,7 +1,7 @@
 <div class="row">
 <div style="margin-left:16%">	
 	<div id="trashWord">Notes in Trash are deleted after 7 days.</div> 
-	<div id="trashEmpty">EMPTY TRASH NOW</div>
+	<div id="trashEmpty" ng-click="emptyTrash()">EMPTY TRASH NOW</div>
 </div>
 </div>
 <div class="row" ui-sortable="sortableOptions" ng-model="records">
@@ -11,7 +11,7 @@
                     	<div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
                    		
                    		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
-                    	
+                    		<div ng-if="x.addImage!=null" id="presentationTitle1" style="background-image: url({{x.addImage}});background-repeat:no-repeat;background-size: cover;"></div>
 					 		<div id="presentationTitle"data-ng-bind-html="x.title"></div>
 					  		<div id="presentationNote" data-ng-bind-html="x.description"></div>
 					  	

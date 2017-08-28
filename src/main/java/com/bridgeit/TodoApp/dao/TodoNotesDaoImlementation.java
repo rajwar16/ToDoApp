@@ -3,12 +3,14 @@ package com.bridgeit.TodoApp.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bridgeit.TodoApp.model.Collaborator;
 import com.bridgeit.TodoApp.model.ToDoNotes;
 import com.bridgeit.TodoApp.model.UserRegistration;
 
@@ -36,13 +38,25 @@ public class TodoNotesDaoImlementation implements TodoNotesDao{
 	 */
 	public List<ToDoNotes> getNotesList(long userId) 
 	{
-		System.out.println("get notes Dao ......");
 		Session session=sessionFactory.openSession();
 		Criteria criteria=session.createCriteria(ToDoNotes.class);
 		criteria.add(Restrictions.eq("user.id", userId));
 		List<ToDoNotes> list=criteria.list();
-		System.out.println("list of Notes :: "+criteria.list());
 		return list;
+		
+		/*Session session=sessionFactory.openSession();
+		Criteria criteria=session.createCriteria(ToDoNotes.class,"todonotes").createAlias("todonotes.Collaborator","collaborator")
+				.add(Restrictions.eq("user.id", userId));
+				.add(Restrictions.eq("collaborator.sharedId", userId));
+		List list = criteria.list();
+		System.out.println("List :: "+list);
+		return list;*/
+		
+		/*Session session=sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(ToDoNotes.class);
+	    criteria.setFetchMode("Collaborator", FetchMode.JOIN);
+	    List list = criteria.list();
+	    return list;*/
 	}
 	
 	/* (non-Javadoc)
@@ -68,7 +82,6 @@ public class TodoNotesDaoImlementation implements TodoNotesDao{
 	 * @see com.bridgeit.TodoApp.dao.TodoNotesDao#getNotesById(long)
 	 */
 	public ToDoNotes getNotesById(long noteId,long userId) {
-		System.out.println("dao getNotesById");
 		Session session=sessionFactory.openSession();
 		Criteria criteria=session.createCriteria(ToDoNotes.class);
 		ToDoNotes toDoNotes=(ToDoNotes) criteria.add(Restrictions.eq("Noteid", noteId)).add(Restrictions.eq("user.id", userId)).uniqueResult();
@@ -86,7 +99,11 @@ public class TodoNotesDaoImlementation implements TodoNotesDao{
 		List<ToDoNotes> toDoNotes=criteria.list();	
 		return toDoNotes;
 	}
-	
-	
-	
+
+	public Boolean collaboratorNoteCreate(Collaborator collaborator) {
+		System.out.println("todo Item :: "+collaborator);
+		Session session=sessionFactory.getCurrentSession();
+		session.saveOrUpdate(collaborator);
+		return true;
+	}
 }
