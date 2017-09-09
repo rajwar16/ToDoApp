@@ -45,6 +45,10 @@ public class AthenticationTokenBasedLogin implements Filter
 		HttpServletRequest request = (HttpServletRequest) request1;
 		HttpServletResponse response = (HttpServletResponse) response1;
 		
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type");
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0);

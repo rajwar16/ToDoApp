@@ -18,19 +18,20 @@ myApp.controller( 'collaborator',['$scope','$rootScope','$controller', '$http','
 		  collaboratorService.collaborator(collaboratorObject).then(function(data){
 			  if(data.data.status==200)
 				{
-				   console.log("collaborator created sucessfully :: ",data.data.noteSharedWithUser.profileImage);
-				   $rootScope.sharedUserProfilePic=data.data.noteSharedWithUser.profileImage;
+				   console.log("collaborator created sucessfully :: ",data.data.SharedUser.profileImage);
+				   console.log("collaborator shared user :: ",data.data.SharedUser);
+				   $rootScope.sharedUserProfilePic=data.data.SharedUser.profileImage;
 				}
 		  });
 	   } 
 }]).service("collaboratorService", function($http,$q) {
-	
     this.collaborator = function (collaboratorObject) {
     	console.log("collaborator...",collaboratorObject);
         return  $http({
             method : "PUT",
             url : "http://localhost:8080/TodoApp/collaborator",
-            data : collaboratorObject
+            data : collaboratorObject,
+            headers: {'accessToken': localStorage.getItem("accessToken")}
         });
     }
 });

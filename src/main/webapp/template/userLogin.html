@@ -9,10 +9,9 @@
 				<div class="title">Sign in</div>
 
 				<form name="userForm">
-
 					<div class="input">
 						<label for="userName"></label> 
-						<input type="email" name="userName" id="userName" data-ng-model="userName" placeholder="Username" required >
+						<input style="width: 100%;padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box; " type="email" name="userName" id="userName" data-ng-model="userName" placeholder="Username" required >
 						<span class="spin"></span>
 					</div>
 						<span style="color:#ED2553;font-size: 14px" data-ng-show="userForm.userName.$error.required && userForm.userName.$touched">*Email is required.</span> 
@@ -20,9 +19,10 @@
 					
 					<div class="input">
 						<label for="pass"></label> 
-						<input type="password" name="password" id="pass" data-ng-model="password" placeholder="Password" required> 
+						<input  style="width: 100%;padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"type="password" name="password" id="pass" data-ng-model="password" placeholder="Password" required> 
 						<span class="spin"></span>
 					</div>
+					
 					<div>
 						<span style="color:#ED2553;font-size:14px" data-ng-show="userForm.password.$error.required && userForm.password.$touched">*password is required.</span> 
 					</div>
@@ -37,16 +37,24 @@
 						</button>
 					</div>
 				</form>
-				<div class="pass-forgot">
-					dont have account plzz<a ui-sref="register">register?</a>
+				<div class="pass-forgot" style="margin-bottom: 20px;margin-top: -16px;">
+					Don't have an account?<a ui-sref="register"> Sign up</a>
 				</div>
 				<div class="pass-forgot">
-						<!-- <button class="btn red" ng-click="facebookLoginController()">
-							Login with facbook
+						<div class="facebookloginButton"><a href="facebookLogin" class="aclass">
+							<img src="Images/fbicon.png" style="height: 20px;width: 20px;margin-right: 13px;margin-top: -4px;">Login with facbook
+						</a></div>
+						
+						<div class="googleloginButton"><a href="facebookLogin" class="aclass">
+							<img src="Images/googleicon.png" style="height: 20px;width: 20px;margin-right: 13px;margin-top: -4px;">Login with google
+						</a></div>
+						
+						<!-- <button class="googleloginButton" ng-click="facebookLoginController()">
+							<img src="Images/googleicon.png" style="height: 20px;width: 20px;margin-right: 13px;margin-top: -4px;">Login with google
 						</button> -->
-						<a href="facebookLogin">Login with facbook</a>
+						<!-- <a href="facebookLoginController()">Login with facbook</a> -->
+						<!-- <a ui-sref="facebookLogin1">Login with facbook</a> -->
 				</div>
-				
 			</div>
 			<!-- Full Name: {{userName + " " + password}} -->
 		</div>

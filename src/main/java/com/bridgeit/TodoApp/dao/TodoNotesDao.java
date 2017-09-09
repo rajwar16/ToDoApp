@@ -3,6 +3,7 @@ package com.bridgeit.TodoApp.dao;
 import java.util.List;
 
 import com.bridgeit.TodoApp.model.Collaborator;
+import com.bridgeit.TodoApp.model.PageScrapedata;
 import com.bridgeit.TodoApp.model.ToDoNotes;
 
 public interface TodoNotesDao 
@@ -18,4 +19,14 @@ public interface TodoNotesDao
 	boolean deleteNoteById(long noteId);
 
 	Boolean collaboratorNoteCreate(Collaborator collaborator);
+
+	Object emptyTrash(long userId);
+
+	List<ToDoNotes> getSharedNotesList(long userId);
+
+	Boolean UpdateToDoNotes(ToDoNotes toDoNotes);
+
+	Boolean createScrape(PageScrapedata pageScrapedata);
+
+	List<PageScrapedata> getPageScrapeData(long noteid);
 }

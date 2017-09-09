@@ -4,11 +4,12 @@ myApp.controller( 'profilePicController',['$scope','$controller','$state', '$htt
 	  $controller('showDivision', {$scope: $scope}),
 	  $controller('registerController', {$scope: $scope}),
 	  
-	  $scope.imageSrc="Images/image.jpg";
+	  //$scope.imageSrc="Images/image.jpg";
 	  
 	  $scope.$on("fileProgress", function(e, progress) {
 	      $scope.progress = progress.loaded / progress.total;
 	  });
+	  
 	  $scope.uploadPic=function(imageSrc)
 	  {
 		  $scope.imageSrc=imageSrc;
@@ -25,11 +26,17 @@ myApp.controller( 'profilePicController',['$scope','$controller','$state', '$htt
 				   console.log("updateprofilePic updated sucessfully :: ",data.data.userRegistration);
 				   $scope.imageSrc=data.data.userRegistration.profileImage;
 				   $scope.profileImage=data.data.userRegistration.profileImage;
+				   //$uibModalInstance.dismiss('cancel');
 				   $state.go("ToDoHomePage");
 				}
 		  });
 		  
-	   } 
+	   }
+	  
+	 /* $scope.cancel = function () {
+		  $uibModalInstance.dismiss('cancel');
+	  };*/
+	  
 }]).service("uploadService", function($http,$q) {
 	
     this.updateprofile = function (updateprofilePic) {

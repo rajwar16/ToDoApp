@@ -29,9 +29,8 @@ public class UserDaoImplementation implements UserDao
 		Session session=sessionFactory.getCurrentSession();
 		if(string=="mannual")
 		{
-		System.out.println("mannual :: ");
+			
 		String originalPassword=userRegistration.getPassword();
-		System.out.println("Original password comming from view page :: "+originalPassword);
 		StrongSecuredPassword strongSecuredPassword=new StrongSecuredPassword();
 
 		String EncryptedPassword=strongSecuredPassword.EncryptPassword(originalPassword);
@@ -67,9 +66,6 @@ public class UserDaoImplementation implements UserDao
 			return null;
 		}
 
-		System.out.println("useregistration data "+user);
-		System.out.println("database password :: "+user.getPassword());
-		System.out.println("incoming password :: "+incomingPassword);
 		boolean validatePassword=strongSecuredPassword.validatingPassword(user.getPassword(),incomingPassword);
 
 		if(validatePassword)
@@ -83,7 +79,6 @@ public class UserDaoImplementation implements UserDao
 		Session session=sessionFactory.openSession();
 		Criteria criteria=session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("email", email));
-		System.out.println("user dao imple getuserby email ::  "+ criteria.uniqueResult());
 		return (User) criteria.uniqueResult();
 	}
 
@@ -96,7 +91,6 @@ public class UserDaoImplementation implements UserDao
 	}
 
 	public Object updateUser(User userRegistration) throws NoSuchAlgorithmException, InvalidKeySpecException {
-		System.out.println("dao Implementation : "+userRegistration);
 		Session session=sessionFactory.getCurrentSession();
 		session.update(userRegistration);		
 		return true;
@@ -114,7 +108,6 @@ public class UserDaoImplementation implements UserDao
 		Session session=sessionFactory.openSession();
 		Criteria criteria=session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("id", userId));
-		System.out.println("user dao imple getuserby email ::  "+ criteria.uniqueResult());
 		return (User) criteria.uniqueResult();
 	}
 

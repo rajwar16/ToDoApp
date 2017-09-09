@@ -52,7 +52,6 @@ myApp.service('TodoHomePageService', function($http) {
     });
     }
     
-    
     this.getRefreshToken = function(token) {
     	console.log("service refreshToken object object  :: ",token);
     	return $http({

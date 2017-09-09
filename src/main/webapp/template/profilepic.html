@@ -1,7 +1,7 @@
 <div style="width:100%;height:500px">
 	<div style="width:100%;height:50px;display: inline-block;font-size: 20px;vertical-align: top;font-family: Roboto,Arial,sans-serif;padding: 10px 32px;">Select profile pic</div>
 	<div style="width:100%;height:50px;display: inline-block;font-size: 16px;vertical-align: top;font-family: Roboto,Arial,sans-serif;padding: 6px 32px;color: #262626;font-weight: bold;">Upload photos</div>
-	<div style="width:100%;height:320px;border: 1px solid">
+	<div style="width:100%;height:320px;border: 1px solid #ccc;">
 	
 		<!-- <input type="file" fileinput="file" filepreview="filepreview" ng-model="pic"/>
 		<div ng-click="changepic()">change pic</div>
@@ -17,5 +17,8 @@
  		<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="display:none" id="fileInput"/>
          	
 	</div>
-	<div style="width:100%;height:80px;border: 1px solid"><button ng-click="uploadPic(imageSrc)">Set as profile pic</button></div>
+	<div style="width:100%;height:80px">
+		<button class="btn" style="margin-left:22px;font-size: 16px;margin-top: 17px;" ng-click="uploadPic(imageSrc)">Set as profile pic</button>
+		<button class="btn" style="margin-left:22px;font-size: 16px;margin-top: 17px;" ng-click="cancel()">Cancel</button>	
+	</div>
 </div>

@@ -1,5 +1,6 @@
 package com.bridgeit.TodoApp.JSONResponse;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,14 +13,32 @@ public class ToDoNotesResponse extends Response
 	private ToDoNotes toDoNotes;	
 	private Date createdDate;
 	private Date editedDate;
-	private User noteSharedWithUser;
+	private User user;
+	private User SharedUser;
+	private List<String> links;
 	
-	public User getNoteSharedWithUser() {
-		return noteSharedWithUser;
+	public List<String> getLinks() {
+		return links;
 	}
 
-	public void setNoteSharedWithUser(User noteSharedWithUser) {
-		this.noteSharedWithUser = noteSharedWithUser;
+	public void setLinks(List<String> containedUrls) {
+		this.links = containedUrls;
+	}
+
+	public User getSharedUser() {
+		return SharedUser;
+	}
+
+	public void setSharedUser(User sharedUser) {
+		SharedUser = sharedUser;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getCreatedDate() {
@@ -57,6 +76,6 @@ public class ToDoNotesResponse extends Response
 	@Override
 	public String toString() {
 		return "ToDoNotesResponse [list=" + list + ", toDoNotes=" + toDoNotes + ", createdDate=" + createdDate
-				+ ", editedDate=" + editedDate + ", noteSharedWithUser=" + noteSharedWithUser + "]";
+				+ ", editedDate=" + editedDate + ", User=" + user + "]";
 	}
 }

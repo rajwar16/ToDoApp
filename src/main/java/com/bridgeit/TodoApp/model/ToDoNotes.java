@@ -2,6 +2,7 @@ package com.bridgeit.TodoApp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -36,6 +38,17 @@ public class ToDoNotes implements Serializable
 	private String isArchive;
 	private String isReminder;
 	
+	@Transient
+	private List<PageScrapedata> pageScrapedata;
+	
+	public List<PageScrapedata> getPageScrapedata() {
+		return pageScrapedata;
+	}
+
+	public void setPageScrapedata(List<PageScrapedata> pageScrapedata) {
+		this.pageScrapedata = pageScrapedata;
+	}
+
 	@Lob
     @Column(name="IMAGE", columnDefinition="mediumblob")
 	private String addImage;

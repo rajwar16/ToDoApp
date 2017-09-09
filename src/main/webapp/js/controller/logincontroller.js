@@ -20,6 +20,7 @@ myApp.controller( 'loginController',function($scope, $state,loginService)
 			if(data.data.status==200)
 			{
 				console.log("login sucessfully status 200..");
+				console.log("accessToken",data.data.accessToken,"    \nrefreshToken",data.data.refreshToken);
 				localStorage.setItem("accessToken",data.data.accessToken);
 				localStorage.setItem("refreshToken",data.data.refreshToken);
 				$state.go("ToDoHomePage");
@@ -41,7 +42,7 @@ myApp.controller( 'loginController',function($scope, $state,loginService)
 	}
 	
 	$scope.facebookLoginController=function() {
-		console.log("inside the lfacebookLoginController function....");
+		console.log("inside the facebookLoginController function....");
 		
 		var result=loginService.facebookLogin().then(function(data){
 			if(data.data.status==200)

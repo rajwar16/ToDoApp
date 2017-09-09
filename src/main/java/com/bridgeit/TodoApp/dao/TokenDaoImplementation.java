@@ -23,7 +23,7 @@ public class TokenDaoImplementation implements TokenDao
 	public Token getToken(String AccessToken) 
 	{
 		Session session=sessionFactory.openSession();
-		
+		System.out.println("getAccess token  :: "+AccessToken);
 		Criteria criteria=session.createCriteria(Token.class);
 		Token token = null;
 		try {
@@ -43,7 +43,6 @@ public class TokenDaoImplementation implements TokenDao
 		session.delete(token);		
 		return null;
 	}
-
 
 	/*public Token getTokenByRefreshToken(String refreshToken) {
 		return refreshToken;

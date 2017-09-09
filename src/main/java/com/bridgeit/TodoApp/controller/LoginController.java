@@ -54,7 +54,6 @@ public class LoginController {
 		{
 			user=userServices.loginUser(loginMap.get("userName"),loginMap.get("password"));
 			
-			System.out.println("after login :: "+user);
 			logger.debug("User Login executed!");
 			
 			/*System.out.println(new Date());
@@ -162,7 +161,6 @@ public class LoginController {
 		
 		HttpSession httpSession=request.getSession();
 		User user=(User) httpSession.getAttribute("user");
-		System.out.println("user data :: "+user);
 		accessToken=UUID.randomUUID().toString().replaceAll("-", "");
 		refreshToken=UUID.randomUUID().toString().replaceAll("-", "");
 		
@@ -173,7 +171,6 @@ public class LoginController {
 		token.setRefreshToken(refreshToken);
 		token.setUserId(user.getId());
 		
-		System.out.println("updated new token is :: "+token);
 		try {
 			tokenservices.addToken(token);
 		} catch (Exception e) {

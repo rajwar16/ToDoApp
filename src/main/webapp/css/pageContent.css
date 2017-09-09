@@ -10,8 +10,6 @@
     margin-top: 25%;
 }
 
-    
-
 .editDiv
 {
 	height: 34px;
@@ -56,7 +54,6 @@
 	display: block;
 }
 
-	
 #pageContainerfluid, #sidebarContainerFluid, #wrapperDiv{
 		background-color: #e8e8e8;
 		visibility: visible;
@@ -407,4 +404,53 @@
     padding: 5px 57px;
     text-transform: uppercase;
 }
-   
+
+.scrapeUrlTitle
+{
+    float: left;
+    width: 160px;
+    height: 24px;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Roboto Condensed',arial,sans-serif;
+    font-size: 14px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom:5px;
+    color: rgba(0,0,0,.87);	
+}
+
+.scrapeUrlHost
+{
+	float:left;
+	width:138px;
+	height:21px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	color: rgba(0,0,0,.54);
+    font-size: 11px;
+    font-weight: 400;
+    font-family: 'Roboto',arial,sans-serif;
+}
+
+.scrapeUrlImage
+{
+	height: 26px;
+    width: 26px;
+    float: left;
+    padding: 3px 14px;
+}
+
+.scrapeUrlImagePopup
+{
+	height: 29px;
+    width: 29px;
+    float: right;
+    padding: 6px 13px;
+    margin-right: 20px;
+    margin-top: 10px;
+}

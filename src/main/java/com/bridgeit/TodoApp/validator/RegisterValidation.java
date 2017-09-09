@@ -32,7 +32,6 @@ public class RegisterValidation implements Validator
 
 	public void validate(Object userRegistration1, Errors bindingResult) 
 	{
-		System.out.println(userRegistration1);
 		User userRegistration=(User) userRegistration1;
 
 		/*UserName validation*/

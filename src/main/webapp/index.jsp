@@ -100,6 +100,7 @@ $(document).ready(function(){
 </script>
 
 <title>Google Keep</title>
+<link rel="shortcut icon" href="Images/googlekeep.png" type="image/png" />
 </head>
 <body data-ng-app="todo" style="background-color: #e8e8e8">
 	<div ui-view></div>

@@ -31,6 +31,7 @@ import com.bridgeit.TodoApp.services.FacebookUtil;
 import com.bridgeit.TodoApp.services.OAuthServiceConfig;
 import com.bridgeit.TodoApp.services.UserServices;
 
+
 @RestController
 public class FacebookLogin {
 	/*private static final String FACEBOOK = "facebook";
@@ -55,13 +56,21 @@ public class FacebookLogin {
 	UserServices userServices;
 	@RequestMapping(value = "facebookLogin")
 	public void facebookLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("facebook login");
+		System.out.println("facebook login:: ");
 		String facebookUrlLink = FacebookUtil.getFacebookUrl();
+		/*response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+		  	response.addHeader("Access-Control-Allow-Credentials", "true");
+			response.addHeader("Access-Control-Allow-Origin", "*");
+			response.addHeader("Access-Control-Allow-Methods", "*");
+			response.addHeader("Access-Control-Max-Age", "3600");
+			response.addHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type");
+		*/
+		
 		response.sendRedirect(facebookUrlLink);
 	}
 	
 	@RequestMapping(value = "facebookUrl")
-	public ResponseEntity<Response> facebookUrl(HttpServletRequest request, HttpServletResponse response) throws IOException 
+	public void facebookUrl(HttpServletRequest request, HttpServletResponse response) throws IOException 
 	{
 		String facebookCode=request.getParameter("code");
 		System.out.println("facebookUrl login :: "+facebookCode);
@@ -86,25 +95,23 @@ public class FacebookLogin {
 		
 		catch (Exception e) {
 			e.printStackTrace();
-			ErrorResponse errorResponse=new ErrorResponse();
+			/*ErrorResponse errorResponse=new ErrorResponse();
 			errorResponse.setStatus(500);
 			errorResponse.setMessage("some internal Database server problem");
-			return new ResponseEntity<Response>(errorResponse,HttpStatus.OK); 
+			return new ResponseEntity<Response>(errorResponse,HttpStatus.OK); */
 		}
 		
 		if (!userRegistered) {
-			registerErrorResponse.setStatus(404);
+			/*registerErrorResponse.setStatus(404);
 			registerErrorResponse.setMessage("user not registered....");
-			return new ResponseEntity<Response>(registerErrorResponse,HttpStatus.OK); 
+			return new ResponseEntity<Response>(registerErrorResponse,HttpStatus.OK); */
 		}
-		
-		registerErrorResponse.setStatus(200);
+		response.sendRedirect("http://localhost:8080/TodoApp/#!/ToDoHomePage");
+		/*registerErrorResponse.setStatus(200);
 		registerErrorResponse.setMessage("user registered sucessfully....");
 		registerErrorResponse.setAccessToken(facebookToken);
-		return new ResponseEntity<Response>(registerErrorResponse,HttpStatus.OK); 
+		return new ResponseEntity<Response>(registerErrorResponse,HttpStatus.OK); */
 	}
-	
-
 	
 	/*@RequestMapping(value = "facebookLogin")
 	public ModelAndView facebookLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {

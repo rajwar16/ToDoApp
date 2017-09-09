@@ -26,9 +26,6 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		url : "/archive",
 		templateUrl : "template/TodoHomePage.html",
 		controller : "archiveController",
-		data: {
-			accessToken: localStorage.getItem("accessToken")
-        }
 	}).state("getrefreshToken", {
 		url : "/getrefreshToken",
 		/*controller : "TodoHomePageController"*/
