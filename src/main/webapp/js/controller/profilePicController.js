@@ -1,4 +1,4 @@
-myApp.controller( 'profilePicController',['$scope','$controller','$state', '$http','uploadService',function($scope, $controller,$state,fileReader,uploadService)
+myApp.controller( 'profilePicController',['$scope','$controller','$state', '$http','uploadService','$uibModal','$uibModalInstance',function($scope, $controller,$state,fileReader,uploadService,$uibModal,$uibModalInstance,$rootScope)
 	{
 	  console.log("profilePicController ...");
 	  $controller('showDivision', {$scope: $scope}),
@@ -26,16 +26,16 @@ myApp.controller( 'profilePicController',['$scope','$controller','$state', '$htt
 				   console.log("updateprofilePic updated sucessfully :: ",data.data.userRegistration);
 				   $scope.imageSrc=data.data.userRegistration.profileImage;
 				   $scope.profileImage=data.data.userRegistration.profileImage;
-				   //$uibModalInstance.dismiss('cancel');
+				   $uibModalInstance.dismiss('Done');
 				   $state.go("ToDoHomePage");
 				}
 		  });
-		  
-	   }
+		 
+	   };
 	  
-	 /* $scope.cancel = function () {
+	  $scope.cancel = function () {
 		  $uibModalInstance.dismiss('cancel');
-	  };*/
+	  };
 	  
 }]).service("uploadService", function($http,$q) {
 	
@@ -43,7 +43,7 @@ myApp.controller( 'profilePicController',['$scope','$controller','$state', '$htt
     	console.log("uploadService...",updateprofilePic);
         return  $http({
             method : "PUT",
-            url : "http://localhost:8080/TodoApp/userUpdate",
+            url : "userUpdate",
             data : updateprofilePic
         });
     }

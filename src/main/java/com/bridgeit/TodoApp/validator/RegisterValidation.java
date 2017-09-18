@@ -8,7 +8,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 
 public class RegisterValidation implements Validator
 {

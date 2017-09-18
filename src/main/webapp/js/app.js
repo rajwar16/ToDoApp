@@ -7,9 +7,10 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		url : "/login",
 		templateUrl : "template/userLogin.html",
 		controller : "loginController"
-	}).state("facebookLogin1", {
-		url : "/facebookLogin1",
-		controller : "facebookLoginController"
+	}).state("facebookLoginComplete", {
+		url : "/facebookLoginComplete",
+		templateUrl : "template/FacebookLoginComplete.html",
+		controller : "facebookLoginCompleteController"
 	}).state("register", {
 		url : "/register",
 		templateUrl : "template/UserRegistration.html",
@@ -18,6 +19,10 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		url : "/ToDoHomePage",
 		templateUrl : "template/TodoHomePage.html",
 		controller : "showDivision",
+	}).state("reminderPage", {
+		url : "/reminderPage",
+		templateUrl : "template/TodoHomePage.html",
+		controller : "reminderController",
 	}).state("trash", {
 		url : "/trash",
 		templateUrl : "template/TodoHomePage.html",
@@ -26,6 +31,18 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		url : "/archive",
 		templateUrl : "template/TodoHomePage.html",
 		controller : "archiveController",
+	}).state("ForgotPassword", {
+		url : "/ForgotPassword",
+		templateUrl : "template/findYourAcount.html",
+		controller : "forgotPassword",
+	}).state("enterTheCode", {
+		url : "/enterTheCode",
+		templateUrl : "template/enterTheCode.html",
+		controller : "forgotPassword",
+	}).state("passwordChange", {
+		url : "/passwordChange",
+		templateUrl : "template/passwordChange.html",
+		controller : "forgotPassword",
 	}).state("getrefreshToken", {
 		url : "/getrefreshToken",
 		/*controller : "TodoHomePageController"*/

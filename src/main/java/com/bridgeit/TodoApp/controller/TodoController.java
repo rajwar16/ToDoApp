@@ -12,15 +12,15 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Constants;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -33,13 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgeit.TodoApp.JSONResponse.ErrorResponse;
 import com.bridgeit.TodoApp.JSONResponse.Response;
 import com.bridgeit.TodoApp.JSONResponse.ToDoNotesResponse;
-import com.bridgeit.TodoApp.JSONResponse.UserResponse;
+
 import com.bridgeit.TodoApp.model.Collaborator;
 import com.bridgeit.TodoApp.model.PageScrapedata;
 import com.bridgeit.TodoApp.model.ToDoNotes;
-import com.bridgeit.TodoApp.model.Token;
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 import com.bridgeit.TodoApp.services.ToDoServices;
 import com.bridgeit.TodoApp.services.TokenServices;
 import com.bridgeit.TodoApp.services.UserServices;
@@ -74,7 +72,6 @@ public class TodoController {
 	public ResponseEntity<Response> CreateToDoNotes(@RequestBody ToDoNotes toDoNotes,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws IOException, URISyntaxException
 	{
 		boolean createNote=false;
-		List<ToDoNotes> todoNoteslist;
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 
@@ -87,7 +84,7 @@ public class TodoController {
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		
-		String accessToken =  httpServletRequest.getHeader("accessToken");
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
 		User user;
@@ -99,10 +96,13 @@ public class TodoController {
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
 		/*HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");*/
+		
+		User user=(User) httpServletRequest.getAttribute("user");
+		System.out.println("user get by httpservletRequest :: "+user);
 		
 		String description=toDoNotes.getDescription();
 		
@@ -116,7 +116,6 @@ public class TodoController {
 	        containedUrls.add(description.substring(urlMatcher.start(0),
 	                urlMatcher.end(0)));
 	    }
-	    
 	  
 		System.out.println(containedUrls);
 		
@@ -137,12 +136,12 @@ public class TodoController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(500);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		
 		if (!createNote) {
-			toDoNotesResponse.setStatus(-1);
+			toDoNotesResponse.setStatus(400);
 			toDoNotesResponse.setMessage("Todo Note not created successfully...");
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
@@ -156,38 +155,32 @@ public class TodoController {
 		toDoNotesResponse.setMessage("Todo Item created successfully...");
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
+	
 	private void getAndCreateScrap(List<String> containedUrls,ToDoNotes toDoNotes) throws URISyntaxException, IOException {
 		
-		 System.out.println("link size ::::::: ::::::: :::::: "+containedUrls.size());
 		 for(int i=0;i<containedUrls.size();i++)
 		 {
 			 PageScrapedata pageScrapedata=new PageScrapedata();
 			 Connection con = Jsoup.connect(containedUrls.get(i)).timeout(40*1000);
 			 URI stringUri=new URI(containedUrls.get(i));
 			 String hostName=stringUri.getHost();
-			 System.out.println("host name ***********************"+hostName);
 			 Document doc = con.get();
 			 String title = null;
 			 Elements metaOgTitle = doc.select("meta[property=og:title]");
 			 if (metaOgTitle!=null) {
 		    	title = metaOgTitle.attr("content");
-		    	System.out.println("if title of url:: "+title);
 			 }
 			 else {
 		    	title = doc.title();
-		    	System.out.println("else title of url:: "+title);
 		    }
 		    
 		    String imageUrl = null;
 		    Elements metaOgImage = doc.select("meta[property=og:image]");
 		    if (metaOgImage!=null) {
 		        imageUrl = metaOgImage.attr("content");
-		        System.out.println("if imageUrl of url:: "+imageUrl);
 		    }
 		    else {
-		    	System.out.println("else imageUrl of url:: "+imageUrl);
 		    }
-		    
 		    pageScrapedata.setHostName(hostName);
 		    pageScrapedata.setUrlTitle(title);
 		    pageScrapedata.setUrlImage(imageUrl);
@@ -196,9 +189,9 @@ public class TodoController {
 		    
 		    boolean createScrape=(Boolean) toDoServices.createScrape(pageScrapedata);
 		 }
-		 }
+		}
 
-	/*------get ToDoNotes List------------*/
+	/*-------------------------get ToDoNotes List-------------------------------------------------------------*/
 	/**
 	 *2) this method get TodoNotes list by Title from database `ToDoGoogleKeep` of table `ToDo_Notes`
 	 * @param httpServletResponse
@@ -209,24 +202,24 @@ public class TodoController {
 	public ResponseEntity<Response> getNotesList(HttpServletResponse httpServletResponse,HttpServletRequest httpServletRequest )
 	{
 		List<ToDoNotes> toDoNotesList=null;
-		/*List<Integer> sharedNoteId=null;
-		List<ToDoNotes> sharedTodoNoteList=null;*/
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 		ErrorResponse errorResponse=new ErrorResponse();
 
-		String accessToken =  httpServletRequest.getHeader("accessToken");
+		User user=(User) httpServletRequest.getAttribute("user");
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
-		User user;
+		User user=null;
+		
 		try {
 			user=userServices.getUserById(userId);	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
+		
 		/*HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");*/
 		
@@ -234,7 +227,6 @@ public class TodoController {
 		try {
 			toDoNotesList=toDoServices.getNotesList(userId1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 			e.printStackTrace();
 		}
@@ -245,7 +237,6 @@ public class TodoController {
 			List<PageScrapedata> scrapedataList=toDoServices.getPageScrapeData(toDoNotes.getNoteid());
 			if(!scrapedataList.isEmpty())
 			{
-				System.out.println("if condition isempty...");
 				for(int i1=0;i1<scrapedataList.size();i1++)
 				{
 					scrapedataList.get(i1).getNoteid().getUser().setPassword(null);
@@ -263,7 +254,7 @@ public class TodoController {
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
-	/*-------------------ToDoNote Update------------------*/
+	/*------------------------------------ToDoNote Update-------------------------------------------------------*/
 	/**
 	 * 3) this controller method update the todoNote inside the `ToDoGoogleKeep` database of `User` table
 	 * @param toDoNotes {@link ToDoNotes}
@@ -276,7 +267,6 @@ public class TodoController {
 	public ResponseEntity<Response> updateToDoNotes(@RequestBody ToDoNotes toDoNotes,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
 	{
 		boolean updateNote=false;
-		List<ToDoNotes> toDoNotesList=null;
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 
@@ -284,27 +274,29 @@ public class TodoController {
 		{
 			List<FieldError> list = bindingResult.getFieldErrors();
 			errorResponse.setMessage("Some Binding error has occure...");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(400);
 			errorResponse.setList(list);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		
-		String accessToken =  httpServletRequest.getHeader("accessToken");
+		User user=(User) httpServletRequest.getAttribute("user");
+		
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
 		User user;
 		try {
 			user=userServices.getUserById(userId);	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
 		/*HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");*/
+		
 		Date noteEditedDate=new Date();
 		toDoNotes.setNoteEditedDate(noteEditedDate);
 		toDoNotes.setUser(user);
@@ -312,15 +304,14 @@ public class TodoController {
 		try {
 			updateNote=(Boolean) toDoServices.UpdateToDoNotes(toDoNotes);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(500);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		
 		if (!updateNote) {
-			toDoNotesResponse.setStatus(-1);
+			toDoNotesResponse.setStatus(400);
 			toDoNotesResponse.setMessage("Todo Note not updated successfully...");
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
@@ -337,7 +328,7 @@ public class TodoController {
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
-	/*----------------Delete todoNote------------------------*/
+	/*----------------------------------Delete todoNote---------------------------------------------------------*/
 	/**
 	 * 4) this method controller Delete the user data from the `ToDoGoogleKeep` database of `User_Registration` table
 	 * @param httpServletRequest
@@ -349,19 +340,20 @@ public class TodoController {
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 		
-		String accessToken =  httpServletRequest.getHeader("accessToken");
+		User user=(User) httpServletRequest.getAttribute("user");
+		
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
 		User user;
 		try {
 			user=userServices.getUserById(userId);	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
 		/*HttpSession httpSession=httpServletRequest.getSession();
 		User user = (User) httpSession.getAttribute("user");*/
@@ -370,33 +362,40 @@ public class TodoController {
 		try {
 			deleteNote = toDoServices.deleteNoteById(noteId);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(500);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		
 		if (!deleteNote) {
-			toDoNotesResponse.setStatus(-1);
+			toDoNotesResponse.setStatus(400);
 			toDoNotesResponse.setMessage("TodoNote not deleted successfully...");
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
 		
 		/*todoNoteslist=toDoServices.getNotesList(user.getId());
 		toDoNotesResponse.setList(todoNoteslist);*/
+		
 		toDoNotesResponse.setMessage("TodoNote deleted successfully...");
 		toDoNotesResponse.setStatus(200);
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
 	
+	/*----------------------------------TodoNoteEmptyTrash todoNote---------------------------------------------------------*/
+	/**
+	 * 5) this method controller Delete the user data from the `ToDoGoogleKeep` database of `User_Registration` table
+	 * @param httpServletRequest
+	 * @return
+	 */
 	@RequestMapping(value="TodoNoteEmptyTrash", method = RequestMethod.DELETE)
 	public ResponseEntity<Response> TodoNoteEmptyTrash(HttpServletResponse httpServletResponse,HttpServletRequest httpServletRequest )
 	{
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
-		ErrorResponse errorResponse=new ErrorResponse();
+		User user=(User) httpServletRequest.getAttribute("user");
 		
+		/*
 		String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
@@ -404,14 +403,13 @@ public class TodoController {
 		try {
 			user=userServices.getUserById(userId);	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
-	/*	HttpSession httpSession=httpServletRequest.getSession();
+	/* HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");*/
 		
 		long userId1=user.getId();
@@ -429,9 +427,10 @@ public class TodoController {
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
 	}
-	/*------get ToDoNotes by Id------------*/
+	
+	/*-----------------------------------get ToDoNotes by Id-------------------------------------*/
 	/**
-	 * 4) this method get TodoNotes by id from database `ToDoGoogleKeep` of table `ToDo_Notes` 
+	 * 6) this method get TodoNotes by id from database `ToDoGoogleKeep` of table `ToDo_Notes` 
 	 * @param noteId
 	 * @param httpServletRequest
 	 * @param httpServletResponse
@@ -441,8 +440,9 @@ public class TodoController {
 	public ResponseEntity<Response> getNotesById(@PathVariable("id") long noteId,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
 	{
 		ErrorResponse errorResponse=new ErrorResponse();
+		User user=(User) httpServletRequest.getAttribute("user");
 		
-		String accessToken =  httpServletRequest.getHeader("accessToken");
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
 		User user;
@@ -453,7 +453,7 @@ public class TodoController {
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
 	/*	HttpSession httpSession=httpServletRequest.getSession();
 		UserRegistration user=(UserRegistration) httpSession.getAttribute("user");*/
@@ -463,11 +463,11 @@ public class TodoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(500);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
-		toDoNotesResponse.setStatus(1);
+		toDoNotesResponse.setStatus(200);
 		toDoNotesResponse.setMessage("Todo Notes get successfully By Id...");
 		toDoNotesResponse.setToDoNotes(toDoNotes);
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
@@ -475,7 +475,7 @@ public class TodoController {
 	
 	/* -------------------get ToDoNotes by Title------------------------*/
 	/**
-	 *4) this method get TodoNotes by Title from database `ToDoGoogleKeep` of table `ToDo_Notes`
+	 *7) this method get TodoNotes by Title from database `ToDoGoogleKeep` of table `ToDo_Notes`
 	 * @param noteTitle
 	 * @param httpServletRequest
 	 * @param httpServletResponse
@@ -486,8 +486,9 @@ public class TodoController {
 	{
 		
 		ErrorResponse errorResponse=new ErrorResponse();
+		User user=(User) httpServletRequest.getAttribute("user");
 		
-		String accessToken =  httpServletRequest.getHeader("accessToken");
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
 		User user;
@@ -498,7 +499,7 @@ public class TodoController {
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
 	/*	HttpSession httpSession=httpServletRequest.getSession();
 		UserRegistration user=(UserRegistration) httpSession.getAttribute("user");*/
@@ -514,25 +515,120 @@ public class TodoController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(500);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		if(toDoNotes==null)
 		{
-			toDoNotesResponse.setStatus(-1);
+			toDoNotesResponse.setStatus(400);
 			toDoNotesResponse.setMessage("Todo Notes of "+noteTitle+" title not found.....");
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.NOT_FOUND);
 		}
-		toDoNotesResponse.setStatus(1);
+		toDoNotesResponse.setStatus(200);
 		toDoNotesResponse.setMessage("Todo Notes get by title successfully...");
 		toDoNotesResponse.setList(toDoNotes);
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
 	
-	/*-------------------ToDoNote Reminder------------------*/
+	/*-------------------ToDoNote Archive------------------------------------------------------------------------*/
 	/**
-	 * 3) this controller method update the todoNote inside the `ToDoGoogleKeep` database of `User` table
+	 * 8) this controller method update the todoNote inside the `ToDoGoogleKeep` database of `User` table
+	 * @param toDoNotes {@link ToDoNotes}
+	 * @param bindingResult {@link BindingResult}
+	 * @param httpServletRequest {@link HttpServletRequest}
+	 * @param httpServletResponse {@link HttpServletResponse}
+	 * @return
+	 */
+	@RequestMapping(value="ToDoNoteArchive", method=RequestMethod.PUT)
+	public ResponseEntity<Response> toDoNoteArchive(@RequestBody Map<String, Object> archiveMap,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
+	{
+		boolean updateNote=false;
+		ToDoNotes toDoNotes = null;
+		
+		ErrorResponse errorResponse=new ErrorResponse();
+		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
+		
+		User user=(User) httpServletRequest.getAttribute("user");
+		
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
+		
+		Token token = tokenservices.getToken(accessToken);
+		long userId=token.getUserId();
+		User user;
+		try {
+			user=userServices.getUserById(userId);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorResponse.setMessage("Exception occure....");
+			errorResponse.setStatus(-1);
+			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
+		}*/
+		
+		/*HttpSession httpSession=httpServletRequest.getSession();
+		User user=(User) httpSession.getAttribute("user");*/
+		
+		Date noteEditedDate=new Date();
+		String archive=(String) archiveMap.get("archive");
+		int noteIdint = (Integer)archiveMap.get("noteId");
+		long noteId = noteIdint;
+		System.out.println("note id archive :: "+noteId);
+		
+		if(bindingResult.hasErrors())
+		{
+			List<FieldError> list = bindingResult.getFieldErrors();
+			errorResponse.setMessage("Some Binding error has occure...");
+			errorResponse.setStatus(400);
+			errorResponse.setList(list);
+			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
+		}
+
+		try {
+			toDoNotes = toDoServices.getNotesById(noteId,user.getId());
+			if(toDoNotes!=null)
+				{
+					if(archive.equals("true"))
+					{
+						toDoNotes.setPin("false");
+					}
+					toDoNotes.setIsArchive(archive);
+					toDoNotes.setNoteEditedDate(noteEditedDate);
+					toDoNotes.setUser(user);//store whole object inside the table
+					try {
+						updateNote=(Boolean) toDoServices.UpdateToDoNotes(toDoNotes);
+					} catch (Exception e) {
+						e.printStackTrace();
+						errorResponse.setMessage("Exception occure....");
+						errorResponse.setStatus(500);
+						return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
+					}
+				}
+			} catch (Exception e) {
+			e.printStackTrace();
+			errorResponse.setMessage("Exception occure....");
+			errorResponse.setStatus(500);
+			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
+		}
+		
+		if (!updateNote) {
+			toDoNotesResponse.setStatus(400);
+			toDoNotesResponse.setMessage("Todo Note not updated successfully...");
+			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
+		}
+		/*try {
+			toDoNotesList=toDoServices.getNotesList(user.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		toDoNotesResponse.setList(toDoNotesList);*/
+		toDoNotesResponse.setStatus(200);
+		toDoNotesResponse.setMessage("Todo Item archive value updated successfully...");
+		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
+	}
+	
+	/*---------------------------------------ToDoNote Reminder-----------------------------------------*/
+	/**
+	 * 9) this controller method update the todoNote inside the `ToDoGoogleKeep` database of `User` table
 	 * @param toDoNotes {@link ToDoNotes}
 	 * @param bindingResult {@link BindingResult}
 	 * @param httpServletRequest {@link HttpServletRequest}
@@ -549,7 +645,9 @@ public class TodoController {
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 		
-		String accessToken =  httpServletRequest.getHeader("accessToken");
+		User user=(User) httpServletRequest.getAttribute("user");
+		
+		/*String accessToken =  httpServletRequest.getHeader("accessToken");
 		Token token = tokenservices.getToken(accessToken);
 		long userId=token.getUserId();
 		User user;
@@ -560,7 +658,7 @@ public class TodoController {
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
 		/*HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");*/
@@ -574,7 +672,7 @@ public class TodoController {
 		{
 			List<FieldError> list = bindingResult.getFieldErrors();
 			errorResponse.setMessage("Some Binding error has occure...");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(400);
 			errorResponse.setList(list);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
@@ -591,19 +689,19 @@ public class TodoController {
 					} catch (Exception e) {
 						e.printStackTrace();
 						errorResponse.setMessage("Exception occure....");
-						errorResponse.setStatus(-1);
+						errorResponse.setStatus(500);
 						return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 					}
 				}
 			} catch (Exception e) {
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(500);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		
 		if (!updateNote) {
-			toDoNotesResponse.setStatus(-1);
+			toDoNotesResponse.setStatus(400);
 			toDoNotesResponse.setMessage("Todo Note not updated successfully...");
 			return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 		}
@@ -618,6 +716,16 @@ public class TodoController {
 		return new ResponseEntity<Response>(toDoNotesResponse,HttpStatus.OK);
 	}
 	
+	
+	/*---------------------------------------ToDoNote collaborator-----------------------------------------*/
+	/**
+	 * 10) this controller method update the todoNote inside the `ToDoGoogleKeep` database of `User` table
+	 * @param toDoNotes {@link ToDoNotes}
+	 * @param bindingResult {@link BindingResult}
+	 * @param httpServletRequest {@link HttpServletRequest}
+	 * @param httpServletResponse {@link HttpServletResponse}
+	 * @return
+	 */
 	@RequestMapping(value="collaborator", method=RequestMethod.PUT)
 	public ResponseEntity<Response> collaborator(@RequestBody Map<String, Object> collaboratorMap,BindingResult bindingResult,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
 	{
@@ -626,7 +734,9 @@ public class TodoController {
 		ErrorResponse errorResponse=new ErrorResponse();
 		ToDoNotesResponse toDoNotesResponse=new ToDoNotesResponse();
 		
-		String accessToken = httpServletRequest.getHeader("accessToken");
+		User user=(User) httpServletRequest.getAttribute("user");
+		
+		/*String accessToken = httpServletRequest.getHeader("accessToken");
 		
 		Token token=null;
 		
@@ -637,9 +747,9 @@ public class TodoController {
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		
-		long userId=token.getUserId();
+		/*long userId=token.getUserId();
 		User user;
 		try {
 			user=userServices.getUserById(userId);	
@@ -648,7 +758,7 @@ public class TodoController {
 			errorResponse.setMessage("Exception occure....");
 			errorResponse.setStatus(-1);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
-		}
+		}*/
 
 		/*HttpSession httpSession=httpServletRequest.getSession();
 		User user=(User) httpSession.getAttribute("user");*/
@@ -674,21 +784,21 @@ public class TodoController {
 							} catch (Exception e) {
 								e.printStackTrace();
 								errorResponse.setMessage("Exception occure....");
-								errorResponse.setStatus(-1);
+								errorResponse.setStatus(500);
 								return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 							}	
 						}
 					}catch (Exception e) {
 					e.printStackTrace();
 					errorResponse.setMessage("Exception occure....");
-					errorResponse.setStatus(-1);
+					errorResponse.setStatus(500);
 					return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 				}
 				}
 			}catch (Exception e) {
 			e.printStackTrace();
 			errorResponse.setMessage("Exception occure....");
-			errorResponse.setStatus(-1);
+			errorResponse.setStatus(500);
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.BAD_REQUEST);
 		}
 		toDoNotesResponse.setStatus(200);

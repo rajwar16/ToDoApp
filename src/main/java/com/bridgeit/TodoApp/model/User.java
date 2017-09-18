@@ -23,17 +23,19 @@ public class User implements Serializable
 	@Id
 	@GenericGenerator(name="id",strategy="increment")
 	@GeneratedValue(generator="id")
-	
 	private long id;
+	
 	private String userName;
 	private String password;
 	private String mobileNo;
 	private String email;
 	private String facebookProfile; 
-	
 	@Lob
     @Column(name="Profile_IMAGE", columnDefinition="mediumblob")
     private String profileImage;
+	
+	private String verifyEmail;
+	
 
 	public long getId() {
 		return id;
@@ -91,9 +93,20 @@ public class User implements Serializable
 		this.profileImage = profileImage;
 	}
 
+	public String getVerifyEmail() {
+		return verifyEmail;
+	}
+
+	public void setVerifyEmail(String verifyEmail) {
+		this.verifyEmail = verifyEmail;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", mobileNo=" + mobileNo
-				+ ", email=" + email + ", facebookProfile=" + facebookProfile + ", profileImage=" + profileImage + "]";
+				+ ", email=" + email + ", facebookProfile=" + facebookProfile + ", profileImage=" + profileImage
+				+ ", verifyEmail=" + verifyEmail + "]";
 	}
+
+	
 }	

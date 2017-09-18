@@ -1,4 +1,4 @@
-myApp.controller( 'registerController',function($scope, $state, $http,registerService)
+myApp.controller( 'registerController',function($scope, $state, $http,$uibModal,registerService)
 {
 	console.log("inside the register controller");
 	
@@ -21,7 +21,15 @@ myApp.controller( 'registerController',function($scope, $state, $http,registerSe
 			
 			if(data.data.status==200)
 			{
-				console.log("login sucessfully status 200..");
+				var modalInstance = $uibModal.open({
+		        	templateUrl: "template/EmailVarification.html",
+		        	controller: function($uibModalInstance) 
+		        	{
+		        		var $ctrl = this;
+		        		console.log("open popup controller data.....");
+		        	},
+		        	controllerAs: "$ctrl",
+				});
 				$state.go("login");
 			}
 			else

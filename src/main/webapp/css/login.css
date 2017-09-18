@@ -481,7 +481,7 @@ html {
 }
 
 a:focus, a:hover {
-    color: white;
+    color: blue;
     text-decoration: underline;
 }
 

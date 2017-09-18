@@ -15,13 +15,18 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.bridgeit.TodoApp.JSONResponse.ErrorResponse;
+import com.bridgeit.TodoApp.JSONResponse.Response;
 import com.bridgeit.TodoApp.JSONResponse.TokenResponse;
 import com.bridgeit.TodoApp.model.Token;
+import com.bridgeit.TodoApp.model.User;
 import com.bridgeit.TodoApp.services.TokenServices;
+import com.bridgeit.TodoApp.services.UserServices;
 
 public class AthenticationTokenBasedLogin implements Filter
 {
@@ -37,6 +42,7 @@ public class AthenticationTokenBasedLogin implements Filter
 				.getWebApplicationContext(request1.getServletContext());
 
 		TokenServices tokenService = (TokenServices) applicationContext.getBean("tokenservices");
+		UserServices userService = (UserServices) applicationContext.getBean("userServices");
 		/*TokenResponse tokenResponse=applicationContext.getBean(TokenResponse.class);
 		System.out.println("token service object :: "+tokenService);*/
 		
@@ -54,7 +60,6 @@ public class AthenticationTokenBasedLogin implements Filter
 		response.setDateHeader("Expires", 0);
 		
 		accessToken =  request.getHeader("accessToken");
-		System.out.println("filter access token :: "+accessToken);
 		
 		if (accessToken == null || accessToken.trim().isEmpty()) {
 			response.setContentType("application/json");
@@ -63,11 +68,18 @@ public class AthenticationTokenBasedLogin implements Filter
 			return;
 		}
 		
-		System.out.println("access token :: "+accessToken);
-		System.out.println("token service bean :: "+tokenService);
-		Token token = tokenService.getToken(accessToken);
+		Token token=null;
 		
-		System.out.println("authetication token from database :: "+token.getAccessToken());
+		try {
+			token = tokenService.getToken(accessToken);
+			System.out.println("filter access token ::::::::::::::::"+token);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			response.setContentType("application/json");
+			String jsonResp = "{\"status\":\"500\",\"errorMessage\":\"Exception occure user not gettong by access token....\"}";
+			response.getWriter().write(jsonResp);
+			return;
+		}
 		
 		if (token.getAccessToken() == null) {
 			response.setContentType("application/json");
@@ -89,6 +101,20 @@ public class AthenticationTokenBasedLogin implements Filter
 			response.getWriter().write(jsonResp);
 			return;
 		}
+		
+		long userId=token.getUserId();
+		User user=null;
+		try {
+			user=userService.getUserById(userId);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setContentType("application/json");
+			String jsonResp = "{\"status\":\"500\",\"errorMessage\":\"Exception occure user not gettong by access token....\"}";
+			response.getWriter().write(jsonResp);
+			return;
+			
+		}
+		request.setAttribute("user", user);
 		chain.doFilter(request, response);
 	}
 	public void destroy() {

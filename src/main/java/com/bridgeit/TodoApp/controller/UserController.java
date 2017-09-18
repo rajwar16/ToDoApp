@@ -1,10 +1,13 @@
 package com.bridgeit.TodoApp.controller;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -25,9 +28,9 @@ import com.bridgeit.TodoApp.JSONResponse.RegisterErrorResponse;
 import com.bridgeit.TodoApp.JSONResponse.Response;
 import com.bridgeit.TodoApp.JSONResponse.UserResponse;
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 import com.bridgeit.TodoApp.services.UserServices;
 import com.bridgeit.TodoApp.validator.RegisterValidation;
+import com.bridgeit.TodoApp.validator.UserEmailValidator;
 
 @RestController
 @RequestMapping(value="/")
@@ -50,13 +53,14 @@ public class UserController
 	 * @return
 	 */
 	@RequestMapping(value="userRegister", method=RequestMethod.POST)
-	public ResponseEntity<Response> addUserRegister(@RequestBody User user,BindingResult bindingResult)
+	public ResponseEntity<Response> addUserRegister(@RequestBody User user,BindingResult bindingResult,HttpServletRequest request)
 	{
 		logger1.debug("addUserRegister547356 is executed!");
 		
 		boolean userRegistered=false;
 		
 		RegisterErrorResponse registerErrorResponse=new RegisterErrorResponse();
+		
 		System.out.println(user);
 		registerValidation.validate(user, bindingResult);
 
@@ -84,24 +88,57 @@ public class UserController
 		catch (Exception e) {
 			ErrorResponse errorResponse=new ErrorResponse();
 			errorResponse.setStatus(500);
-			errorResponse.setMessage("some internal Database server problem");
+			errorResponse.setMessage("some internal Database server problem... so user not registered successfully...");
 			return new ResponseEntity<Response>(errorResponse,HttpStatus.OK); 
 		}
+		long userId=user.getId();
+		String emailID=user.getEmail();
+		String token=UUID.randomUUID().toString().replaceAll("-", "");
 		
-		if (!userRegistered) {
-			registerErrorResponse.setStatus(404);
-			registerErrorResponse.setMessage("user not registered....");
-			return new ResponseEntity<Response>(registerErrorResponse,HttpStatus.OK); 
-		}
+		request.getSession().setAttribute(token, userId);
+		UserEmailValidator.mailVerification(emailID,token);
 		
 		registerErrorResponse.setStatus(200);
 		registerErrorResponse.setMessage("user registered sucessfully....");
 		return new ResponseEntity<Response>(registerErrorResponse,HttpStatus.OK); 
-	
 	}
 	
-	
-	/*----------------------updateUser----------------*/
+	@RequestMapping(value="verifyMail")
+	public void verifyMail(HttpServletRequest request,HttpServletResponse response) throws IOException
+	{
+		User user=null;
+		UserResponse userResponse=new UserResponse();
+		String userToken=request.getParameter("userToken");
+		long userid =(Long) request.getSession().getAttribute(userToken);
+		System.out.println("userid by session :: "+userid);
+		
+		try {
+			user =userServices.getUserById(userid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		/*if(user==null)
+		{
+			userResponse.setStatus(-1);
+			userResponse.setMessage("invalid user email id....");
+			return new ResponseEntity<Response>(userResponse,HttpStatus.OK); 
+		}*/
+		user.setVerifyEmail("true");
+		try {
+			userServices.updateUser(user);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+		
+	/*	userResponse.setStatus(200);
+		userResponse.setMessage("user Email id verified successfully now plzz login....");
+		return new ResponseEntity<Response>(userResponse,HttpStatus.OK);*/
+		response.sendRedirect("http://localhost:8080/TodoApp/#!/login");
+		
+	}
+	/*-----------------------------------updateUser--------------------------------------------*/
 	/**
 	 * 
 	 *2) this method controller update the user data inside the `ToDoGoogleKeep` database of `User_Registration` table

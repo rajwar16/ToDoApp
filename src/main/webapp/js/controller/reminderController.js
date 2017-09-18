@@ -1,19 +1,19 @@
-myApp.controller( 'archiveController',['$scope', '$controller', function($scope, $controller)
+myApp.controller( 'reminderController',['$scope', '$controller', function($scope, $controller)
 	{
 	  $controller('showDivision', {$scope: $scope}),
-	  console.log("archiveController archive...");
+	  console.log("reminderController reminder...");
 	  
 		$scope.pinupHtml=false;
 	   	$scope.viewHtml=false;
 	   	$scope.trashHtml=false;
-	   	$scope.archiveHtml=true;
-	   	$scope.reminderHtml=false;
+	   	$scope.archiveHtml=false;
+	   	$scope.reminderHtml=true;
 	   	$scope.createEditableNote=false;
 	   	
 	   	$scope.navigationBar="rgb(96, 125, 139)";
 	    $scope.navigationBorder="rgb(96, 125, 139)";
 	    $scope.google=false;
-	    $scope.navbarName="Archive";
+	    $scope.navbarName="Reminders";
 	    $scope.navcolor="white";
 	    $scope.menuImg="Images/menu.svg";
 	    $scope.listImg="Images/list2.svg";

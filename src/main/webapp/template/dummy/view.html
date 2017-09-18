@@ -1,0 +1,140 @@
+<!-- <div class="row" style="margin-top: 65px; ">
+
+	<div id="pinWord" style="margin-bottom: 4%">Others</div>
+		<div ng-class="space3col"></div>	
+	<div  ng-class="view_change" style="background-color: red">
+		<!-- <div ui-sortable ng-model="records">
+			<div data-ng-repeat="x in records | filter:searchQuery" testpackery id="todoNote"> 
+				<div ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false'" >
+						<div ng-class="space3col"></div>
+						<div ng-class="view_change" style="padding-right: 0px; padding-left: 0px;background-color: yellow;">
+						<div ng-style="{'background-color':x.color}">
+								<div id="pinDiv" ng-click="isPin(x,'true')">
+									<img src="Images/pin.svg" style="height: 20px; width: 20px">
+								</div>
+							<div ng-click="open(x)">
+								<div id="presentationTitle" data-ng-bind-html="x.title"></div>
+								<div id="presentationNote" data-ng-bind-html="x.description"></div>
+							</div>
+							<div style="display: inline-block; height: 35px; width: 100%">
+								<div id="presentationeditRepeat" style="height: 35px">
+									<div class="editDivRepeat" title="Remind me">
+										<img src="Images/remindericon.svg">
+									</div>
+									<div class="editDivRepeat" title="Collaborator">
+										<img src="Images/cc.svg">
+									</div>
+								------------------- colorDiv Section ---------------------------------------------------------------
+									<color></color>
+								------------------- colorDiv Section End-------------------------------------------------------
+									<div class="editDivRepeat" title="Add image">
+										<img src="Images/img.svg">
+									</div>
+									<div class="editDivRepeat" title="Archive"
+										ng-click="isarchive(x,'true')">
+										<img src="Images/archive.svg">
+									</div>
+									<div class="editDivRepeat" title="More">
+										<img src="Images/list.png">
+									</div>
+
+									<div class="editDivRepeat" title="Delete">
+										<button id="doneButton" ng-click="deleteNote(x,'true')"
+											style="float: right;">
+											<img src="Images/trash.svg">
+										</button>
+									</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+</div> -->
+
+
+<!--****************************************************************************************************************** / -->
+<!-- </div> -->
+<!-- <script>                  
+var $grid = $('.grid').packery({
+  itemSelector: '.grid-item',
+  columnWidth: 100
+});
+
+// make all grid-items draggable
+$grid.find('.grid-item').each( function( i, gridItem ) {
+  var draggie = new Draggabilly( gridItem );
+  // bind drag events to Packery
+  $grid.packery( 'bindDraggabillyEvents', draggie );
+});                    
+</script> -->
+
+<!--****************************************************************************************************************** / -->
+<div class="row" ng-show="othershow">
+	<div ng-class="space3col"></div>                  
+    <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
+		<div id="pinWord" style="margin-bottom: 3%;margin-top: 7%;">Others</div>
+	</div>
+</div>	
+<!-- <div class="row" dnd-list="records"> -->
+<div class="row">	
+  	<div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false' " testpackery ng-class="view_change" style="margin:0px 15px 18px 3px;padding-right: 0px;padding-left: 0px;" class="todoNoteDiv1"  ng-style="{'background-color':x.color,width:colLg4view}">
+  	<!-- <div  data-ng-repeat="x in records | filter:searchQuery as results track by $index"  dnd-draggable="x" dnd-effect-allowed="copymove" dnd-selected="models.selected=x" >  -->
+<!--   	<div ng-if="x.pin=='false' && x.isDelete=='false' && x.isArchive=='false'" >
+                <div ng-class="space3col"></div>                  
+                <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px;" ng-style="{'width':colLg4}">
+                   		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}"> -->
+                    		<div id="pinDiv" ng-click="isPin(x,'true')">
+									<img src="Images/pin.svg"  title="unpin" style="height: 20px; width: 20px">
+							</div>
+							<div ng-click="open(x)">
+								<div ng-if="x.addImage!=null" id="presentationTitle1" style="background-image: url({{x.addImage}});background-repeat:no-repeat;background-size: cover;"></div>
+					 			<div id="presentationTitle"data-ng-bind-html="x.title"></div>
+					  			<div id="presentationNote" data-ng-bind-html="x.description"></div>
+					  		</div>
+					  		<div style="display: inline-block; height: 35px;width: 100%;">
+					  			<div id="presentationeditRepeat" style="height: 35px">
+					  			
+					  				<div class="dropdown-toggle editDivRepeat" style="padding: 0px 7px;top: 93%;left:4px;" data-toggle="dropdown" title="Remind me">
+					  					<img src="Images/remindericon.svg" >
+					  				</div>
+                					<div class="dropdown-menu" style="padding:20px;width: 335px;height: 280px;position: absolute;top: 93%;left: 3px;">
+                						<div style="width: 100%;height: 20%;font-size: 17px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" >Reminder:</div>
+                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" ng-click="reminder(x,'today')">Later today<span style="margin-left:120px;color:rgba(0,0,0,.54)">8:00 PM</span></div>
+                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" ng-click="reminder(x,'tomorrow')">Tomorrow<span style="margin-left: 130px;color:rgba(0,0,0,.54)">8:00 PM</span></div>
+                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" ng-click="reminder(x,'nextWeek')">nextWeek<span style="margin-left: 130px;color:rgba(0,0,0,.54)">8:00 PM</span></div>
+                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;">Pick date & time</div>
+                					</div>
+					  				<!-- <div class="editDivRepeat" title="Remind me"><img src="Images/remindericon.svg"></div> -->
+					  				<div class="editDivRepeat" title="Collaborator" ng-click="collaborator(x)">
+					  					<img src="Images/cc.svg">
+					  				</div>
+			<!--------------------- colorDiv Section----------------------------------------------------------------->
+  									<color></color>
+			<!--------------------- colorDiv Section End--------------------------------------------------------->
+					  				<div class="editDivRepeat" title="Add image"><!-- <img src="Images/img.svg"> -->
+					  					<img src="Images/img.svg" ng-click="triggerUpload()"/>
+ 										<input type="file" ng-file-select="onFileSelect($files)" ng-model="addImageFunc" style="display:none" id="fileInput"/>
+					  				</div>
+					  				<div class="editDivRepeat" title="Archive" ng-click="isarchive(x,'true')"><img src="Images/archive.svg"></div>
+					  				<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
+					  				<div  class="editDivRepeat"  title="Delete" style="margin-top: -2px;margin-left: 3px;">
+					  					<button id="doneButton" ng-click="deleteNote(x,'true')" style="float:right;">
+					  						<img src="Images/trash.svg">
+					  					</button>
+					  				</div>
+    							</div>
+    						</div>
+    						<div ng-if="x.isReminder!=null" style="height: 36px;width: 90%;margin-left: 15px;border-top:2px dotted rgba(0,0,0,0.1);" >
+									<div style="color:rgba(0,0,0,.54);font-size: 14px;font-family: 'Roboto',arial,sans-serif;padding-top: 7px "><span style="padding: 3px 7px 7px 4px;"><img src="Images/watchReminder.svg"></span>{{x.isReminder}}</div>                    	
+                    		</div>
+ 							<div ng-if="x.pageScrapedata!=null"  data-ng-repeat="scrape in x.pageScrapedata" style="height: 57px;width: 100%;border: 2px solid rgba(0,0,0,0.1);background-color: rgba(250,250,250,0.8);" >
+                    		<div style="height: 56px;width:56px;float:left;background-color:transparent ;"><img style="height: 56px;width:56px;" ng-src="{{scrape.urlImage}}"></div>
+                    		<div style="float:left;width:158px;height:56px;margin-left: 10px;background-color:transparent ;">
+                    			<div class="scrapeUrlTitle" style="background-color:transparent;">{{scrape.urlTitle}}</div>
+                    			<div class="scrapeUrlHost" style="background-color:transparent;">{{scrape.hostName}}</div>
+                    		</div>
+                    		<!-- <div class="scrapeUrlImage" style="height: 14px;width: 14px;margin-left: 20px;margin-top: 2px;background-color:transparent;"><img style="height: 16px;width:16px;" src="Images/link.svg"></div> -->
+                    		<div class="scrapeUrlImage"><a ng-href="{{scrape.redirectUrl}}" target="_blank" ><img style="height: 16px;width:16px;" src="Images/link.svg"></a></div>
+                    		</div>
+                    	</div>

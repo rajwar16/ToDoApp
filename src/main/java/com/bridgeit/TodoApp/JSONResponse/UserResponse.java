@@ -3,7 +3,6 @@ package com.bridgeit.TodoApp.JSONResponse;
 import java.util.List;
 
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 
 public class UserResponse extends Response{
 

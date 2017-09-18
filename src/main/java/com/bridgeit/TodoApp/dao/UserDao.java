@@ -5,7 +5,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 
 public interface UserDao 
 {

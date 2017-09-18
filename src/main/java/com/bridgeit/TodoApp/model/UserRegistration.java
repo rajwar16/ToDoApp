@@ -1,4 +1,4 @@
-package com.bridgeit.TodoApp.model;
+/*package com.bridgeit.TodoApp.model;
 
 import java.io.Serializable;
 
@@ -91,3 +91,4 @@ public class UserRegistration implements Serializable
 				+ ", mobilePhone=" + mobilePhone + ", emailId=" + emailId + "]";
 	}
 }
+*/

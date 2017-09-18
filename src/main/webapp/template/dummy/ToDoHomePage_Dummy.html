@@ -84,7 +84,7 @@
                 </li>
                 <br>
                  <li>
-                    <a ui-sref="reminderPage"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/remindericon.svg">Reminders</a>
+                    <a href="#"><img style="height: 24px;width: 24px;margin-right: 35px;" src="Images/remindericon.svg">Reminders</a>
                 </li>
                 
                 <hr style="height: 1px;color:red;background-color: black">
@@ -112,7 +112,9 @@
                       	<div contenteditable1 contenteditable="true" class="presentation"  data-ng-show = "IsVisible1" data-placeholder="Take a note..." data-ng-click="ShowHide()" id="initialTitle">
                       		<div class="presentationDiv"><img style="height: 24px;width: 24px" src="Images/img.svg"></div>
                       	</div>
+					  	
 					  	<!-- /card division  -->
+					  	
 					  	<!--this is editable division, this division will show when click card division -->
 					  	<div data-ng-show="IsVisible" ng-style="{'background-color':createColor}" class="presentation1">
 					  		<div data-ng-model="note" data-ng-show="addImageDiv" id="presentationNote">
@@ -130,19 +132,23 @@
 					  		<div id="presentationedit" style="display:inline-block;">
 					  		
 					  			<!--------- reminder div ------------->	
-					  			<div class="dropdown-toggle editDivRepeat" style="padding: 7px 7px;top: 93%;left:4px;" data-toggle="dropdown" title="Remind me">
-					  					<img src="Images/remindericon.svg" style="padding-left: 7px;">
-					  				</div>
-                					<div class="dropdown-menu" style="padding:20px;width: 335px;height: 280px;position: absolute;top: 93%;left: 3px;">
-                						<div style="width: 100%;height: 20%;font-size: 17px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" >Reminder:</div>
-                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" ng-click="createReminder('today')">Later today<span style="margin-left:120px;color:rgba(0,0,0,.54)">8:00 PM</span></div>
-                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" ng-click="createReminder('tomorrow')">Tomorrow<span style="margin-left: 130px;color:rgba(0,0,0,.54)">8:00 PM</span></div>
-                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;" ng-click="createReminder('nextWeek')">nextWeek<span style="margin-left: 130px;color:rgba(0,0,0,.54)">8:00 PM</span></div>
-                						<div style="width: 100%;height: 20%;font-size: 16px;font-family: 'Roboto',arial,sans-serif;padding:5px 16px;">Pick date & time</div>
+					  			<div class="dropdown-toggle editDiv" data-toggle="dropdown" title="Remind me">
+					  				<img src="Images/remindericon.svg" >
+					  			</div>
+					  		
+                				<div class="dropdown-menu" style="width: 44%;height: 183%;position: absolute;top: 93%;left: 3px;">
+                					<div style="height: 46px;width: 300px;font-size: 14px;padding: 15px;font-family: 'Roboto',arial,sans-serif;">Reminder:</div>
+                					<div style="height: 35px;width: 300px;background-color: yellow;">
+                						<input ng-model="date2" datetime-picker date-format="yyyy-MM-dd" date-only /> 
                 					</div>
+                					<div style="height: 35px;width: 300px;background-color: red;"></div>
+                					<div style="height: 35px;width: 300px;background-color: yellow;"></div>
+                					<div style="height: 35px;width: 300px;background-color: red;"></div>
+                					<div style="height: 35px;width: 300px;background-color: yellow;"></div>
+                				</div>
 					  			<!--------- reminder div ------------->	
-					  			<div class="editDiv" title="Collaborator" style="padding-left: 15px;"><img src="Images/cc.svg" ></div>
-					  			<div class="editDiv" title="color" style="padding: 6px 0px 0px 0px;"><color ></color></div>
+					  			<div class="editDiv" title="Collaborator"><img src="Images/cc.svg" ></div>
+					  			<div class="editDiv" title="Collaborator" style="padding: 6px 0px 0px 0px;"><color ></color></div>
 					  			
 					  			<div class="editDiv" title="Add image">
 					  				<input type="image" src="Images/img.svg"/>
@@ -153,7 +159,7 @@
 					  			</div>
 					  			
 					  			<div class="editDiv" title="Archive" ng-click="createArchive('true')"><img src="Images/archive.svg" ></div>
-					  			<!-- <div class="editDiv" title="More"><img src="Images/list.png" ></div> -->
+					  			<div class="editDiv" title="More"><img src="Images/list.png" ></div>
 					  			
 					  			<div class="editdivButton">
 					  				<button id="doneButton" ng-click="createNote()">
@@ -161,10 +167,6 @@
 					  				</button>
 					  			</div>
 					  		</div>
-					  		
-					  		<div ng-show="createReminderDiv" style="height: 36px;width: 90%;margin-left: 15px;border-top:2px dotted rgba(0,0,0,0.1);" >
-									<div style="color:rgba(0,0,0,.54);font-size: 14px;font-family: 'Roboto',arial,sans-serif;padding-top: 7px "><span style="padding: 3px 7px 7px 4px;"><img src="Images/watchReminder.svg"></span>{{createday}}</div>                    	
-                    		</div>
 					  	</div>
 					 </div>
                     </div>	
@@ -185,7 +187,6 @@
                   	<div ng-show="pinupHtml" ng-include="'template/pinup.html'"></div>
                   	<div ng-show="viewHtml" ng-include="'template/view.html'"></div>
                   	<div ng-show="trashHtml" ng-include="'template/trash.html'"></div>
-                  	<div ng-show="reminderHtml" ng-include="'template/reminder.html'"></div>
                   	<div ng-show="archiveHtml" ng-include="'template/archive.html'"></div>
                   </div>
                 </div>

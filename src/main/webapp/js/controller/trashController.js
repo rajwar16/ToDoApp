@@ -8,6 +8,7 @@ myApp.controller( 'trashController',['$scope', '$controller', function($scope, $
 	   	$scope.viewHtml=false;
 	   	$scope.trashHtml=true;
 	   	$scope.archiveHtml=false;
+	   	$scope.reminderHtml=false;
 	   	$scope.createEditableNote=false;
 	   	
 	   	

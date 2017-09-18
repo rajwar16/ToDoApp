@@ -5,47 +5,39 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
         url : "http://localhost:8080/TodoApp/ToDoNoteList",
         headers: {'accessToken': localStorage.getItem("accessToken")}
     }).then(function(data){
-    	console.log(data.data);
-    	console.log("accessToken:::"+localStorage.getItem("accessToken"));
+    	console.log("status is :: :: :: ",data.data.status==-2)
 		if(data.data.status==-2)
 		{
-			console.log("accessToken expired status ::  ", data.data.status);
-			var token = {
+			/*var token = {
 					accessToken : localStorage.getItem("accessToken"),
 					refreshToken : localStorage.getItem("refreshToken")
 			}
-			console.log("token object access token :: "+token.accessToken);
 			
 			var refreshToken=TodoHomePageService.getRefreshToken(token).then(function(data){
-				console.log("getting refresh and accessToken::  200 status  ::  ",data.data.status);
 				if(data.data.status==200)
 				{
-					console.log("getting refresh and accessToken::  200 status  ::  ",data.data.status);
 					localStorage.setItem("accessToken",data.data.accessToken);
 					localStorage.setItem("refreshToken",data.data.refreshToken);
 				}
 				else if(data.data.status==-2)
 				{
-					console.log("refreshToken is expired you have to login  status ::  ", data.data.status);
 					$state.go("login");
 				}
 				else if(data.data.status==400)
 				{
-					console.log("accessToken is missing you have to login  status ::  ", data.data.status);
 					$state.go("login");
 				}
-			});
+			});*/
+			$scope.getRefreshToken();
 		}
 		else if(data.data.status==-1)
 		{
-			console.log("access token is null");
 			$state.go("login");
 		}
 		
     	var count=0; // for count pin
 		var countView=0;  // for count pin
 		$scope.records=data.data.list.reverse();
-		console.log("todonotes list :: ",$scope.records);
 		
 		for(var i=0;i<=$scope.records.length-1;i++)
 		{
@@ -59,7 +51,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 				countView=countView+1;
 			}
 		}
-		console.log("count view is  :: ",countView);
 		if(count==0)
 		{
 			$scope.pinShow=false;
@@ -82,25 +73,20 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 		}
     	
     	toUpdate=$scope.records;
-    	/*$scope.userNameInitial=$scope.records[0].user.userName[0];
-    	$scope.changeBgColor={"background-color" : "red"} 
-    	
-    	$scope.userId=$scope.records[0].user.id;
-    	$scope.profileImage=$scope.records[0].user.profileImage;
-    	$scope.imageSrc = $scope.profileImage;
-    	
-    	$scope.userName=$scope.records[0].user.userName;
-    	$scope.email=$scope.records[0].user.email;
-    	$scope.mobileNo=$scope.records[0].user.mobileNo;*/
     	
     	$scope.user=data.data.user;
-    	console.log("----------------user is todohome user :: ",$scope.user);
     	$scope.userNameInitial=$scope.user.userName[0];
     	$scope.changeBgColor={"background-color" : "red"} 
     	
     	$scope.userId=$scope.user.id;
+    	if($scope.user.profileImage==null)
+    	{
+    		$scope.profileImage=$scope.user.facebookProfile;
+    	}
+    	else{
+    		$scope.profileImage=$scope.user.profileImage;
+    	}
     	
-    	$scope.profileImage=$scope.user.profileImage;
     	$scope.imageSrc = $scope.profileImage;
     	
     	$scope.userName=$scope.user.userName;
@@ -108,10 +94,8 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
     	$scope.mobileNo=$scope.usermobileNo;
     }, 
     function errorCallback(response) {
-    	console.log("accessToken:::"+localStorage.getItem("accessToken"));
     });
 	
-	console.log("show division controller...");
     // This will hide the DIV by default.
 	$scope.addImageDiv=false;
 	$scope.addImageFunc=null;
@@ -119,6 +103,7 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
     $scope.IsVisible = false;
     $scope.IsVisible1 = true ;
     $scope.createEditableNote=true;
+    $scope.createReminderDiv=false;
     
     // list view and gridview image hide and show
     $scope.gridviewImg=false;
@@ -150,6 +135,7 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
    	$scope.viewHtml=true;
    	$scope.trashHtml=false;
    	$scope.archiveHtml=false;
+   	$scope.reminderHtml=false;
     // is pin
     $scope.pinup=false;
     $scope.pinImg=true;
@@ -170,7 +156,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 
     // hide show division function----------
     $scope.ShowHide = function () {
-    	console.log("hide and show function...");
         // If DIV is visible it will be hidden and vice versa.
         $scope.IsVisible = !$scope.IsVisible;
         $scope.IsVisible1 = !$scope.IsVisible1;
@@ -193,9 +178,19 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
     //create note----------------------------------------------------------------------------    
     $scope.createArchive=function(value)
     {
-    	console.log("archive value is :: ",value);
-    	toastr.success('Note archive');
-    	$scope.isArchive=value;
+    	console.log();
+    	if($scope.pinup==value)
+    	{
+    		$scope.pinup=false;
+    		$scope.isArchive=value;
+    		$scope.createNote();
+    		toastr.success('Note unpinned and archive');
+    	}
+    	else{
+        	$scope.isArchive=value;	
+        	$scope.createNote();
+        	toastr.success('Note archive');
+    	}
     }
     
     $scope.createPinup=function(value)
@@ -212,10 +207,8 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 		$scope.IsVisible = false;
 	    $scope.IsVisible1 = true ;
 	    
-	    console.log("title is :: ", $scope.title," ","description is :: ",$scope.note);
 	    if(angular.isUndefined($scope.title) && angular.isUndefined($scope.note))
 	    {
-	    	console.log("inside empty note title is :: ",$scope.title," ","description is :: ",$scope.note);
 	    	$state.go("ToDoHomePage");
 	    }
 	    else{
@@ -226,21 +219,13 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 				pin:$scope.pinup,
 				isDelete:$scope.isDelete,
 				isArchive:$scope.isArchive,
+				isReminder:$scope.createday,
 				addImage:$scope.addImageFunc
 		}
-		console.log("division data :: "+createNoteObject.isdelete);
 		
 		var result=TodoHomePageService.createNote(createNoteObject).then(function(data){
-			console.log("todo notes create successfully...",data);		
-			console.log("todo notes list :: ",data.data.list);
-			console.log("list of headers :: "+data.headers('accessToken'));
-			console.log("my status :: "+data.data.status);	
-			console.log("my messages :: "+data.data.message);
-			console.log("todo notes linkss :: ",data.data.links);
-			
 			if(data.data.status==200)
 			{
-				console.log("get all notes.....................");
 				$scope.getAllNotes();
 				/*var count=0;
 				var countView=0;
@@ -307,12 +292,10 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
     
     // popup function
     $scope.open = function (x) {
-    	console.log("open popup data....."+x +"jjoo"+x.title+"  decsc :: "+x.description);
         var modalInstance = $uibModal.open({
         	templateUrl: "template/popupdiv.html",
         	controller: function($uibModalInstance) {
         		var $ctrl = this;
-        		console.log("open popup controller data....."+x.title+"  decsc :: "+x.description+"id :: "+x.id);
         		this.id = x.noteid;
         		this.title=x.title;
         		this.note=x.description;
@@ -326,23 +309,12 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
         		this.addImage1=x.addImage;
         		
         		this.pageScrapedata1=x.pageScrapedata;
-        		console.log("updated title :: "+this.title);
-        		console.log("updated note :: "+this.note);
-        		console.log("updated note :: "+this.id);
-        		
-        		/*
-        		$scope.$on("fileProgress1", function(e, progress) {
-        		      $scope.progress = progress.loaded / progress.total;
-        		});*/
-        		
         		this.changedivColor=function(color)
         		{
         			this.color=color;
-        			console.log("popup color function :: "+color)
         		}
         		
         		this.updateNoteFunction=function(id){
-        			console.log("inside updateNote functiom :: "+id);
         			$uibModalInstance.dismiss('Done');
         			var updateObj = {
         					noteid :id,
@@ -358,7 +330,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
         					addImage:this.addImage1,
         					pageScrapedata:this.pageScrapedata1
         			}
-        			console.log("update note shared object :: "+updateObj);
         			var result=TodoHomePageService.updateNote(updateObj).then(function(data){
         				if(data.data.status==200)
         				{
@@ -383,28 +354,23 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
     
   // hide show division function----------
     $scope.ShowHide1= function() {
-    	console.log("onblur hide and show 1 function...");
         // If DIV is visible it will be hidden and vice versa.
         $scope.IsVisible = !$scope.IsVisible;
         $scope.IsVisible1 = !$scope.IsVisible1;
 	};
 	
 	 $scope.showPopupData= function(x) {
-	    	console.log("showPopupData title..."+x.title);
-	    	console.log("showPopupData description..."+x.description);
 	    	$scope.updateDataNote=x;
 		};
 		
 	// deletePermanent note function-----------
 	$scope.deletePermanent=function(noteid)
 	{
-		console.log("note id is :: "+noteid);
 		var result=TodoHomePageService.deleteNote(noteid).then(function(data){
 			if(data.data.status==200)
 			{
 				/*$scope.records=data.data.list.reverse();*/
 				$scope.getAllNotes();
-				console.log("200 success delete Notes ::  ",$scope.records);
 			}
 			else if(data.data.status==-2)
 			{
@@ -412,7 +378,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 			}
 			else
 			{
-				console.log("notedeleted");
 				$state.go("ToDoHomePage");
 			}
 		});
@@ -423,7 +388,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	// delete note function-----------------------------
 		$scope.deleteNote=function(x,value)
 		{
-			console.log("note is :: "+x);
 			$scope.isDelete=value;
 			
 			var updateObj = {
@@ -470,7 +434,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	// empty trash function------------
 		$scope.emptyTrash=function()
 		{
-			console.log("empty trash....");
 			var result=TodoHomePageService.emptyTrash().then(function(data){
 				if(data.data.status==200)
 				{
@@ -482,7 +445,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 				}
 				else
 				{
-					console.log("notedeleted");
 					$state.go("ToDoHomePage");
 				}
 			});
@@ -491,7 +453,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	// ------------list view function---------------------------
 	$scope.listview=function()
 	{
-		console.log("list view");
 		$scope.gridviewImg=false;
 	    $scope.listviewImg=true;
 	    $scope.space3col="";
@@ -503,7 +464,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	// ----------grid view function---------------------------
 	$scope.gridview=function()
 	{
-		console.log("grid view");
 		$scope.gridviewImg=true;
 	    $scope.listviewImg=false;
 	    
@@ -516,7 +476,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	// -------------------isPin()-------------------------
 	$scope.isPin=function(x,value)
 	{
-		$scope.pinup=value;
 		var updatePin = {
 				noteid :x.noteid,
 				title :x.title,
@@ -524,23 +483,16 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 				noteCreatedDate:x.noteCreatedDate,
 				noteEditedDate:x.noteEditedDate,
 				color:x.color,
-				pin:$scope.pinup,
+				pin:value,
 				isDelete:$scope.isDelete,
 				isArchive:$scope.isArchive,
 				addImage:x.addImage
 		}
-		/*var updatePin = {
-				noteid :x.noteid,
-				pin:$scope.pinup,
-				isDelete:$scope.isDelete,
-				isArchive:$scope.isArchive,
-		}*/
 		
 		var result=TodoHomePageService.updateNote(updatePin).then(function(data){
 			if(data.data.status==200)
 			{
 				$scope.getAllNotes();
-				$scope.pinup=false;
 			}
 			else if(data.data.status==-2)
 			{
@@ -554,30 +506,19 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 		});
 	   
 	};
-	// -------------------isPin()--------------------------
-	
-	// -------------------isArchive()----------------------
+	// -------------------------isPin()--------------------------
+	// -------------------------isArchive()----------------------
 	$scope.isarchive=function(x,value)
 	{
-		$scope.isArchive=value;
-		var updatePin = {
-				noteid :x.noteid,
-				title :x.title,
-				description :x.description,
-				noteCreatedDate:x.noteCreatedDate,
-				noteEditedDate:x.noteEditedDate,
-				color:x.color,
-				pin:false,
-				isDelete:$scope.isDelete,
-				isArchive:$scope.isArchive,
-				addImage:$scope.addImage
+		console.log("image is :: ",$scope.addImage);
+		var updateArchive = {
+				noteId :x.noteid,
+				archive:value,
 		}
-		
-		var result=TodoHomePageService.updateNote(updatePin).then(function(data){
+		var result=TodoHomePageService.archive(updateArchive).then(function(data){
 			if(data.data.status==200)
 			{
 				$scope.getAllNotes();
-				$scope.pinup=false;
 			}
 			else
 			{
@@ -595,22 +536,49 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 		}
 	   
 	};
-	//-----------------------------end isArchive()--------------------------
-	//-----------------------------isreminder()-----------------------------
-	
+	//-----------------------------create isreminder()-----------------------------
+	$scope.createReminder= function (day) {
+		console.log(day);
+		$scope.createday=day;
+		if($scope.createday=='today')
+		{
+			var today = new Date();
+			today.setHours(20, 0, 0);
+		    $scope.createday = new Date(today);
+		    $scope.createReminderDiv=true;
+		}
+		
+		else if($scope.createday=='tomorrow')
+		{
+			 var tomorrow = new Date(currentDate);
+			 tomorrow.setHours(20, 0, 0);
+		     tomorrow.setDate(tomorrow.getDate() + 1);
+		     $scope.createday = new Date(tomorrow);
+		     $scope.createReminderDiv=true;
+		}
+		else if($scope.createday=='nextWeek')
+		{
+			var nextWeek = new Date(currentDate);
+			nextWeek.setHours(20, 0, 0);
+			nextWeek.setDate(nextWeek.getDate() + 7);
+		    $scope.createday = new Date(nextWeek);
+		    $scope.createReminderDiv=true;
+		}
+		else{
+			
+		}
+	}
+	//----------------------------isreminder()-----------------------------
 	$scope.reminder= function (x,day) {
-		console.log("new date.....",new Date());
 		var currentDate=new Date();
 		$scope.day=day;
 		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-		console.log("week day :: ",days[currentDate.getDay()]);
 		
 		if($scope.day=='today')
 		{
 			var today = new Date();
 			today.setHours(20, 0, 0);
 		    $scope.day = new Date(today);
-		    console.log("calculated day :: ",$scope.day);
 		}
 		
 		else if($scope.day=='tomorrow')
@@ -619,7 +587,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 			 tomorrow.setHours(20, 0, 0);
 		     tomorrow.setDate(tomorrow.getDate() + 1);
 		     $scope.day = new Date(tomorrow);
-		     console.log("calculated day :: ",$scope.day);
 		}
 		else if($scope.day=='nextWeek')
 		{
@@ -627,7 +594,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 			nextWeek.setHours(20, 0, 0);
 			nextWeek.setDate(nextWeek.getDate() + 7);
 		    $scope.day = new Date(nextWeek);
-		    console.log("calculated day :: ",$scope.day);
 		}
 		
 		else{
@@ -661,7 +627,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	
 	//-----------------------------------collaborator--------------------
 	 $scope.collaborator = function (x) {
-		console.log("colaborator function called",x);
 		$rootScope.noteObject=x; 
 		var modalInstance = $uibModal.open({
         	templateUrl: "template/collaborator.html",
@@ -692,14 +657,12 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	//--------view image-------------------------
 	$scope.triggerUpload=function()
 	{
-		console.log("upload pic on view....");
 		var fileuploader = angular.element("#fileInput");
 		
 	    fileuploader.on('click',function(){
 	    })
 	    
 	    fileuploader.trigger('click');
-	    console.log("incomimg img",$scope.addImageFunc);
 	}
 
 	
@@ -714,27 +677,15 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	//-------------------------------open profile pic--------------------------------------
 	$scope.openProfilepic=function()
 	{
-		console.log("open Profile pic :: ");
 		var modalInstance = $uibModal.open({
         	templateUrl: "template/profilepic.html",
         	controller: "profilePicController",
 		});
-		/*	$uibModalInstance.dismiss('cancel');*/
-		/*
-		modalInstance.result.catch(function(error) {
-		      console.log("error", error);
-		});*/
-		
-		/*	$uibModalStack.dismissAll(); 
-		$rootScope.cancel = function() {
-		      $uibModalInstance.dismiss('cancel');
-		};*/
 	};
 	//------------------closed profile pic-------------------------------------
 
 	// -----------------------------refresh function---------------------------
 	$scope.refresh= function () {
-		console.log("refresh......");
 		  window.location.reload(); 
 	};
 	
@@ -742,7 +693,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	
 	// -----------------------------logout function---------------------------
 	$scope.logout= function () {
-		
 		var result=TodoHomePageService.logout().then(function(data){
 			if(data.data.status==200)
 			{
@@ -761,7 +711,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	//------------------------------- GetAll notes function-----------------------
 	$scope.getAllNotes=function()
 	{
-		console.log("all recordss value....",$scope.records);
 		var result=TodoHomePageService.getAllNotes().then(function(data){	
 			if(data.data.status==200)
 			{
@@ -770,7 +719,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 				var countView=0;
 				$scope.records=data.data.list.reverse();
 				
-				console.log("all recordss value....",$scope.records);
 				for(var i=0;i<=$scope.records.length-1;i++)
 				{
 					if($scope.records[i].pin=='true')
@@ -806,6 +754,10 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 			}
 			else if(data.data.status==-2)
 			{
+				$scope.getRefreshToken();
+			}
+			else if(data.data.status==-1)
+			{
 				$state.go("login");
 			}
 			else
@@ -813,23 +765,33 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 				$state.go("ToDoHomePage");
 			}
 		});
-		
-		/*toUpdate=$scope.records;
-    	$scope.userNameInitial=$scope.records[0].user.userName[0];
-    	console.log("first character :: "+$scope.userNameInitial);
-    	$scope.changeBgColor={"background-color" : "red"} 
-    	
-    	$scope.userId=$scope.records[0].user.id;
-    	$scope.profileImage=$scope.records[0].user.profileImage;
-    	$scope.imageSrc = $scope.profileImage;
-        console.log("profile image source  imageSrc:: ",$scope.imageSrc);
-    	
-    	$scope.userName=$scope.records[0].user.userName;
-    	$scope.email=$scope.records[0].user.email;
-    	$scope.mobileNo=$scope.records[0].user.mobileNo;*/
 	}
 	//------------------GetAll note function ended----------------------------
 	
+	
+	$scope.getRefreshToken=function()
+	{
+		var token = {
+				accessToken : localStorage.getItem("accessToken"),
+				refreshToken : localStorage.getItem("refreshToken")
+		}
+		
+		var refreshToken=TodoHomePageService.getRefreshToken(token).then(function(data){
+			if(data.data.status==200)
+			{
+				localStorage.setItem("accessToken",data.data.accessToken);
+				localStorage.setItem("refreshToken",data.data.refreshToken);
+			}
+			else if(data.data.status==-2)
+			{
+				$state.go("login");
+			}
+			else if(data.data.status==-1)
+			{
+				$state.go("login");
+			}
+		});
+	}
 	
 	// ----------select color for div view function---------------------------
 	$scope.changedivColor=function(x,color)
@@ -850,7 +812,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 		}
 		
 		$scope.color=color;
-		/* $scope.divColor=$scope.color; */
 		
 		var updateColor = {
 				noteid :x.noteid,
@@ -869,8 +830,6 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 			if(data.data.status==200)
 			{
 				$scope.getAllNotes();
-				/*$scope.records=data.data.list.reverse();
-				console.log("200 success delete Notes ::  ",$scope.records);*/
 				$scope.pinup=false;
 			}
 			else if(data.data.status==-2)

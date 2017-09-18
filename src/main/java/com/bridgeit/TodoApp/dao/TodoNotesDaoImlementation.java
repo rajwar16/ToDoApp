@@ -22,7 +22,6 @@ import com.bridgeit.TodoApp.model.Collaborator;
 import com.bridgeit.TodoApp.model.PageScrapedata;
 import com.bridgeit.TodoApp.model.ToDoNotes;
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 
 public class TodoNotesDaoImlementation implements TodoNotesDao{
 
@@ -157,7 +156,6 @@ public class TodoNotesDaoImlementation implements TodoNotesDao{
 	}
 
 	public Boolean UpdateToDoNotes(ToDoNotes toDoNotes) {
-		long userId=toDoNotes.getUser().getId();
 		String hql = "UPDATE ToDoNotes set title=:title1,description=:description,noteCreatedDate=:noteCreatedDate,noteEditedDate=:noteEditedDate,color=:color,pin=:pin,isDelete=:isDelete,isArchive=:isArchive,isReminder=:isReminder,addImage=:addImage WHERE Noteid = :noteid";
 		Session session=sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);

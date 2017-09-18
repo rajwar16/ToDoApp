@@ -11,7 +11,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 import com.bridgeit.TodoApp.validator.StrongSecuredPassword;
 
 public class UserDaoImplementation implements UserDao
@@ -98,7 +97,7 @@ public class UserDaoImplementation implements UserDao
 	
 	public boolean deleteUser(long userId) {
 		Session session=sessionFactory.getCurrentSession();
-		 UserRegistration user = (UserRegistration ) session.createCriteria(UserRegistration.class)
+		 User user = (User) session.createCriteria(User.class)
           .add(Restrictions.eq("id", userId)).uniqueResult();
 		session.delete(user);		
 		return true;

@@ -43,8 +43,10 @@
 		<url-pattern>/ToDoNoteList</url-pattern>
 		<url-pattern>/ToDoNoteUpdate/</url-pattern>
 		<url-pattern>/TodoNoteDelete</url-pattern>
-		<url-pattern>/ToDoNoteList</url-pattern>
-		
+		<url-pattern>/ToDoNoteArchive</url-pattern>
+		<url-pattern>/collaborator</url-pattern>
+		<url-pattern>/ToDoNoteReminder</url-pattern>
+		<url-pattern>/TodoNoteEmptyTrash</url-pattern>
 	</filter-mapping>
 	
 	<!-- <filter>

@@ -76,8 +76,6 @@
 	<bean id="tokenDao" class="com.bridgeit.TodoApp.dao.TokenDaoImplementation"/>
 	<bean id="ToDoServices" class="com.bridgeit.TodoApp.services.ToDoServices"/>
 	<bean id="todoNotesDao" class="com.bridgeit.TodoApp.dao.TodoNotesDaoImlementation"/>
-	<!-- <bean id="facebookServiceProvider" class="com.bridgeit.TodoApp.services.OAuthServiceConfig"/> -->
-	<!-- <bean id="todoNotesDao" class="com.bridgeit.TodoApp.services.OAuthServiceProvider"/> -->
 	
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -103,17 +101,6 @@
 				</bean>
 			</list>
 		</property>
-	</bean>
-	
-	<bean id="facebookServiceProvider" class="com.bridgeit.TodoApp.services.OAuthServiceProvider">
-		<constructor-arg name="config" ref="facebookServiceConfig" />
-	</bean>
-	
-	<bean id="facebookServiceConfig" class="com.bridgeit.TodoApp.services.OAuthServiceConfig">
-		<constructor-arg value="${app.config.oauth.facebook.apikey}" />
-		<constructor-arg value="${app.config.oauth.facebook.apisecret}" />
-		<constructor-arg value="${app.config.oauth.facebook.callback}" />
-		<constructor-arg value="org.scribe.builder.api.FacebookApi" />
 	</bean>
 	
 	<bean id="oAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">

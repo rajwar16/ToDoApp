@@ -9,9 +9,9 @@
   <div  data-ng-repeat="x in records | filter:searchQuery as results track by $index" >
   	<div ng-if="x.pin=='true'">
                 <div ng-class="space3col"></div>                  
-                 <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px;" ng-style="{'width':colLg4}">
+                    <div ng-class="view_change" style="padding-right: 0px;padding-left: 0px">
                    		<div class="todoNoteDiv" id="todoNote" ng-style="{'background-color':x.color}">
-                    		<div id="pinDiv"  ng-click="isPin(x,'false')" style="display: block"><img src="Images/colorPin.svg" title="unpin" style="height: 20px;width:20px;"></div>
+                    		<div id="pinDiv" ng-click="isPin(x,'false')" style="display: block"><img src="Images/colorPin.svg" title="unpin" style="height: 20px;width:20px;"></div>
                     		
                     		<div ng-if="x.addImage!=null" id="presentationTitle1" style="background-image: url({{x.addImage}});background-repeat:no-repeat;background-size: cover;"></div>
                     		
@@ -41,12 +41,13 @@
 			<!--------------------- colorDiv Section End--------------------------------------------------------->
 					  				<div class="editDivRepeat" title="Add image"><img src="Images/img.svg"></div>
 					  				<div class="editDivRepeat" title="Archive" ng-click="isarchive(x,'true')"><img src="Images/archive.svg"></div>
-					  				<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
 					  				<div  class="editDivRepeat"  title="Delete">
-					  					<button id="doneButton" ng-click="deleteNote(x,'true')" style="float:right;">
-					  						<img src="Images/trash.svg">
+					  					<button id="doneButton" ng-click="deleteNote(x,'true')" >
+					  						<img src="Images/trash.svg" style="height: 19px;width: 24px;">
 					  					</button>
 					  				</div>
+					  				
+					  				<div class="editDivRepeat" title="More"><img src="Images/list.png"></div>
     							</div>
     						</div>
     						<div ng-if="x.isReminder!=null" style="height: 36px;width: 90%;margin-left: 15px;border-top:2px dotted rgba(0,0,0,0.1);" >

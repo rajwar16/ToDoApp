@@ -1,26 +1,18 @@
-myApp.controller( 'loginController',function($scope, $state,loginService)
+myApp.controller( 'loginController', function($scope, $state,$uibModal,loginService)
 {
 	console.log("inside the loginController");
 	$scope.invalidCredintial=false;
 	$scope.loginController=function() {
-		console.log("inside the login controller function...gbbbbbbbbbbbbb");
-		console.log($scope.userName);
-		console.log($scope.password);
 		var loginObject = {
 				userName : $scope.userName,
 				password : $scope.password
 		}
 		
 		var result=loginService.userLogin(loginObject).then(function(data){
-			console.log("Response Body :: ",data.data);		
 			console.log("list of headers :: "+data.headers('accessToken'));
-			console.log("my status :: "+data.data.status);	
-			console.log("my messages :: "+data.data.message);
 			
 			if(data.data.status==200)
 			{
-				console.log("login sucessfully status 200..");
-				console.log("accessToken",data.data.accessToken,"    \nrefreshToken",data.data.refreshToken);
 				localStorage.setItem("accessToken",data.data.accessToken);
 				localStorage.setItem("refreshToken",data.data.refreshToken);
 				$state.go("ToDoHomePage");
@@ -28,10 +20,24 @@ myApp.controller( 'loginController',function($scope, $state,loginService)
 			
 			else if(data.data.status==404)
 			{
-				console.log("login unsucessfully status 404..");
 				$scope.invalidCredintial=true;
 				$state.go("login");
 			}
+			else if(data.data.status==-2)
+			{
+				console.log("my messages :: "+data.data.message);
+				
+				var modalInstance = $uibModal.open({
+		        	templateUrl: "template/EmailVarification.html",
+		        	controller: function($uibModalInstance) 
+		        	{
+		        		var $ctrl = this;
+		        		console.log("open popup controller data.....");
+		        	},
+		        	controllerAs: "$ctrl",
+				});
+			}
+			
 			else
 			{
 				console.log("invalid credintial..");

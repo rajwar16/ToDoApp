@@ -80,6 +80,17 @@ myApp.service('TodoHomePageService', function($http) {
     	}
     });
     }
+    
+    this.archive = function(archive) {
+    	console.log("service archive object  :: ",archive);
+    	return $http({
+    		method : "PUT",
+            url : "ToDoNoteArchive",
+            data : archive,
+            headers: {'accessToken': localStorage.getItem("accessToken")
+    	}
+    });
+    }
 
     this.logout = function() {
     	console.log("service logout ....");

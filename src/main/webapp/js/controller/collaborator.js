@@ -1,4 +1,4 @@
-myApp.controller( 'collaborator',['$scope','$rootScope','$controller', '$http','$state','collaboratorService',function($scope, $rootScope,$controller,$state,fileReader,collaboratorService,noteObject)
+myApp.controller( 'collaborator',['$scope','$rootScope','$controller', '$http','$state','collaboratorService','$uibModal','$uibModalInstance',function($scope, $rootScope,$controller,$state,fileReader,collaboratorService,$uibModal,$uibModalInstance,noteObject)
 	{
 	  $controller('showDivision', {$scope: $scope}),
 	  $controller('registerController', {$scope: $scope}),
@@ -18,12 +18,14 @@ myApp.controller( 'collaborator',['$scope','$rootScope','$controller', '$http','
 		  collaboratorService.collaborator(collaboratorObject).then(function(data){
 			  if(data.data.status==200)
 				{
-				   console.log("collaborator created sucessfully :: ",data.data.SharedUser.profileImage);
 				   console.log("collaborator shared user :: ",data.data.SharedUser);
-				   $rootScope.sharedUserProfilePic=data.data.SharedUser.profileImage;
+				   $uibModalInstance.dismiss('Done');
 				}
 		  });
-	   } 
+	   };
+	   $scope.cancel = function () {
+			  $uibModalInstance.dismiss('cancel');
+	   };
 }]).service("collaboratorService", function($http,$q) {
     this.collaborator = function (collaboratorObject) {
     	console.log("collaborator...",collaboratorObject);

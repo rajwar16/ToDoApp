@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.TodoApp.dao.UserDao;
 import com.bridgeit.TodoApp.model.User;
-import com.bridgeit.TodoApp.model.UserRegistration;
 
 /**
  * @author Pooja Rajwar
