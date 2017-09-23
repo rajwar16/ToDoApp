@@ -24,11 +24,10 @@ public class UserDaoImplementation implements UserDao
 	 */
 	
 	public Object addUserRegister(User userRegistration ,String string) throws NoSuchAlgorithmException, InvalidKeySpecException {
-		
 		Session session=sessionFactory.getCurrentSession();
 		if(string=="mannual")
 		{
-			
+		System.out.println("user update...."+userRegistration.getPassword());
 		String originalPassword=userRegistration.getPassword();
 		StrongSecuredPassword strongSecuredPassword=new StrongSecuredPassword();
 

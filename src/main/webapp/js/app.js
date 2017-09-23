@@ -51,7 +51,6 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 	});
 	$urlRouterProvider.otherwise('/login');
 });
-
 myApp.factory('AuthService', ['$rootScope', function($rootScope){
 	$rootScope.$on('$stateChangeStart', 
 			   function(event, toState, toParams, fromState, fromParams){ 

@@ -25,6 +25,7 @@ import com.bridgeit.TodoApp.JSONResponse.Response;
 import com.bridgeit.TodoApp.JSONResponse.TokenResponse;
 import com.bridgeit.TodoApp.model.Token;
 import com.bridgeit.TodoApp.model.User;
+import com.bridgeit.TodoApp.redisUtil.TokenRepository;
 import com.bridgeit.TodoApp.services.TokenServices;
 import com.bridgeit.TodoApp.services.UserServices;
 
@@ -43,6 +44,8 @@ public class AthenticationTokenBasedLogin implements Filter
 
 		TokenServices tokenService = (TokenServices) applicationContext.getBean("tokenservices");
 		UserServices userService = (UserServices) applicationContext.getBean("userServices");
+		TokenRepository tokenRepository=(TokenRepository) applicationContext.getBean("tokenRepository");
+		
 		/*TokenResponse tokenResponse=applicationContext.getBean(TokenResponse.class);
 		System.out.println("token service object :: "+tokenService);*/
 		
@@ -71,6 +74,7 @@ public class AthenticationTokenBasedLogin implements Filter
 		Token token=null;
 		
 		try {
+			/*token=tokenRepository.findToken(accessToken);*/
 			token = tokenService.getToken(accessToken);
 			System.out.println("filter access token ::::::::::::::::"+token);
 		} catch (Exception e1) {

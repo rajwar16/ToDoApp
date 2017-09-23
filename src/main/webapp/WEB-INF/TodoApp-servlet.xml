@@ -76,7 +76,8 @@
 	<bean id="tokenDao" class="com.bridgeit.TodoApp.dao.TokenDaoImplementation"/>
 	<bean id="ToDoServices" class="com.bridgeit.TodoApp.services.ToDoServices"/>
 	<bean id="todoNotesDao" class="com.bridgeit.TodoApp.dao.TodoNotesDaoImlementation"/>
-	
+	<!-- <bean id="tokenRepository" class="com.bridgeit.TodoApp.redisUtil.TokenRepositoryImpl"/>
+	 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="10000000" />

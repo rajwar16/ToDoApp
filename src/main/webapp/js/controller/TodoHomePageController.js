@@ -625,6 +625,34 @@ myApp.controller('showDivision',function ($scope,$state,$http,$uibModal,$window,
 	};
 	// ---------------------------------end isreminder()------------------
 	
+	
+	$scope.facebookshare = function(data) {
+		console.log("facebook share::" + data)
+		data.description = data.description.replace("<br>", " ");
+		data.description = data.description.replace("<div>", " ");
+		data.description = data.description.replace("</div>", " ");
+		console.log($("#presentationNote").val());
+
+		FB.init({
+		appId : '462155094166865',
+		status : true,
+		xfbml : true,
+		version : 'v2.7'
+		});
+
+		FB.ui({
+		method : 'share_open_graph',
+		action_type : 'og.shares',
+		action_properties : JSON.stringify({
+		object : {
+		'og:title' : data.title,
+		'og:description' : data.description,
+		}
+		})
+		});
+
+		}
+	
 	//-----------------------------------collaborator--------------------
 	 $scope.collaborator = function (x) {
 		$rootScope.noteObject=x; 

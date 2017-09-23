@@ -2,6 +2,8 @@ package com.bridgeit.TodoApp.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
@@ -36,6 +38,8 @@ import com.bridgeit.TodoApp.JSONResponse.TokenResponse;
 import com.bridgeit.TodoApp.JSONResponse.UserResponse;
 import com.bridgeit.TodoApp.model.Token;
 import com.bridgeit.TodoApp.model.User;
+import com.bridgeit.TodoApp.redisUtil.TokenRepository;
+import com.bridgeit.TodoApp.redisUtil.TokenRepositoryImpl;
 import com.bridgeit.TodoApp.services.TokenServices;
 import com.bridgeit.TodoApp.services.UserServices;
 
@@ -47,6 +51,9 @@ public class LoginController {
 	
 	@Autowired
 	TokenServices tokenservices;
+	
+	@Autowired
+	TokenRepositoryImpl tokenRepository;
 
 	protected static Logger logger = Logger.getLogger("login");
 
@@ -109,6 +116,8 @@ public class LoginController {
 		//---------genreted token add into database-----------------------
 		System.out.println("genered token is :: "+token);
 		tokenservices.addToken(token);
+		
+		/*tokenRepository.saveToken(token);*/
 		
 		//-----------token add to header----------------------------------
 		response.setHeader("accessToken", token.getAccessToken());
@@ -317,11 +326,11 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="validateCode")
-	public void validateCode(HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException, IOException
-	{
+	public void validateCode(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		System.out.println("validate code :: ");
-		String codeToken=request.getParameter("codeToken");
+		String codeToken=request.getParameter("userToken");
 		User  user =(User) request.getSession().getAttribute(codeToken);
+		System.out.println("user from token :: "+user);
 		String token=UUID.randomUUID().toString().replaceAll("-", "");
 		request.getSession().setAttribute(token, user);
 		
@@ -330,4 +339,39 @@ public class LoginController {
 			response.sendRedirect("http://localhost:8080/TodoApp/#!/passwordChange?token="+token);
 		}
 	}
+	
+	@RequestMapping(value="changePassword")
+	public ResponseEntity<Response> changePassword(@RequestBody Map<String, String> newPassword ,HttpServletRequest request,HttpServletResponse response) throws IOException{
+		UserResponse userResponse=new UserResponse();
+		String newpassword=newPassword.get("newpassword");
+		String token=newPassword.get("tokenKey");
+		User user=(User) request.getSession().getAttribute(token);
+		
+		
+		if(user!=null)
+		{
+			System.out.println("user from token :: "+user);
+			user.setPassword(newpassword);
+			try {
+				userServices.addUserRegister(user,"manual");
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				userResponse.setStatus(500);
+				userResponse.setMessage("Exception occure....");
+				return new ResponseEntity<Response>(userResponse,HttpStatus.OK);
+			} catch (InvalidKeySpecException e) {
+				e.printStackTrace();
+				userResponse.setStatus(500);
+				userResponse.setMessage("Exception occure....");
+				return new ResponseEntity<Response>(userResponse,HttpStatus.OK);
+			}
+			//response.sendRedirect("http://localhost:8080/TodoApp/#!/passwordChange?token="+token);
+		}
+		
+		System.out.println("dhgjfthkjht new paswword forgot password ....."+user.getPassword());
+		userResponse.setStatus(200);
+		userResponse.setMessage("code send via email successfully....");
+		return new ResponseEntity<Response>(userResponse,HttpStatus.OK);
+	}
+	
 }
